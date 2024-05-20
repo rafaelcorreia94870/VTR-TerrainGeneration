@@ -1,0 +1,113 @@
+<?xml version="1.0" ?>
+<project name="Terrain Generation" width="800" height="800">
+	<assets>
+        <attributes>
+            <attribute type = "RENDERER" data="FLOAT" name = "level" value = "10" />
+        </attributes>
+		
+		<scenes>
+            <scene name="SkyBox" >
+                <geometry name="skyBox" material="skybox" type="BOX" >
+                </geometry>
+            </scene>
+            <scene name="Terrain" >
+				<geometry name="terrain" type ="GRID" LENGTH="2000000" DIVISIONS="50" material="terrain">
+                    <TRANSLATE x="0.0" y="20.0" z="0.0" />
+                </geometry>
+			</scene>
+		</scenes>
+        <viewports>
+			<viewport name="MainViewport">
+                <ORIGIN x="0.0" y="0.0" />
+				<CLEAR_COLOR r="1.0" g="1.0" b="1.0" />
+			</viewport>
+            <viewport name="MinimapViewport">
+                <ORIGIN x="0.0" y="0.75" />
+                <SIZE width="0.25" height="0.25" />
+				<CLEAR_COLOR r="1.0" g="1.0" b="1.0" />
+			</viewport>
+		</viewports>
+		
+		<cameras>
+			<camera name="MainCamera">
+				<viewport name="MainViewport" />
+				<TYPE value="PERSPECTIVE"/>
+				<POSITION x="0.0"   y="70.0"  z="200.0" />
+				<VIEW     x="0.0"   y="-0.5"   z="-1.0"   />
+				<UP       x="0.0"   y="1.0"    z="0.0"    />
+                <NEAR value="0.1" />
+                <FAR value="150000.0" />
+			</camera>
+            <camera name="Minimap">
+				<viewport name="MinimapViewport" />
+				<POSITION x="0.0"   y="4500"  z="0.0"    />
+				<VIEW     x="0.0"   y="-1"   z="0.001"    />
+				<UP       x="0.0"   y="1.0"     z="0.0"    />
+			</camera>
+		</cameras>
+
+        <lights>
+			<light name="Sun" >
+				<DIRECTION x="1.0" y="-0.5" z="-2" />
+			</light>
+		</lights>
+        		
+		<materialLibs>
+			<materialLib filename="terrain.mlib"/>
+            <materialLib filename="skybox.mlib" />
+		</materialLibs>
+		
+	</assets>
+    <pipelines>
+        <pipeline name="terrain" default="true" defaultCamera="MainCamera">
+
+            <pass class="default" name="skybox">
+				<scenes>
+					<scene name="SkyBox" />
+				</scenes>
+				<camera name="MainCamera" />
+				<viewport name="MainViewport" />
+				<lights>
+					<light name="Sun" />
+				</lights>
+				<materialMaps>
+					<map fromMaterial="skybox"
+						toMaterial="skybox" toLibrary="base" />
+				</materialMaps>
+			</pass>
+
+            <pass name="Terrain" class="default" >
+                <scenes>
+                    <scene name="Terrain" />
+                </scenes>
+                <camera name="MainCamera" />
+                <viewport name="MainViewport"/>
+                <lights>
+                    <light name="Sun" />
+                </lights>
+ 				<materialMaps>
+                    <map fromMaterial="terrain" toMaterial="terrain"  toLibrary="Terrain" />
+				</materialMaps>
+				<COLOR_CLEAR value="false"/>
+            </pass>
+            
+            <pass name="Minimap" class="default" >
+                <scenes>
+                    <scene name="Terrain" />
+                </scenes>
+                <camera name="Minimap" />
+                <viewport name="MinimapViewport"/>
+                <lights>
+                    <light name="Sun" />
+                </lights>
+ 				<materialMaps>
+                    <map fromMaterial="terrain" toMaterial="terrain"  toLibrary="Terrain" />
+				</materialMaps>
+				<COLOR_CLEAR value="false"/>
+            </pass>
+
+        </pipeline>
+    </pipelines>
+</project>
+		
+	

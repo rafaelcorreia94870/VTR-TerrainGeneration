@@ -1,0 +1,88 @@
+<materialLib name="base">
+
+    <textures>
+        <cubeMap name="CM" 
+            filePosX="textures/skybox/inverted/Daylight Box_Left.bmp"
+            fileNegX="textures/skybox/inverted/Daylight Box_Right.bmp"
+            filePosY="textures/skybox/inverted/Daylight Box_Top.bmp"
+            fileNegY="textures/skybox/inverted/Daylight Box_Bottom.bmp"
+            filePosZ="textures/skybox/inverted/Daylight Box_Front.bmp"
+            fileNegZ="textures/skybox/inverted/Daylight Box_Back.bmp"
+        />
+
+    </textures>
+
+    <shaders>
+        <shader name="skyBox" vs = "shaders/skybox.vert" 
+        ps = "shaders/skybox.frag" />
+
+
+   </shaders>
+
+    <states>
+        <state name="skybox" >
+            <CULL_TYPE value="FRONT" />
+        </state>
+        <state name="transparency">
+            <ORDER value="2"/>
+            <BLEND value="true"/>
+            <BLEND_SRC value="SRC_ALPHA"/>
+            <BLEND_DST value="ONE_MINUS_SRC_ALPHA"/>
+        </state>
+    </states>
+
+    <materials>
+        <!--material SKYBOX-->
+        <material name="skybox" >
+            <shader name="skyBox" >
+                <values>
+                    <valueof uniform="m_pvm" 
+                            type="RENDERER" 
+                            component="PROJECTION_VIEW_MODEL" />
+                    <valueof uniform="cam_pos" 
+                            type="CAMERA"
+                            component="POSITION" />
+
+                    <valueof uniform="tex_cm" 
+                            type="TEXTURE_BINDING" 
+                            component="UNIT" id ="6" />
+
+              </values>
+            </shader>
+            <textures>
+               <texture name="CM" UNIT="6" >
+                    <WRAP_S value="CLAMP_TO_EDGE" />
+                    <WRAP_T value="CLAMP_TO_EDGE" />
+                </texture>
+            </textures>
+            <state name = "skybox" />
+        </material>
+        <!--material CM-
+        <material name="cm">
+            <shader name ="cm">
+                <values>
+                    <valueof uniform="m_pvm" 
+                            type="RENDERER" 
+                            component="PROJECTION_VIEW_MODEL" />
+                    <valueof uniform="m_m" 
+                            type="RENDERER" 
+                            component="MODEL" />
+                    <valueof uniform="cam_pos" 
+                            type="CAMERA"
+                            component="POSITION" />
+
+                    <valueof uniform="tex_cm" 
+                            type="TEXTURE_BINDING" 
+                            component="UNIT" id ="6" />
+                </values>
+            </shader>
+            <textures>
+                <texture name="CM" UNIT="6" >
+                     <WRAP_S value="CLAMP_TO_EDGE" />
+                     <WRAP_T value="CLAMP_TO_EDGE" />
+                 </texture>
+             </textures>
+            <state name="transparency"/>
+        </material-->
+    </materials>
+</materialLib>
