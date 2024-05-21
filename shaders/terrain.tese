@@ -4,6 +4,11 @@ layout(triangles, fractional_odd_spacing, ccw) in;
 uniform	mat4 m_pvm, m_view;
 uniform	mat3 m_normal;
 uniform vec4 l_dir;
+uniform float timer;
+uniform float scale;
+
+uniform int num_octaves = 10;
+
 
 in vec4 normalTC[];
 in vec4 posTC[];
@@ -20,10 +25,22 @@ out Data {
 
 void main() {
 
+
     //confio só nas contas do stor
+
 	vec4 b300 = posTC[0];
 	vec4 b030 = posTC[1];
 	vec4 b003 = posTC[2];
+
+	float noisevar = 0.0;
+	for(int i = 1; i < num_octaves; ++i) {
+            //vec2 t = texCoord[0] * pow(2,i);
+            //noisevar += snoise(vec2(u,v));
+			b300.y += scale*snoise(posTC[0].xz);
+			b030.y += scale*snoise(posTC[1].xz);
+			b003.y += scale*snoise(posTC[2].xz);
+    }
+	
 	vec4 n1 = normalTC[0];
 	vec4 n2 = normalTC[1];
 	vec4 n3 = normalTC[2];
@@ -52,17 +69,17 @@ void main() {
 	vec4 b111 = E + (E - V) / 2;
 	
 	float u = gl_TessCoord.x;
-	float v = gl_TessCoord.y;                                                          
+	float v = gl_TessCoord.y;                                           
 	float w = gl_TessCoord.z;
-	
+
+
+
 	vec4 res = b300 * w*w*w + b030 * u*u*u + b003 * v*v*v +
 				b210 * 3 * w*w*u + b120 * 3*w*u*u + b201 * 3 * w*w*v +
 				b021 * 3*u*u*v + b102 * 3*w*v*v + b012 * 3*u*v*v +
 				b111*6*w*u*v;
-	//res.y += 200 * snoise(texturecoord.xy) n da
-	
 	//n sei
-	res.y += 200 * snoise(res.xy);
+	//res.y += 2 * snoise(res.xy);
 
 	float v12 = 2 * (dot (b030 - b300, n1+n2)/dot (b030 - b300, b030 - b300));
 	float v23 = 2 * (dot (b003 - b030, n2+n3)/dot (b003 - b030, b003 - b030));
@@ -81,6 +98,7 @@ void main() {
     perturbedNormal += n011 * u*v;
     perturbedNormal += n101 * w*v;
     perturbedNormal = normalize(perturbedNormal);
+
 	
 	DataOut.normalTE = normalize(m_normal * 
 				vec3(n1 *w*w + n2 *u*u + n3 *v*v +

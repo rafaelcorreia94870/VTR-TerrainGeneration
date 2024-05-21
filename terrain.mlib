@@ -1,5 +1,10 @@
 <?xml version="1.0"?>
 <materialLib name="Terrain">
+        <textures>
+                <texture name="grass_rock_diffuse" filename="textures/biomes/grass_rock/textures/aerial_grass_rock_diff_1k.jpg" mipmap="true"/>
+                <texture name="grass_rock_displacement" filename="textures/biomes/grass_rock/textures/aerial_grass_rock_disp_1k.png" mipmap="true"/>
+                <texture name="grass_rock_roughness" filename="textures/biomes/grass_rock/textures/aerial_grass_rock_rough_1k.jpg" mipmap="true"/>
+        </textures>
         <shaders>
                 <shader name="terrain">
                         <vs>
@@ -23,7 +28,14 @@
                         te="shaders/terrain.tese"
                         vs="shaders/terrain.vert"
                 /-->
-                        
+                <shader name = "grass_rock">
+                        <vs>
+                                <file name="shaders/texture.vert"/>
+                        </vs>
+                        <ps>
+                                <file name="shaders/texture.frag"/>
+                        </ps>
+                </shader>
         </shaders>
 
         <materials>
@@ -40,9 +52,32 @@
                                         <valueof uniform="FOV"  type="CAMERA" context="MainCamera" component="FOV" />
                                         <valueof uniform="Ratio" type="VIEWPORT" context="MainViewport" component="ABSOLUTE_RATIO" />
                                         <valueof uniform="WindowSize"	type="VIEWPORT" context="MainViewport" component="ABSOLUTE_SIZE" />    
+                                        
+                                        <valueof uniform="num_octaves" type="RENDERER" component="num_octaves" />
+                                        <valueof uniform="scale" type="RENDERER" component="scale" />
+                                        <valueof uniform="timer" type="RENDERER" component="TIMER" />
                                 </values>
                         </shader>
                 </material>
+                <material name = "grass_rock">
+                        <shader name="grass_rock">
+                                <valueof uniform="grass_diff"
+						type="TEXTURE_BINDING"
+						component="UNIT" id="0"/>
+				<valueof uniform="grass_disp"
+						 type="TEXTURE_BINDING"
+						 component="UNIT" id="1"/>
+				<valueof uniform="grass_rough"
+						 type="TEXTURE_BINDING"
+						 component="UNIT" id="2"/>
+                        </shader>
+                        <textures>
+				<texture name="grass_rock_diffuse" UNIT="0"/>
+				<texture name="grass_rock_displacement" UNIT="1"/>
+				<texture name="grass_rock_roughness" UNIT="2"/>
+			</textures>
+                </material>
         </materials>
+
 
 </materialLib>

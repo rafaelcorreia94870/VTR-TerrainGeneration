@@ -3,6 +3,8 @@
 	<assets>
         <attributes>
             <attribute type = "RENDERER" data="FLOAT" name = "level" value = "10" />
+			<attribute name="num_octaves" type="RENDERER" data="INT" value="10" />
+            <attribute name="scale" type="RENDERER" data= "FLOAT" value="10.0" />
         </attributes>
 		
 		<scenes>
@@ -11,7 +13,9 @@
                 </geometry>
             </scene>
             <scene name="Terrain" >
-				<geometry name="terrain" type ="GRID" LENGTH="2000000" DIVISIONS="50" material="terrain">
+				<geometry name="terrain" type ="GRID" LENGTH="200000" DIVISIONS="50" material="terrain">
+				<!--geometry name="terrain" type ="GRID" LENGTH="2000" DIVISIONS="50" material="terrain"-->
+				
                     <TRANSLATE x="0.0" y="20.0" z="0.0" />
                 </geometry>
 			</scene>
@@ -26,10 +30,22 @@
                 <SIZE width="0.25" height="0.25" />
 				<CLEAR_COLOR r="1.0" g="1.0" b="1.0" />
 			</viewport>
+			<viewport name="GODViewport" >
+				<ORIGIN x="0.0" y="0.0" />
+			</viewport>
 		</viewports>
 		
 		<cameras>
 			<camera name="MainCamera">
+				<viewport name="MainViewport" />
+				<TYPE value="PERSPECTIVE"/>
+				<POSITION x="0.0"   y="70.0"  z="200.0" />
+				<VIEW     x="0.0"   y="-0.5"   z="-1.0"   />
+				<UP       x="0.0"   y="1.0"    z="0.0"    />
+                <NEAR value="0.1" />
+                <FAR value="150000.0" />
+			</camera>
+			<camera name="GOD">
 				<viewport name="MainViewport" />
 				<TYPE value="PERSPECTIVE"/>
 				<POSITION x="0.0"   y="70.0"  z="200.0" />
@@ -58,8 +74,12 @@
 		</materialLibs>
 		
 	</assets>
+
+
     <pipelines>
         <pipeline name="terrain" default="true" defaultCamera="MainCamera">
+
+			
 
             <pass class="default" name="skybox">
 				<scenes>
@@ -86,11 +106,40 @@
                     <light name="Sun" />
                 </lights>
  				<materialMaps>
-                    <map fromMaterial="terrain" toMaterial="terrain"  toLibrary="Terrain" />
+                    <map fromMaterial="*" toMaterial="terrain"  toLibrary="Terrain" />
 				</materialMaps>
 				<COLOR_CLEAR value="false"/>
             </pass>
-            
+
+			<!--pass name = "texturing" class = "default">
+				<scenes>
+                    <scene name="Terrain" />
+                </scenes>
+                <camera name="MainCamera" />
+                <viewport name="MainViewport"/>
+                <lights>
+                    <light name="Sun" />
+                </lights>
+ 				<materialMaps>
+                    <map fromMaterial="*" toMaterial="grass_rock"  toLibrary="Terrain" />
+				</materialMaps>
+				<COLOR_CLEAR value="false"/>
+			</pass-->
+
+			<!--pass class="default" name="DebugViewFromGodsCamera">
+				<mode value= "DONT_RUN"/>
+				<scenes>
+					<scene name="Terrain" />
+					<scene name="MainCamera" />
+				</scenes>
+				<camera name="GOD"/>
+				<viewport name="MainViewport" />
+				<lights>
+					<light name="Sun" />
+				</lights>
+				<COLOR_CLEAR value="false"/>
+			</pass--> 
+
             <pass name="Minimap" class="default" >
                 <scenes>
                     <scene name="Terrain" />
@@ -108,6 +157,17 @@
 
         </pipeline>
     </pipelines>
+	
+	<interface>
+		<window label="Terrain Generation">
+			<var label = "level" type ="RENDERER" context="CURRENT" 
+					component="level" def="min=1.0 max=20 step=1.0" />
+			<var label = "num_octaves" type ="RENDERER" context="CURRENT"
+					component="num_octaves" def="min=1 max=100 step=1" />
+			<var label = "scale" type ="RENDERER" context="CURRENT"
+					component="scale" def="min=0.1 max=500 step=0.1" />
+		</window>
+	</interface>
 </project>
 		
 	

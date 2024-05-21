@@ -10,8 +10,8 @@ out vec4 posTC[];
 out vec4 normalTC[];
 out vec2 texCoordTC[];
 
-uniform float olevel=1;
-uniform float ilevel=1;
+uniform float olevel=10;
+uniform float ilevel=10;
 
 void main() {
 
