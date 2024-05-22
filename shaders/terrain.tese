@@ -7,7 +7,12 @@ uniform vec4 l_dir;
 uniform float timer;
 uniform float scale;
 
-uniform int num_octaves = 10;
+uniform int num_octaves;
+uniform float persistence;
+uniform float lacunarity;
+uniform float heightmult;
+float minValue = 2;
+float maxValue = 400;
 
 
 in vec4 normalTC[];
@@ -32,14 +37,30 @@ void main() {
 	vec4 b030 = posTC[1];
 	vec4 b003 = posTC[2];
 
-	float noisevar = 0.0;
+	float noisevar1 = 0.0;
+	float noisevar2 = 0.0;
+	float noisevar3 = 0.0;
+	float amplitude = 1.0;
+	float frequency = 1.0;
 	for(int i = 1; i < num_octaves; ++i) {
-            //vec2 t = texCoord[0] * pow(2,i);
-            //noisevar += snoise(vec2(u,v));
-			b300.y += scale*snoise(posTC[0].xz);
-			b030.y += scale*snoise(posTC[1].xz);
-			b003.y += scale*snoise(posTC[2].xz);
+		float sampleX1 = b300.x / scale * frequency;
+		float sampleX2 = b030.x / scale * frequency;
+		float sampleX3 = b003.x / scale * frequency;
+
+		float sampleZ1 = b300.z / scale * frequency;
+		float sampleZ2 = b030.z / scale * frequency;
+		float sampleZ3 = b003.z / scale * frequency;
+		
+        noisevar1 += (snoise(vec2(sampleX1,sampleZ1))) * amplitude;
+		noisevar2 += (snoise(vec2(sampleX2,sampleZ2))) * amplitude;
+		noisevar3 += (snoise(vec2(sampleX3,sampleZ3))) * amplitude;
+
+		amplitude *= persistence;
+		frequency *= lacunarity;
     }
+	b300.y = heightmult * noisevar1;
+	b030.y = heightmult * noisevar2;
+	b003.y = heightmult * noisevar3;
 	
 	vec4 n1 = normalTC[0];
 	vec4 n2 = normalTC[1];

@@ -5,6 +5,17 @@
             <attribute type = "RENDERER" data="FLOAT" name = "level" value = "10" />
 			<attribute name="num_octaves" type="RENDERER" data="INT" value="10" />
             <attribute name="scale" type="RENDERER" data= "FLOAT" value="10.0" />
+			<attribute name="persistence" type="RENDERER" data="FLOAT" value="0.5" />
+			<attribute name="lacunarity" type="RENDERER" data="FLOAT" value="2.0" />
+			<attribute name="heightMultiplier" type="RENDERER" data="FLOAT" value="10.0" />
+
+			<attribute name="option" data="INT" type="RENDERER" value=0 />
+			<attribute name="alpha" data="FLOAT" type="RENDERER" value=0.75 />
+
+			<attribute type="RENDERER" name="height" data="FLOAT" value="5.0"/>
+			<attribute type="RENDERER" name="width" data="FLOAT" value="300.0"/>
+			<attribute type="RENDERER" name="nwaves" data="INT" value="2"/>
+
         </attributes>
 		
 		<scenes>
@@ -13,11 +24,16 @@
                 </geometry>
             </scene>
             <scene name="Terrain" >
-				<geometry name="terrain" type ="GRID" LENGTH="200000" DIVISIONS="50" material="terrain">
+				<geometry name="terrain" type ="GRID" LENGTH="20000" DIVISIONS="50" material="terrain">
 				<!--geometry name="terrain" type ="GRID" LENGTH="2000" DIVISIONS="50" material="terrain"-->
 				
                     <TRANSLATE x="0.0" y="20.0" z="0.0" />
                 </geometry>
+			</scene>
+			<scene name="Water" >
+				<geometry name="water" type ="GRID" LENGTH="20000" DIVISIONS="50" material="water">
+					<TRANSLATE x="0.0" y="100.0" z="0.0" />
+				</geometry>
 			</scene>
 		</scenes>
         <viewports>
@@ -71,6 +87,7 @@
 		<materialLibs>
 			<materialLib filename="terrain.mlib"/>
             <materialLib filename="skybox.mlib" />
+			<materialLib filename="water.mlib" />
 		</materialLibs>
 		
 	</assets>
@@ -96,6 +113,7 @@
 				</materialMaps>
 			</pass>
 
+			
             <pass name="Terrain" class="default" >
                 <scenes>
                     <scene name="Terrain" />
@@ -111,6 +129,20 @@
 				<COLOR_CLEAR value="false"/>
             </pass>
 
+			<pass name="Water" class="default" >
+				<scenes>
+					<scene name="Water" />
+				</scenes>
+				<camera name="MainCamera" />
+				<viewport name="MainViewport"/>
+				<lights>
+					<light name="Sun" />
+				</lights>
+				<materialMaps>
+					<map fromMaterial="*" toMaterial="water"  toLibrary="water" />
+				</materialMaps>
+				<COLOR_CLEAR value="false"/>
+			</pass>
 			<!--pass name = "texturing" class = "default">
 				<scenes>
                     <scene name="Terrain" />
@@ -140,6 +172,8 @@
 				<COLOR_CLEAR value="false"/>
 			</pass--> 
 
+			
+
             <pass name="Minimap" class="default" >
                 <scenes>
                     <scene name="Terrain" />
@@ -165,7 +199,22 @@
 			<var label = "num_octaves" type ="RENDERER" context="CURRENT"
 					component="num_octaves" def="min=1 max=100 step=1" />
 			<var label = "scale" type ="RENDERER" context="CURRENT"
-					component="scale" def="min=0.1 max=500 step=0.1" />
+					component="scale" def="min=0.1 max=1000 step=0.1" />
+			<var label = "persistence" type ="RENDERER" context="CURRENT"
+					component="persistence" def="min=0.1 max=1.0 step=0.1" />
+			<var label = "lacunarity" type ="RENDERER" context="CURRENT"
+					component="lacunarity" def="min=1.0 max=5.0 step=0.1" />
+			<var label = "HeightMultiplier" type ="RENDERER" context="CURRENT"
+					component="heightMultiplier" def="min=0.1 max=800.0 step=0.1" />
+			
+		</window>
+		<window label="Wave Settings" >
+			<var label="Height" type="RENDERER" context="CURRENT" 
+					component="height" def="min=1.0 max=100 step=1.0" />
+			<var label="Width" type="RENDERER" context="CURRENT" 
+					component="width" def="min=1.0 max=2000 step=10.0" />
+			<var label="Number of Waves" type="RENDERER" context="CURRENT"
+					component="nwaves" def="min=1 max=100 step=1" />
 		</window>
 	</interface>
 </project>
