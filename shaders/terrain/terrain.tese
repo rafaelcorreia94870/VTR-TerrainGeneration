@@ -18,6 +18,8 @@ float maxValue = 400;
 in vec4 normalTC[];
 in vec4 posTC[];
 in vec2 texCoord[];
+in vec4 colorTC[];
+in float isInsideFrustumTC[];
 
 out Data {
     vec3 normalTE;
@@ -25,14 +27,21 @@ out Data {
     vec4 colorTE;
     vec2 tcTE;
     float eTE;
+	float isInsideFrustumTE;
 } DataOut;
 
 
 void main() {
+	DataOut.isInsideFrustumTE = 1.0;
+	/*
+	if (isInsideFrustumTC[0]==0.0 && isInsideFrustumTC[1]==0.0 && isInsideFrustumTC[2]==0.0) {
+		DataOut.isInsideFrustumTE = 0.0;
+		return;
+	}
+	*/
 
 
     //confio só nas contas do stor
-
 	vec4 b300 = posTC[0];
 	vec4 b030 = posTC[1];
 	vec4 b003 = posTC[2];
@@ -127,7 +136,7 @@ void main() {
 
     DataOut.l_dirTE = normalize(vec3(m_view * -l_dir));
     DataOut.tcTE = vec2(u, v);
-    DataOut.colorTE = vec4(1.0, 1.0, 1.0, 1.0);
+    DataOut.colorTE = colorTC[0];
     DataOut.eTE = 0.0;
 			
 	gl_Position = m_pvm * res;

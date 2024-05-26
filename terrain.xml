@@ -3,11 +3,11 @@
 	<assets>
         <attributes>
             <attribute type = "RENDERER" data="FLOAT" name = "level" value = "10" />
-			<attribute name="num_octaves" type="RENDERER" data="INT" value="10" />
-            <attribute name="scale" type="RENDERER" data= "FLOAT" value="10.0" />
+			<attribute name="num_octaves" type="RENDERER" data="INT" value="3" />
+            <attribute name="scale" type="RENDERER" data= "FLOAT" value="0.1" />
 			<attribute name="persistence" type="RENDERER" data="FLOAT" value="0.5" />
 			<attribute name="lacunarity" type="RENDERER" data="FLOAT" value="2.0" />
-			<attribute name="heightMultiplier" type="RENDERER" data="FLOAT" value="10.0" />
+			<attribute name="heightMultiplier" type="RENDERER" data="FLOAT" value="1.0" />
 
 			<attribute name="option" data="INT" type="RENDERER" value=0 />
 			<attribute name="alpha" data="FLOAT" type="RENDERER" value=0.75 />
@@ -24,7 +24,7 @@
                 </geometry>
             </scene>
             <scene name="Terrain" >
-				<geometry name="terrain" type ="GRID" LENGTH="20000" DIVISIONS="50" material="terrain">
+				<geometry name="terrain" type ="GRID" LENGTH="200" DIVISIONS="50" material="terrain">
 				<!--geometry name="terrain" type ="GRID" LENGTH="2000" DIVISIONS="50" material="terrain"-->
 				
                     <TRANSLATE x="0.0" y="20.0" z="0.0" />
@@ -46,9 +46,16 @@
                 <SIZE width="0.25" height="0.25" />
 				<CLEAR_COLOR r="1.0" g="1.0" b="1.0" />
 			</viewport>
-			<viewport name="GODViewport" >
-				<ORIGIN x="0.0" y="0.0" />
+			<!--viewport name="RightViewport" >
+				<ORIGIN x=0.5 y=0.0 />
+				<SIZE width=0.5 height=1 />
+				<CLEAR_COLOR r="0.2" g="0.2" b="0.4" />
 			</viewport>
+			<viewport name="LeftViewport" >
+				<ORIGIN x=0.0 y=0.0 />
+				<SIZE width=0.5 height=1 />
+				<CLEAR_COLOR r="0.2" g="0.2" b="0.4" />
+			</viewport-->
 		</viewports>
 		
 		<cameras>
@@ -87,7 +94,7 @@
 		<materialLibs>
 			<materialLib filename="terrain.mlib"/>
             <materialLib filename="skybox.mlib" />
-			<materialLib filename="water.mlib" />
+			<!--materialLib filename="water.mlib" /-->
 		</materialLibs>
 		
 	</assets>
@@ -97,12 +104,14 @@
         <pipeline name="terrain" default="true" defaultCamera="MainCamera">
 
 			
+			
 
             <pass class="default" name="skybox">
 				<scenes>
 					<scene name="SkyBox" />
 				</scenes>
 				<camera name="MainCamera" />
+				<!--viewport name="RightViewport" /-->
 				<viewport name="MainViewport" />
 				<lights>
 					<light name="Sun" />
@@ -119,7 +128,8 @@
                     <scene name="Terrain" />
                 </scenes>
                 <camera name="MainCamera" />
-                <viewport name="MainViewport"/>
+                <!--viewport name="RightViewport"/-->
+				<viewport name="MainViewport"/>
                 <lights>
                     <light name="Sun" />
                 </lights>
@@ -129,7 +139,8 @@
 				<COLOR_CLEAR value="false"/>
             </pass>
 
-			<pass name="Water" class="default" >
+			<!--pass name="Water" class="default" >
+				<mode value="DONT_RUN"/>
 				<scenes>
 					<scene name="Water" />
 				</scenes>
@@ -142,7 +153,7 @@
 					<map fromMaterial="*" toMaterial="water"  toLibrary="water" />
 				</materialMaps>
 				<COLOR_CLEAR value="false"/>
-			</pass>
+			</pass-->
 			<!--pass name = "texturing" class = "default">
 				<scenes>
                     <scene name="Terrain" />
@@ -158,20 +169,18 @@
 				<COLOR_CLEAR value="false"/>
 			</pass-->
 
-			<!--pass class="default" name="DebugViewFromGodsCamera">
-				<mode value= "DONT_RUN"/>
+			<!--pass class="default" name="Gods View">
+				<mode value="DONT_RUN"/>
 				<scenes>
 					<scene name="Terrain" />
 					<scene name="MainCamera" />
 				</scenes>
-				<camera name="GOD"/>
-				<viewport name="MainViewport" />
+				<camera name="GOD" />
+				<viewport name="LeftViewport" />
 				<lights>
 					<light name="Sun" />
 				</lights>
-				<COLOR_CLEAR value="false"/>
-			</pass--> 
-
+			</pass-->
 			
 
             <pass name="Minimap" class="default" >

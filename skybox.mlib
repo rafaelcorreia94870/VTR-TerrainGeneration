@@ -13,8 +13,8 @@
     </textures>
 
     <shaders>
-        <shader name="skyBox" vs = "shaders/skybox.vert" 
-        ps = "shaders/skybox.frag" />
+        <shader name="skyBox" vs = "shaders/skybox/skybox.vert" 
+        ps = "shaders/skybox/skybox.frag" />
 
 
    </shaders>

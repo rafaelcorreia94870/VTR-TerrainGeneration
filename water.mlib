@@ -2,7 +2,6 @@
 <materialLib name="water">
 	<shaders>
 		<shader name="water" 	ps  = "shaders/water/wave5.frag" 
-								gs  = "shaders/water/wave4.geom"
 								vs  = "shaders/water/wave1.vert" />
 	</shaders>
 	
