@@ -12,9 +12,13 @@
 			<attribute name="option" data="INT" type="RENDERER" value=0 />
 			<attribute name="alpha" data="FLOAT" type="RENDERER" value=0.75 />
 
+			<attribute name="squareSize" data="INT" type="RENDERER" value=1 />
+			<attribute name="chunkSize" data="INT" type="RENDERER" value=15 />
+
 			<attribute type="RENDERER" name="height" data="FLOAT" value="5.0"/>
 			<attribute type="RENDERER" name="width" data="FLOAT" value="300.0"/>
 			<attribute type="RENDERER" name="nwaves" data="INT" value="2"/>
+			<attribute type="RENDERER" name="speed" data="FLOAT" value=".1"/>
 
         </attributes>
 		
@@ -27,12 +31,18 @@
 				<geometry name="terrain" type ="GRID" LENGTH="200" DIVISIONS="50" material="terrain">
 				<!--geometry name="terrain" type ="GRID" LENGTH="2000" DIVISIONS="50" material="terrain"-->
 				
-                    <TRANSLATE x="0.0" y="20.0" z="0.0" />
+                    <TRANSLATE x="0.0" y="0.0" z="0.0" />
                 </geometry>
 			</scene>
+			<scene name="chunks" >
+				<buffers name="chunks" primitive="POINTS" material="chunks" >
+					<position name="point" fromLibrary="Chunks" />
+				</buffers>
+			</scene>
+			
 			<scene name="Water" >
-				<geometry name="water" type ="GRID" LENGTH="20000" DIVISIONS="50" material="water">
-					<TRANSLATE x="0.0" y="100.0" z="0.0" />
+				<geometry name="water" type ="GRID" LENGTH="2000" DIVISIONS="100" material="water">
+					<TRANSLATE x="0.0" y="0.0" z="0.0" />
 				</geometry>
 			</scene>
 		</scenes>
@@ -94,7 +104,8 @@
 		<materialLibs>
 			<materialLib filename="terrain.mlib"/>
             <materialLib filename="skybox.mlib" />
-			<!--materialLib filename="water.mlib" /-->
+			<materialLib filename="chunks.mlib" />
+			<materialLib filename="water.mlib" />
 		</materialLibs>
 		
 	</assets>
@@ -111,7 +122,6 @@
 					<scene name="SkyBox" />
 				</scenes>
 				<camera name="MainCamera" />
-				<!--viewport name="RightViewport" /-->
 				<viewport name="MainViewport" />
 				<lights>
 					<light name="Sun" />
@@ -120,27 +130,44 @@
 					<map fromMaterial="skybox"
 						toMaterial="skybox" toLibrary="base" />
 				</materialMaps>
+				<COLOR_CLEAR value="false"/>
+			</pass>
+
+
+
+			<pass name="Chunks" class="default" >
+				<scenes instances = 1024>
+					<scene name="chunks" />
+				</scenes>
+				<camera name="MainCamera" />
+				<viewport name="MainViewport"/>
+				<lights>
+					<light name="Sun" />
+				</lights>
+				<materialMaps>
+					<map fromMaterial="chunks" toMaterial="chunks"  toLibrary="Chunks" />
+				</materialMaps>
+				<COLOR_CLEAR value="false"/>
 			</pass>
 
 			
             <pass name="Terrain" class="default" >
-                <scenes>
-                    <scene name="Terrain" />
-                </scenes>
+				<scenes>
+					<scene name="Terrain" />
+				</scenes>
                 <camera name="MainCamera" />
-                <!--viewport name="RightViewport"/-->
+                <!--viewport name="RightViewport"-->
 				<viewport name="MainViewport"/>
                 <lights>
                     <light name="Sun" />
                 </lights>
  				<materialMaps>
-                    <map fromMaterial="*" toMaterial="terrain"  toLibrary="Terrain" />
+                    <map fromMaterial="terrain" toMaterial="terrain"  toLibrary="Terrain" />
 				</materialMaps>
 				<COLOR_CLEAR value="false"/>
             </pass>
 
-			<!--pass name="Water" class="default" >
-				<mode value="DONT_RUN"/>
+			<pass name="Water" class="default" >
 				<scenes>
 					<scene name="Water" />
 				</scenes>
@@ -153,7 +180,7 @@
 					<map fromMaterial="*" toMaterial="water"  toLibrary="water" />
 				</materialMaps>
 				<COLOR_CLEAR value="false"/>
-			</pass-->
+			</pass>
 			<!--pass name = "texturing" class = "default">
 				<scenes>
                     <scene name="Terrain" />
@@ -183,7 +210,7 @@
 			</pass-->
 			
 
-            <pass name="Minimap" class="default" >
+            <!--pass name="Minimap" class="default" >
                 <scenes>
                     <scene name="Terrain" />
                 </scenes>
@@ -196,7 +223,7 @@
                     <map fromMaterial="terrain" toMaterial="terrain"  toLibrary="Terrain" />
 				</materialMaps>
 				<COLOR_CLEAR value="false"/>
-            </pass>
+            </pass-->
 
         </pipeline>
     </pipelines>
@@ -212,9 +239,13 @@
 			<var label = "persistence" type ="RENDERER" context="CURRENT"
 					component="persistence" def="min=0.1 max=1.0 step=0.1" />
 			<var label = "lacunarity" type ="RENDERER" context="CURRENT"
-					component="lacunarity" def="min=1.0 max=5.0 step=0.1" />
+					component="lacunarity" def="min=0.1 max=2.0 step=0.1" />
 			<var label = "HeightMultiplier" type ="RENDERER" context="CURRENT"
-					component="heightMultiplier" def="min=0.1 max=800.0 step=0.1" />
+					component="heightMultiplier" def="min=0.1 max=100.0 step=0.1" />
+			<var label = "CHUNKSIZE" type ="RENDERER" context="CURRENT"
+					component="chunkSize" def="min=1 max=15 step=1" />
+			<var label = "SQUARESIZE" type ="RENDERER" context="CURRENT"
+					component="squareSize" def="min=1 max=30 step=1" />
 			
 		</window>
 		<window label="Wave Settings" >
@@ -224,6 +255,9 @@
 					component="width" def="min=1.0 max=2000 step=10.0" />
 			<var label="Number of Waves" type="RENDERER" context="CURRENT"
 					component="nwaves" def="min=1 max=100 step=1" />
+			
+			<var label ="Speed" type ="RENDERER" context="CURRENT"
+					component="speed" def="min=0.01 max=1.0 step=0.01" />
 		</window>
 	</interface>
 </project>

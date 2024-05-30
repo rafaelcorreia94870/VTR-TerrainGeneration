@@ -1,10 +1,24 @@
 <?xml version="1.0" ?>
 <materialLib name="water">
+	<textures>
+		<texture name="ocean" filename="textures/water/ocean.jpeg" mipmap="true" />
+		<texture name="lake" filename="textures/water/lake.jpg" mipmap="true" />
+	</textures>
 	<shaders>
-		<shader name="water" 	ps  = "shaders/water/wave5.frag" 
-								vs  = "shaders/water/wave1.vert" />
+		<shader name="water" 	ps  = "shaders/water/water.frag" 
+								vs  = "shaders/water/water.vert" />
 	</shaders>
-	
+	<states>
+		<state name="CullFront">
+			<CULL_TYPE value ="FRONT"  />
+		</state>
+		<state name="Transparent" >
+			<ORDER value="2" />
+			<BLEND value="TRUE" />
+			<BLEND_SRC value="SRC_ALPHA" />
+			<BLEND_DST value="ONE_MINUS_SRC_ALPHA" />
+		</state>
+	</states>
 	<materials>
 		<material name="water" >
 			<shader name="water" >
@@ -50,10 +64,20 @@
 
 					<valueof uniform="width"    type="RENDERER" component="width" />
 
-					<valueof uniform="nwaves"	type="RENDERER" component="nwaves" />                                         
+					<valueof uniform="nwaves"	type="RENDERER" component="nwaves" />  
+
+					<valueof uniform="speedvar"	type="RENDERER" component="speed" />
+
+					<valueof uniform="ocean" type="TEXTURE_BINDING" component = "UNIT" id="0" />
+					<valueof uniform="lake" type="TEXTURE_BINDING" component = "UNIT" id="1" />                                       
 							
 				</values>
 			</shader>
+			<textures>
+				<texture name="ocean" UNIT ="0"/>
+				<texture name="lake" UNIT = "1"/>
+			</textures>
+			<state name = "Transparent" />
 		</material>
 	
 	</materials>

@@ -1,30 +1,45 @@
 #version 440
 
-in Data {
-    vec3 normalTE;
-	vec3 l_dirTE;
-    vec4 colorTE;
-    vec2 tcTE;
-    float eTE;
-	float isInsideFrustumTE;
-} DataIn[];
+layout (triangles) in;
+layout (triangle_strip, max_vertices = 6) out;
 
-out Data {
-	vec3 normalGS;
-	vec3 l_dirGS;
-	vec4 colorGS;
-	vec2 tcGS;
-	float eGS;
-	float isInsideFrustumGS;
-} DataOut;
+uniform mat4 m_pvm;
+uniform mat4 m_view;
+uniform mat4 m_m;
+
+const int gridSize = 200;
+const float gridSpacing = 10.0;
 
 void main()
 {
-    DataOut.normalGS = DataIn[0].normalTE;
-    DataOut.l_dirGS = DataIn[0].l_dirTE;
-    DataOut.colorGS = DataIn[0].colorTE;
-    DataOut.tcGS = DataIn[0].tcTE;
-    DataOut.eGS = DataIn[0].eTE;
-    DataOut.isInsideFrustumGS = DataIn[0].isInsideFrustumTE;
-}
+    for (int i = 0; i < gl_in.length(); i++)
+    {
+        gl_Position = m_pvm * m_view * m_m * gl_in[i].gl_Position;
+        EmitVertex();
+    }
 
+    // Calculate the camera distance
+    float cameraDistance = length(gl_Position.xyz);
+
+    // Generate new grids based on camera distance
+    if (cameraDistance > gridSize * gridSpacing)
+    {
+        for (int x = -gridSize; x <= gridSize; x++)
+        {
+            for (int z = -gridSize; z <= gridSize; z++)
+            {
+                // Calculate the grid position
+                vec3 gridPosition = vec3(x * gridSpacing, 0.0, z * gridSpacing);
+
+                // Modify the vertices to include the new heights
+                for (int i = 0; i < gl_in.length(); i++)
+                {
+                    gl_Position = m_pvm * m_view * m_m * (gl_in[i].gl_Position + vec4(gridPosition, 0.0));
+                    EmitVertex();
+                }
+
+                EndPrimitive();
+            }
+        }
+    }
+}
