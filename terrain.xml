@@ -48,7 +48,7 @@
 			
 			<scene name="Water" >
 				<geometry name="water" type ="GRID" LENGTH="2000" DIVISIONS="100" material="water">
-					<TRANSLATE x="0.0" y="4.0" z="0.0" />
+					<TRANSLATE x="0.0" y="0.0" z="0.0" />
 				</geometry>
 			</scene>
 		</scenes>
@@ -142,8 +142,7 @@
 
 
 			<pass name="Chunks" class="default" >
-				<scenes instances = 1024>
-					<scene name = "Axis"/>
+				<scenes instances = "1024">
 					<scene name="chunks" />
 				</scenes>
 				<camera name="MainCamera" />
@@ -164,8 +163,6 @@
 					<!--buffers name = "buffer" primitive="TRIANGLES" material="chunks">
 
 					</buffers-->
-					<scene name = "Axis"/>
-
 					<scene name="Terrain" />
 				</scenes>
                 <camera name="MainCamera" />
@@ -183,8 +180,6 @@
 
 			<pass name="Water" class="default" >
 				<scenes>
-					<scene name = "Axis"/>
-
 					<scene name="Water" />
 				</scenes>
 				<camera name="MainCamera" />
