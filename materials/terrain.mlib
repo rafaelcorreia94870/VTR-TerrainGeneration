@@ -1,42 +1,42 @@
 <?xml version="1.0"?>
 <materialLib name="Terrain">
         <textures>
-                <texture name="grass_rock_diffuse" filename="textures/biomes/grass_rock/textures/aerial_grass_rock_diff_1k.jpg" mipmap="true"/>
-                <texture name="grass_rock_displacement" filename="textures/biomes/grass_rock/textures/aerial_grass_rock_disp_1k.png" mipmap="true"/>
-                <texture name="grass_rock_roughness" filename="textures/biomes/grass_rock/textures/aerial_grass_rock_rough_1k.jpg" mipmap="true"/>
+                <texture name="grass_rock_diffuse" filename="../textures/biomes/grass_rock/textures/aerial_grass_rock_diff_1k.jpg" mipmap="true"/>
+                <texture name="grass_rock_displacement" filename="../textures/biomes/grass_rock/textures/aerial_grass_rock_disp_1k.png" mipmap="true"/>
+                <texture name="grass_rock_roughness" filename="../textures/biomes/grass_rock/textures/aerial_grass_rock_rough_1k.jpg" mipmap="true"/>
         </textures>
         <shaders>
                 <shader name="terrain">
                         <vs>
-                                <file name="shaders/terrain/terrain.vert"/>
+                                <file name="../shaders/terrain/terrain.vert"/>
                         </vs>
                         <tc>
-                                <file name="shaders/terrain/terrain.tesc"/>
+                                <file name="../shaders/terrain/terrain.tesc"/>
                         </tc>
                         <te>
-                                <file name="shaders/utils/header.glsl"/>
-                                <file name="shaders/utils/noise.glsl"/>
-                                <file name="shaders/terrain/terrain.tese"/>
+                                <file name="../shaders/utils/header.glsl"/>
+                                <file name="../shaders/utils/noise.glsl"/>
+                                <file name="../shaders/terrain/terrain.tese"/>
                         </te>
                         <!--gs>
-                                <file name="shaders/terrain/terrain.geom"/>
+                                <file name="../shaders/terrain/terrain.geom"/>
                         </gs-->
                         <ps>
-                                <file name="shaders/terrain/terrain.frag"/>
+                                <file name="../shaders/terrain/terrain.frag"/>
                         </ps>
                 </shader>
                 <!--shader name="terrain"
-                        ps="shaders/terrain.frag"
-                        tc="shaders/terrain.tesc"
-                        te="shaders/terrain.tese"
-                        vs="shaders/terrain.vert"
+                        ps="../shaders/terrain.frag"
+                        tc="../shaders/terrain.tesc"
+                        te="../shaders/terrain.tese"
+                        vs="../shaders/terrain.vert"
                 /-->
                 <shader name = "grass_rock">
                         <vs>
-                                <file name="shaders/texture/texture.vert"/>
+                                <file name="../shaders/texture/texture.vert"/>
                         </vs>
                         <ps>
-                                <file name="shaders/texture/texture.frag"/>
+                                <file name="../shaders/texture/texture.frag"/>
                         </ps>
                 </shader>
         </shaders>

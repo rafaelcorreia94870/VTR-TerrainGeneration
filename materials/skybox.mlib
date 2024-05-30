@@ -2,19 +2,19 @@
 
     <textures>
         <cubeMap name="CM" 
-            filePosX="textures/skybox/inverted/Daylight Box_Left.bmp"
-            fileNegX="textures/skybox/inverted/Daylight Box_Right.bmp"
-            filePosY="textures/skybox/inverted/Daylight Box_Top.bmp"
-            fileNegY="textures/skybox/inverted/Daylight Box_Bottom.bmp"
-            filePosZ="textures/skybox/inverted/Daylight Box_Front.bmp"
-            fileNegZ="textures/skybox/inverted/Daylight Box_Back.bmp"
+            filePosX="../textures/skybox/inverted/Daylight Box_Left.bmp"
+            fileNegX="../textures/skybox/inverted/Daylight Box_Right.bmp"
+            filePosY="../textures/skybox/inverted/Daylight Box_Top.bmp"
+            fileNegY="../textures/skybox/inverted/Daylight Box_Bottom.bmp"
+            filePosZ="../textures/skybox/inverted/Daylight Box_Front.bmp"
+            fileNegZ="../textures/skybox/inverted/Daylight Box_Back.bmp"
         />
 
     </textures>
 
     <shaders>
-        <shader name="skyBox" vs = "shaders/skybox/skybox.vert" 
-        ps = "shaders/skybox/skybox.frag" />
+        <shader name="skyBox" vs = "../shaders/skybox/skybox.vert" 
+        ps = "../shaders/skybox/skybox.frag" />
 
 
    </shaders>

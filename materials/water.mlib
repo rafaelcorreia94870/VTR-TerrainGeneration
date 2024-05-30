@@ -1,12 +1,12 @@
 <?xml version="1.0" ?>
 <materialLib name="water">
 	<textures>
-		<texture name="ocean" filename="textures/water/ocean.jpeg" mipmap="true" />
-		<texture name="lake" filename="textures/water/lake.jpg" mipmap="true" />
+		<texture name="ocean" filename="../textures/water/ocean.jpeg" mipmap="true" />
+		<texture name="lake" filename="../textures/water/lake.jpg" mipmap="true" />
 	</textures>
 	<shaders>
-		<shader name="water" 	ps  = "shaders/water/water.frag" 
-								vs  = "shaders/water/water.vert" />
+		<shader name="water" 	ps  = "../shaders/water/water.frag" 
+								vs  = "../shaders/water/water.vert" />
 	</shaders>
 	<states>
 		<state name="CullFront">

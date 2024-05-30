@@ -2,13 +2,13 @@
     <shaders>
         <shader name = "chunks">
                 <vs>
-                        <file name="shaders/chunks/chunks.vert"/>
+                        <file name="../shaders/chunks/chunks.vert"/>
                 </vs>
                 <gs>
-                        <file name="shaders/chunks/chunks.geom"/>
+                        <file name="../shaders/chunks/chunks.geom"/>
                 </gs>
                 <ps>
-                        <file name="shaders/chunks/chunks.frag"/>
+                        <file name="../shaders/chunks/chunks.frag"/>
                 </ps>
         </shader>
     </shaders>

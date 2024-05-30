@@ -12,8 +12,8 @@
 			<attribute name="option" data="INT" type="RENDERER" value=0 />
 			<attribute name="alpha" data="FLOAT" type="RENDERER" value=0.75 />
 
-			<attribute name="squareSize" data="INT" type="RENDERER" value=1 />
-			<attribute name="chunkSize" data="INT" type="RENDERER" value=15 />
+			<attribute name="squareSize" data="INT" type="RENDERER" value=5 />
+			<attribute name="chunkSize" data="INT" type="RENDERER" value=7 />
 
 			<attribute type="RENDERER" name="height" data="FLOAT" value="5.0"/>
 			<attribute type="RENDERER" name="width" data="FLOAT" value="300.0"/>
@@ -102,10 +102,10 @@
 		</lights>
         		
 		<materialLibs>
-			<materialLib filename="terrain.mlib"/>
-            <materialLib filename="skybox.mlib" />
-			<materialLib filename="chunks.mlib" />
-			<materialLib filename="water.mlib" />
+			<materialLib filename="materials/terrain.mlib"/>
+            <materialLib filename="materials/skybox.mlib" />
+			<materialLib filename="materials/chunks.mlib" />
+			<materialLib filename="materials/water.mlib" />
 		</materialLibs>
 		
 	</assets>
@@ -245,7 +245,7 @@
 			<var label = "CHUNKSIZE" type ="RENDERER" context="CURRENT"
 					component="chunkSize" def="min=1 max=15 step=1" />
 			<var label = "SQUARESIZE" type ="RENDERER" context="CURRENT"
-					component="squareSize" def="min=1 max=30 step=1" />
+					component="squareSize" def="min=1 max=50 step=1" />
 			
 		</window>
 		<window label="Wave Settings" >

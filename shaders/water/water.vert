@@ -1,6 +1,7 @@
 #version 440
 
 uniform	mat4 m_pvm;
+uniform mat4 m_m;
 uniform	mat4 m_vm;
 uniform	mat4 m_view;
 uniform	mat3 m_normal;
@@ -20,6 +21,6 @@ out vec2 texCoord;
 
 void main () {
 	texCoord = texCoord0;
-	eye =  vec3(m_view_model*position);
+	eye =  vec3(m_m * position);
     gl_Position = m_pvm * position;
 }
