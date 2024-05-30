@@ -67,9 +67,9 @@ void main() {
 		amplitude *= persistence;
 		frequency *= lacunarity;
     }
-	b300.y = heightmult * noisevar1;
-	b030.y = heightmult * noisevar2;
-	b003.y = heightmult * noisevar3;
+	b300.y += heightmult * noisevar1;
+	b030.y += heightmult * noisevar2;
+	b003.y += heightmult * noisevar3;
 
 
 

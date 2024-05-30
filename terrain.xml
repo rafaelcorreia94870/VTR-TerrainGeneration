@@ -28,12 +28,18 @@
                 </geometry>
             </scene>
             <scene name="Terrain" >
+				
 				<geometry name="terrain" type ="GRID" LENGTH="200" DIVISIONS="50" material="terrain">
+                	<TRANSLATE x="0.0" y="0.0" z="0.0" />
+                </geometry>
 				<!--geometry name="terrain" type ="GRID" LENGTH="2000" DIVISIONS="50" material="terrain"-->
 				
-                    <TRANSLATE x="0.0" y="0.0" z="0.0" />
-                </geometry>
 			</scene>
+			<scene name="Axis">
+        		<geometry name = "axis" type = "AXIS"  >
+        		    <SCALE x=500 y=500 z =500 />
+        		</geometry>
+    		</scene>
 			<scene name="chunks" >
 				<buffers name="chunks" primitive="POINTS" material="chunks" >
 					<position name="point" fromLibrary="Chunks" />
@@ -42,7 +48,7 @@
 			
 			<scene name="Water" >
 				<geometry name="water" type ="GRID" LENGTH="2000" DIVISIONS="100" material="water">
-					<TRANSLATE x="0.0" y="0.0" z="0.0" />
+					<TRANSLATE x="0.0" y="4.0" z="0.0" />
 				</geometry>
 			</scene>
 		</scenes>
@@ -137,6 +143,7 @@
 
 			<pass name="Chunks" class="default" >
 				<scenes instances = 1024>
+					<scene name = "Axis"/>
 					<scene name="chunks" />
 				</scenes>
 				<camera name="MainCamera" />
@@ -147,12 +154,18 @@
 				<materialMaps>
 					<map fromMaterial="chunks" toMaterial="chunks"  toLibrary="Chunks" />
 				</materialMaps>
+				<!--renderTarget name="buffer" fromLibrary="Chunks"/-->
 				<COLOR_CLEAR value="false"/>
 			</pass>
 
-			
+
             <pass name="Terrain" class="default" >
 				<scenes>
+					<!--buffers name = "buffer" primitive="TRIANGLES" material="chunks">
+
+					</buffers-->
+					<scene name = "Axis"/>
+
 					<scene name="Terrain" />
 				</scenes>
                 <camera name="MainCamera" />
@@ -167,8 +180,11 @@
 				<COLOR_CLEAR value="false"/>
             </pass>
 
+
 			<pass name="Water" class="default" >
 				<scenes>
+					<scene name = "Axis"/>
+
 					<scene name="Water" />
 				</scenes>
 				<camera name="MainCamera" />
@@ -180,7 +196,10 @@
 					<map fromMaterial="*" toMaterial="water"  toLibrary="water" />
 				</materialMaps>
 				<COLOR_CLEAR value="false"/>
+				<DEPTH_CLEAR value="false"/>
 			</pass>
+
+			
 			<!--pass name = "texturing" class = "default">
 				<scenes>
                     <scene name="Terrain" />

@@ -21,6 +21,6 @@ out vec2 texCoord;
 
 void main () {
 	texCoord = texCoord0;
-	eye =  vec3(m_m * position);
+	eye =  vec3(m_view_model * position);
     gl_Position = m_pvm * position;
 }

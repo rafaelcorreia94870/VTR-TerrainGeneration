@@ -1,4 +1,12 @@
 <materialLib name = "Chunks">
+	<!--renderTargets>
+		<renderTarget name="buffer">
+    		<SIZE width=1024 height=1024/>
+    		<LAYERS value=1/>
+    		<SAMPLES value=1/>
+		</renderTarget>
+	</renderTargets-->
+
     <shaders>
         <shader name = "chunks">
                 <vs>
@@ -13,7 +21,7 @@
         </shader>
     </shaders>
 	<buffers>
-		<buffer name="point">
+		<buffer name="buffer">
 			<SIZE value="16"  />
 		</buffer>	
     </buffers>

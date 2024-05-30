@@ -57,7 +57,7 @@ void main() {
 		outer = 3.0;
         tessLevel = 3.0;  
     } else {
-		distanceColor = vec4(0.0, 0.0, 1.0, 1.0);
+		distanceColor = vec4(1.0, 0.0, 1.0, 1.0);
         tessLevel = 1.0;  
 		outer = 1.0;
     }
