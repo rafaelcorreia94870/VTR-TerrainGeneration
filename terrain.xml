@@ -29,7 +29,7 @@
             </scene>
             <scene name="Terrain" >
 				
-				<geometry name="terrain" type ="GRID" LENGTH="200" DIVISIONS="50" material="terrain">
+				<geometry name="terrain" type ="GRID" LENGTH="200" DIVISIONS="100" material="terrain">
                 	<TRANSLATE x="0.0" y="0.0" z="0.0" />
                 </geometry>
 				<!--geometry name="terrain" type ="GRID" LENGTH="2000" DIVISIONS="50" material="terrain"-->
@@ -48,7 +48,7 @@
 			
 			<scene name="Water" >
 				<geometry name="water" type ="GRID" LENGTH="2000" DIVISIONS="100" material="water">
-					<TRANSLATE x="0.0" y="0.0" z="0.0" />
+					<TRANSLATE x="0.0" y="4.0" z="0.0" />
 				</geometry>
 			</scene>
 		</scenes>
@@ -142,7 +142,7 @@
 
 
 			<pass name="Chunks" class="default" >
-				<scenes instances = "1024">
+				<scenes instances = "1023">
 					<scene name="chunks" />
 				</scenes>
 				<camera name="MainCamera" />
@@ -175,6 +175,8 @@
                     <map fromMaterial="terrain" toMaterial="terrain"  toLibrary="Terrain" />
 				</materialMaps>
 				<COLOR_CLEAR value="false"/>
+				<DEPTH_CLEAR value="false"/>
+
             </pass>
 
 
@@ -264,7 +266,7 @@
 		</window>
 		<window label="Wave Settings" >
 			<var label="Height" type="RENDERER" context="CURRENT" 
-					component="height" def="min=1.0 max=100 step=1.0" />
+					component="height" def="min=-1.0 max=100 step=1.0" />
 			<var label="Width" type="RENDERER" context="CURRENT" 
 					component="width" def="min=1.0 max=2000 step=10.0" />
 			<var label="Number of Waves" type="RENDERER" context="CURRENT"

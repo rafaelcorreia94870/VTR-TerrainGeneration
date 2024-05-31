@@ -1,7 +1,7 @@
 #version 440
 
 float shininess = 64;
-uniform sampler2D ocean, lake;
+uniform sampler2D ocean, lake, waves;
 uniform float timer;
 uniform mat4 m_view;
 uniform mat4 m_view_model;
@@ -19,7 +19,8 @@ void main() {
     float speed = 0.00008* speedvar;
     vec3 normal = texture(ocean, texCoord + timer * speed ).rgb;
     vec3 normal2 = texture(lake, texCoord - 0.5 * timer * speed ).rgb;
-    vec3 n = mix(normal, normal2, 0.5);
+    vec3 normal3 = texture(lake, vec2(texCoord.r - 0.5 * timer * speed, texCoord.g * timer * 1/speed)).rgb;
+    vec3 n = mix(normal, mix(normal2, normal3, 0.5), 0.5);
     vec3 nn = normalize(m_normal* n);
 
     vec3 l_dirCamera = normalize(vec3(m_view * (-l_dir))); // camera space

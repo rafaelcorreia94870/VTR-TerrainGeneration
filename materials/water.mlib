@@ -2,6 +2,7 @@
 <materialLib name="water">
 	<textures>
 		<texture name="ocean" filename="../textures/water/ocean.jpeg" mipmap="true" />
+		<texture name="waves" filename="../textures/water/waves.jpeg" mipmap="true" />
 		<texture name="lake" filename="../textures/water/lake.jpg" mipmap="true" />
 	</textures>
 	<shaders>
@@ -69,13 +70,16 @@
 					<valueof uniform="speedvar"	type="RENDERER" component="speed" />
 
 					<valueof uniform="ocean" type="TEXTURE_BINDING" component = "UNIT" id="0" />
-					<valueof uniform="lake" type="TEXTURE_BINDING" component = "UNIT" id="1" />                                       
+					<valueof uniform="lake" type="TEXTURE_BINDING" component = "UNIT" id="1" />     
+					<valueof uniform="waves" type="TEXTURE_BINDING" component = "UNIT" id="2" />                                       
+
 							
 				</values>
 			</shader>
 			<textures>
 				<texture name="ocean" UNIT ="0"/>
 				<texture name="lake" UNIT = "1"/>
+				<texture name="waves" UNIT = "2"/>
 			</textures>
 			<state name = "Transparent" />
 		</material>

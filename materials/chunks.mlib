@@ -21,7 +21,7 @@
         </shader>
     </shaders>
 	<buffers>
-		<buffer name="buffer">
+		<buffer name="point">
 			<SIZE value="16"  />
 		</buffer>	
     </buffers>
