@@ -9,7 +9,6 @@ in Data {
 	vec4 colorTE;
 	vec2 tcTE;
 	float eTE;
-	float isInsideFrustumTE;
 } DataIn;
 
 out vec4 color;
@@ -31,11 +30,14 @@ void main(){
 	vec3 l = normalize(DataIn.l_dirTE);
 	float intensity = max(dot(l,n),0.0);
 	if (intensity < 0.1) {
+		
 		color = (DataIn.colorTE * intensity) + DataIn.colorTE * 0.2;
 	}
 	else {
 		color = DataIn.colorTE * intensity ;
 	}
+
+	
 
 /*
 	if (DataIn.colorTE == vec4(1.0,0.0,0.0,1.0) || DataIn.colorTE == vec4(0.0,1.0,0.0,1.0) || DataIn.colorTE == vec4(0.0,0.0,1.0,1.0)){

@@ -29,12 +29,9 @@
             </scene>
             <scene name="Terrain" >
 				
-				<!--geometry name="terrain" type ="GRID" LENGTH="200" DIVISIONS="100" material="terrain">
+				<geometry name="terrain" type ="GRID" LENGTH="200" DIVISIONS="100" material="terrain">
                 	<TRANSLATE x="0.0" y="0.0" z="0.0" />
-                </geometry-->
-				<buffers name="buffer" primitive="POINTS" material="terrain" >
-					<position name="point" fromLibrary="Terrain" />
-				</buffers>
+                </geometry>
 				<!--geometry name="terrain" type ="GRID" LENGTH="2000" DIVISIONS="50" material="terrain"-->
 				
 			</scene>
@@ -111,7 +108,7 @@
 		</lights>
         		
 		<materialLibs>
-			<materialLib filename="materials/terrain.mlib"/>
+			<materialLib filename="materials/terrain_triangle.mlib"/>
             <materialLib filename="materials/skybox.mlib" />
 			<materialLib filename="materials/chunks.mlib" />
 			<materialLib filename="materials/water.mlib" />
@@ -144,7 +141,7 @@
 
 
 
-			<!--pass name="Chunks" class="default" >
+			<pass name="Chunks" class="default" >
 				<scenes instances = "1023">
 					<scene name="chunks" />
 				</scenes>
@@ -156,14 +153,16 @@
 				<materialMaps>
 					<map fromMaterial="chunks" toMaterial="chunks"  toLibrary="Chunks" />
 				</materialMaps>
-				<renderTarget name="buffer" fromLibrary="Chunks"/>
+				<!--renderTarget name="buffer" fromLibrary="Chunks"/-->
 				<COLOR_CLEAR value="false"/>
-			</pass-->
+			</pass>
 
 
             <pass name="Terrain" class="default" >
-				<scenes instances="1023" >
+				<scenes>
+					<!--buffers name = "buffer" primitive="TRIANGLES" material="chunks">
 					
+					</buffers-->
 					
 					<scene name="Terrain" />
 
@@ -182,7 +181,7 @@
             </pass>
 
 
-			<!--pass name="Water" class="default" >
+			<pass name="Water" class="default" >
 				<scenes>
 					<scene name="Water" />
 				</scenes>
@@ -196,7 +195,7 @@
 				</materialMaps>
 				<COLOR_CLEAR value="false"/>
 				<DEPTH_CLEAR value="false"/>
-			</pass-->
+			</pass>
 
 			
 			<!--pass name = "texturing" class = "default">

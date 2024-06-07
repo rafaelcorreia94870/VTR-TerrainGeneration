@@ -1,0 +1,12 @@
+tesselation triangles pq e que as normais ficam esquisitas (contas dada da aula)
+tesselation triangles pq e que recalcular tao a ficar com normais iguais (mas os snoises sao diferentes)
+tesselation bezier neste momento n aparece no ecra, mas
+tesselation bezier a conta para a distancia n funciona (pq as posicao sao recalculadas, mas mm a recalcular n funciona)
+water shader a mancha especular nao funciona, mas acho que devia funcionar.
+
+vcpi
+GAN pq e que de repente da restart ao progresso que teve
+outras metricas que possa ver sem ser a loss
+
+vtr solo
+horizon forbidden west

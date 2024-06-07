@@ -8,18 +8,15 @@
         <shaders>
                 <shader name="terrain">
                         <vs>
-                                <!--file name="../shaders/terrain/terrain.vert"/-->
-                                <file name="../shaders/terrain/terrain_quads.vert"/>
+                                <file name="../shaders/terrain/terrain.vert"/>
                         </vs>
                         <tc>
-                                <!--file name="../shaders/terrain/terrain.tesc"/-->
-                                <file name="../shaders/terrain/terrain_quads.tesc"/>
+                                <file name="../shaders/terrain/terrain.tesc"/>
                         </tc>
                         <te>
                                 <file name="../shaders/utils/header.glsl"/>
                                 <file name="../shaders/utils/noise.glsl"/>
-                                <!--file name="../shaders/terrain/terrain.tese"/-->
-                                <file name="../shaders/terrain/terrain_quads.tese"/>
+                                <file name="../shaders/terrain/terrain.tese"/>
                         </te>
                         <!--gs>
                                 <file name="../shaders/terrain/terrain.geom"/>
