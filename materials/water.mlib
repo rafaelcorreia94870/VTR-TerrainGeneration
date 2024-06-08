@@ -12,6 +12,7 @@
 			<vs>
 				<file name="../shaders/utils/header.glsl"/>
                 <file name="../shaders/utils/noise.glsl"/>
+                <file name="../shaders/utils/translate.glsl"/>
 				<file name= "../shaders/water/water.vert" />
 			</vs>
 			<ps>
@@ -85,7 +86,8 @@
 
 					<valueof uniform="speedvar"	type="RENDERER" component="speed" />
 					<valueof uniform="foam_option" type="RENDERER" component="foam_option" />
-
+					<valueof uniform="LOOKAT" type="CAMERA" context="MainCamera" component="LOOK_AT_POINT" />
+					<valueof uniform="POS" type="CAMERA" context="MainCamera" component="POSITION" />
 					<valueof uniform="ocean" type="TEXTURE_BINDING" component = "UNIT" id="0" />
 					<valueof uniform="lake" type="TEXTURE_BINDING" component = "UNIT" id="1" />     
 					<valueof uniform="waves" type="TEXTURE_BINDING" component = "UNIT" id="2" />   

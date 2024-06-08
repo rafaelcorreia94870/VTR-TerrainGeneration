@@ -22,6 +22,9 @@
 			<attribute type="RENDERER" name="seeTessLevels" data="INT" value="0"/>
 			<attribute type="RENDERER" name="foam_option" data="INT" value="0"/>
 
+
+			<attribute type="PASS" name="FROM" data="FLOAT" value = -1 />
+			<attribute type="PASS" name="TO" data="FLOAT" value = -1 />
         </attributes>
 		
 		<scenes>
@@ -114,6 +117,8 @@
             <materialLib filename="materials/skybox.mlib" />
 			<materialLib filename="materials/chunks.mlib" />
 			<materialLib filename="materials/water.mlib" />
+			<!--materialLib filename="materials/shadowMaterials3.mlib"/-->
+
 		</materialLibs>
 		
 	</assets>
@@ -199,6 +204,82 @@
 				<DEPTH_CLEAR value="false"/>
 			</pass>
 
+
+			<!--pass class="depthmap" name="pass1">
+				<scenes>
+					<scene name="Terrain" />
+				</scenes>
+				<TO value="5" />
+				<camera name="MainCamera" />
+				<lights>
+					<light name="Sun" />
+				</lights>
+				<renderTarget name="shadowMap1" fromLibrary="Shadow Materials"/>
+				<materialMaps>
+					<map fromMaterial="*" toLibrary="Shadow Materials" toMaterial="depthOnly" />
+				</materialMaps>
+			</pass>
+			
+			<pass class="depthmap" name="pass2">
+				<scenes>
+					<scene name="Terrain" />
+				</scenes>
+				<FROM value="5" />
+				<TO value="15" />
+				<camera name="MainCamera" />
+				<lights>
+					<light name="Sun" />
+				</lights>
+				<renderTarget name="shadowMap2" fromLibrary="Shadow Materials"/>
+				<materialMaps>
+					<map fromMaterial="*" toLibrary="Shadow Materials" toMaterial="depthOnly" />
+				</materialMaps>
+			</pass>
+			
+			<pass class="depthmap" name="pass3">
+				<scenes>
+					<scene name="Terrain" />
+				</scenes>
+				<FROM value="15" />
+				<TO value="50" />
+				<camera name="MainCamera" />
+				<lights>
+					<light name="Sun" />
+				</lights>
+				<renderTarget name="shadowMap3" fromLibrary="Shadow Materials"/>
+				<materialMaps>
+					<map fromMaterial="*" toLibrary="Shadow Materials" toMaterial="depthOnly" />
+				</materialMaps>
+			</pass>
+			
+			<pass class="depthmap" name="pass4">
+				<scenes>
+					<scene name="Terrain" />
+				</scenes>
+				<FROM value="50" />
+				<TO value="150" />
+				<camera name="MainCamera" />
+				<lights>
+					<light name="Sun" />
+				</lights>
+				<renderTarget name="shadowMap4" fromLibrary="Shadow Materials"/>
+				<materialMaps>
+					<map fromMaterial="*" toLibrary="Shadow Materials" toMaterial="depthOnly" />
+				</materialMaps>
+			</pass>
+			
+			<pass class="default" name="pass5">
+				<scenes>
+					<scene name="Terrain" />
+				</scenes>
+				<camera name="MainCamera" />
+				<lights>
+					<light name="Sun" />
+				</lights>
+				<materialMaps>
+					<map fromMaterial="*" toLibrary="Shadow Materials" toMaterial="flat-with-shadow-4-depths" />
+				</materialMaps>
+			</pass-->
 			
 			<!--pass name = "texturing" class = "default">
 				<scenes>

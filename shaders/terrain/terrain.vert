@@ -4,7 +4,6 @@ uniform mat3 m_normal;
 uniform vec4 l_dir;
 uniform float timer;
 uniform vec4 LOOKAT;
-uniform vec4 POS;
 
 in vec4 position;
 in vec3 normal;
@@ -14,7 +13,6 @@ out vec4 posV;
 out vec3 normalV;
 out vec2 texCoordV;
 out float isInsideFrustum;
-
 
 
 void main(void) {
@@ -27,7 +25,7 @@ void main(void) {
 	float frequency = 1.0;
 	
     worldSpace.y = fbm(worldSpace.xz);
-
+    worldSpace = translate_to_centerCam(worldSpace);
     posV = worldSpace;
     gl_Position = worldSpace;
 

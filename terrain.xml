@@ -116,6 +116,7 @@
             <materialLib filename="materials/skybox.mlib" />
 			<materialLib filename="materials/chunks.mlib" />
 			<materialLib filename="materials/water.mlib" />
+			<materialLib filename="materials/shadowMaterials3.mlib"/>
 		</materialLibs>
 		
 	</assets>

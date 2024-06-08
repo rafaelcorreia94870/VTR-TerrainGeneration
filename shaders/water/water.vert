@@ -26,6 +26,7 @@ out vec3 eye;
 out vec2 texCoord;
 out float terrainHeight;
 out float waterHeight;
+out vec4 water_position;
 
 void main () {
     float speed = 0.00008* speedvar;
@@ -35,12 +36,14 @@ void main () {
 
 
 	vec4 calcposition = m_m * position;
+	calcposition = translate_to_centerCam(calcposition);
 	calcposition.y = height;
 	calcposition.y += texture(water, texCoord - 0.5 * timer * speed).r;
 
 
     terrainHeight = fbm(vec2(calcposition.x, calcposition.z));
 	waterHeight = calcposition.y;
+	water_position = calcposition;
 
 
     gl_Position = m_p* m_view * calcposition;

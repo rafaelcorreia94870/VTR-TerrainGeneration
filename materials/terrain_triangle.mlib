@@ -10,6 +10,7 @@
                         <vs>
                                 <file name="../shaders/utils/header.glsl"/>
                                 <file name="../shaders/utils/noise.glsl"/>
+                                <file name="../shaders/utils/translate.glsl"/>
                                 <file name="../shaders/terrain/terrain.vert"/>
                         </vs>
                         <tc>
