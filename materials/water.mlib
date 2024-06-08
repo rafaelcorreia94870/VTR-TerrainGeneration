@@ -4,10 +4,21 @@
 		<texture name="ocean" filename="../textures/water/ocean.jpeg" mipmap="true" />
 		<texture name="waves" filename="../textures/water/waves.jpeg" mipmap="true" />
 		<texture name="lake" filename="../textures/water/lake.jpg" mipmap="true" />
+		<texture name="water" filename="../textures/water/water.jpeg" mipmap="true" />
+		<texture name="foam" filename="../textures/water/foam.png" mipmap="true" />
 	</textures>
 	<shaders>
-		<shader name="water" 	ps  = "../shaders/water/water.frag" 
-								vs  = "../shaders/water/water.vert" />
+		<shader name="water" >
+			<vs>
+				<file name="../shaders/utils/header.glsl"/>
+                <file name="../shaders/utils/noise.glsl"/>
+				<file name= "../shaders/water/water.vert" />
+			</vs>
+			<ps>
+				<file name="../shaders/utils/header.glsl"/>
+				<file name= "../shaders/water/water.frag"/>
+			</ps>
+		</shader>
 	</shaders>
 	<states>
 		<state name="CullFront">
@@ -25,7 +36,12 @@
 			<shader name="water" >
 				<values>
 					<valueof uniform="scale" 	type="RENDERER"  
-												component="scale"  />	
+												component="scale"  />
+
+					<valueof uniform="num_octaves" type="RENDERER" component="num_octaves" />
+					<valueof uniform="heightmult" type="RENDERER" component="heightMultiplier" />
+					<valueof uniform="lacunarity" type="RENDERER" component="lacunarity" />
+					<valueof uniform="persistence" type="RENDERER" component="persistence" />
 												
 					<valueof uniform="timer" 	type="RENDERER"  
 												component="TIMER"  />	
@@ -68,11 +84,13 @@
 					<valueof uniform="nwaves"	type="RENDERER" component="nwaves" />  
 
 					<valueof uniform="speedvar"	type="RENDERER" component="speed" />
+					<valueof uniform="foam_option" type="RENDERER" component="foam_option" />
 
 					<valueof uniform="ocean" type="TEXTURE_BINDING" component = "UNIT" id="0" />
 					<valueof uniform="lake" type="TEXTURE_BINDING" component = "UNIT" id="1" />     
-					<valueof uniform="waves" type="TEXTURE_BINDING" component = "UNIT" id="2" />                                       
-
+					<valueof uniform="waves" type="TEXTURE_BINDING" component = "UNIT" id="2" />   
+					<valueof uniform="water" type="TEXTURE_BINDING" component = "UNIT" id="3" />                                    
+					<valueof uniform="foam" type="TEXTURE_BINDING" component = "UNIT" id="4" />
 							
 				</values>
 			</shader>
@@ -80,6 +98,8 @@
 				<texture name="ocean" UNIT ="0"/>
 				<texture name="lake" UNIT = "1"/>
 				<texture name="waves" UNIT = "2"/>
+				<texture name="water" UNIT = "3"/>
+				<texture name="foam" UNIT = "4"/>
 			</textures>
 			<state name = "Transparent" />
 		</material>

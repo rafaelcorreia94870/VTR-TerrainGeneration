@@ -19,6 +19,7 @@
 			<attribute type="RENDERER" name="width" data="FLOAT" value="300.0"/>
 			<attribute type="RENDERER" name="nwaves" data="INT" value="2"/>
 			<attribute type="RENDERER" name="speed" data="FLOAT" value=".1"/>
+			
 
         </attributes>
 		
@@ -162,8 +163,10 @@
 
 
             <pass name="Terrain" class="default" >
-				<scenes instances="1023" >
+				<scenes instances= 1023 >
+					<!--buffers name = "buffer" primitive="TRIANGLES" material="chunks">
 					
+					</buffers-->
 					
 					<scene name="Terrain" />
 
@@ -276,6 +279,8 @@
 			
 			<var label ="Speed" type ="RENDERER" context="CURRENT"
 					component="speed" def="min=0.01 max=1.0 step=0.01" />
+			<var label ="Foam Option" type ="RENDERER" context="CURRENT"
+					component="foam_option" def="min=0 max=1 step=1" />
 		</window>
 	</interface>
 </project>

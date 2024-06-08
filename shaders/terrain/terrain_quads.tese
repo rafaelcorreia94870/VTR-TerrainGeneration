@@ -41,25 +41,7 @@ mat3 rotationMatrix = mat3(
 );
 
 
-float fbm(in vec2 xz) {
-    float noisevar = 0.0;
-    float lacunarityI = lacunarity;
-    
-    float amplitude = 1.0;
-    float frequency = 1.0;
-    
-    for(int i = 0; i < num_octaves; ++i) {
 
-        float sampleX = xz.x / scale * frequency;
-        float sampleZ = xz.y / scale * frequency; 
-        noisevar += snoise(vec2(sampleX,sampleZ)) * amplitude;
-        frequency *= lacunarityI;
-
-        amplitude *= persistence;
-		frequency *= lacunarity;
-    }
-    return heightmult * (noisevar+1);
-}
 
 
 void main() {

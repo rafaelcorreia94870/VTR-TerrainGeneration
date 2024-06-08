@@ -3,11 +3,11 @@
 	<assets>
         <attributes>
             <attribute type = "RENDERER" data="FLOAT" name = "level" value = "10" />
-			<attribute name="num_octaves" type="RENDERER" data="INT" value="3" />
-            <attribute name="scale" type="RENDERER" data= "FLOAT" value="0.1" />
+			<attribute name="num_octaves" type="RENDERER" data="INT" value="8" />
+            <attribute name="scale" type="RENDERER" data= "FLOAT" value="128" />
 			<attribute name="persistence" type="RENDERER" data="FLOAT" value="0.5" />
 			<attribute name="lacunarity" type="RENDERER" data="FLOAT" value="2.0" />
-			<attribute name="heightMultiplier" type="RENDERER" data="FLOAT" value="1.0" />
+			<attribute name="heightMultiplier" type="RENDERER" data="FLOAT" value="20.0" />
 
 			<attribute name="option" data="INT" type="RENDERER" value=0 />
 			<attribute name="alpha" data="FLOAT" type="RENDERER" value=0.75 />
@@ -19,6 +19,8 @@
 			<attribute type="RENDERER" name="width" data="FLOAT" value="300.0"/>
 			<attribute type="RENDERER" name="nwaves" data="INT" value="2"/>
 			<attribute type="RENDERER" name="speed" data="FLOAT" value=".1"/>
+			<attribute type="RENDERER" name="seeTessLevels" data="INT" value="0"/>
+			<attribute type="RENDERER" name="foam_option" data="INT" value="0"/>
 
         </attributes>
 		
@@ -47,7 +49,7 @@
 			</scene>
 			
 			<scene name="Water" >
-				<geometry name="water" type ="GRID" LENGTH="2000" DIVISIONS="100" material="water">
+				<geometry name="water" type ="GRID" LENGTH="200" DIVISIONS="100" material="water">
 					<TRANSLATE x="0.0" y="4.0" z="0.0" />
 				</geometry>
 			</scene>
@@ -141,7 +143,7 @@
 
 
 
-			<pass name="Chunks" class="default" >
+			<!--pass name="Chunks" class="default" >
 				<scenes instances = "1023">
 					<scene name="chunks" />
 				</scenes>
@@ -153,9 +155,9 @@
 				<materialMaps>
 					<map fromMaterial="chunks" toMaterial="chunks"  toLibrary="Chunks" />
 				</materialMaps>
-				<!--renderTarget name="buffer" fromLibrary="Chunks"/-->
+				<renderTarget name="buffer" fromLibrary="Chunks"/>
 				<COLOR_CLEAR value="false"/>
-			</pass>
+			</pass-->
 
 
             <pass name="Terrain" class="default" >
@@ -250,7 +252,7 @@
 			<var label = "level" type ="RENDERER" context="CURRENT" 
 					component="level" def="min=1.0 max=20 step=1.0" />
 			<var label = "num_octaves" type ="RENDERER" context="CURRENT"
-					component="num_octaves" def="min=1 max=100 step=1" />
+					component="num_octaves" def="min=1 max=32 step=1" />
 			<var label = "scale" type ="RENDERER" context="CURRENT"
 					component="scale" def="min=0.1 max=1000 step=0.1" />
 			<var label = "persistence" type ="RENDERER" context="CURRENT"
@@ -263,6 +265,8 @@
 					component="chunkSize" def="min=1 max=15 step=1" />
 			<var label = "SQUARESIZE" type ="RENDERER" context="CURRENT"
 					component="squareSize" def="min=1 max=50 step=1" />
+			<var label = "seeTessLevels" type ="RENDERER" context="CURRENT"
+					component="seeTessLevels" def="min=0 max=1 step=1" />
 			
 		</window>
 		<window label="Wave Settings" >
@@ -275,6 +279,8 @@
 			
 			<var label ="Speed" type ="RENDERER" context="CURRENT"
 					component="speed" def="min=0.01 max=1.0 step=0.01" />
+			<var label ="Foam Option" type ="RENDERER" context="CURRENT"
+					component="foam_option" def="min=0 max=1 step=1" />
 		</window>
 	</interface>
 </project>

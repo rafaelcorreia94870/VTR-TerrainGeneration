@@ -5,12 +5,6 @@ uniform	mat4 m_pvm, m_view, m_p, m_m;
 uniform	mat3 m_normal;
 uniform vec4 l_dir;
 uniform float timer;
-uniform float scale;
-
-uniform int num_octaves;
-uniform float persistence;
-uniform float lacunarity;
-uniform float heightmult;
 float minValue = 2;
 float maxValue = 400;
 
@@ -20,6 +14,7 @@ in vec4 posTC[];
 in vec2 texCoord[];
 in vec4 colorTC[];
 in float isInsideFrustumTC[];
+in float distanceTC[];
 
 out Data {
     vec3 normalTE;
@@ -27,6 +22,8 @@ out Data {
     vec4 colorTE;
     vec2 tcTE;
     float eTE;
+	vec3 posTE;
+	float distanceTE;
 } DataOut;
 
 
@@ -40,10 +37,14 @@ void main() {
 
 
     //confio só nas contas do stor
-	vec3 b300 = (m_m * posTC[0]).xyz;
-	vec3 b030 = (m_m * posTC[1]).xyz;
-	vec3 b003 = (m_m * posTC[2]).xyz;
+	vec3 b300 = (posTC[0]).xyz;
+	vec3 b030 = (posTC[1]).xyz;
+	vec3 b003 = (posTC[2]).xyz;
+	b300.y = fbm(b300.xz);
+	b030.y = fbm(b030.xz);
+	b003.y = fbm(b003.xz);
 
+/*
 	float noisevar1 = 0.0;
 	float noisevar2 = 0.0;
 	float noisevar3 = 0.0;
@@ -66,10 +67,10 @@ void main() {
 		frequency *= lacunarity;
     }
 	
-
 	b300.y += heightmult * (noisevar1+1);
 	b030.y += heightmult * (noisevar2+1);
 	b003.y += heightmult * (noisevar3+1);
+*/
 	
 
 
@@ -78,31 +79,31 @@ void main() {
 	//DataOut.colorTE = vec3(noisevarmix, noisevarmix, noisevarmix, 1.0);
 	
 	vec3 n1 = normalTC[0].xyz;
-	/*
+	
 	vec3 b300b003 = b003 - b300;
 	vec3 b300b030 = b030 - b300;
 	//n1 = cross(b300b003, b300b030);
-	n1 = cross(b300b030,b300b003);
-	*/
+	// n1 = cross(b300b030,b300b003);
+	
 	
 	vec3 n2 = normalTC[1].xyz;
-	/*
+	
 	vec3 b030b300 = b300 - b030;
 	vec3 b030b003 = b003 - b030;
 	//n2 = cross(b030b300, b030b003);
-	n2 = cross(b030b003,b030b300);
-	*/
+	// n2 = cross(b030b003,b030b300);
+	
 	
 
 	vec3 n3 = normalTC[2].xyz;
-	/*
+	
 
 	vec3 b003b030 = b030 - b003;
 	vec3 b003b300 = b300 - b003;
 	//n3 = cross(b003b030, b003b300);
-	n3 = cross(b003b300,b003b030);
+	// n3 = cross(b003b300,b003b030);
 	
-*/
+
 
 
 	n1 = normalize(n1);
@@ -172,9 +173,13 @@ void main() {
     DataOut.l_dirTE = normalize(vec3(m_view * -l_dir));
     DataOut.tcTE = vec2(u, v);
     DataOut.colorTE = colorTC[0];
+	DataOut.posTE = res;
+	DataOut.distanceTE = distanceTC[0];
+	/*
 	if (noisevar1 == noisevar2 && noisevar2 == noisevar3){
 		DataOut.colorTE = vec4(1., 0.0, 0., 0.8);
 	} 
+	*/
     DataOut.eTE = 0.0;
 	gl_Position =  m_p * m_view * vec4(res,1.0);
 }

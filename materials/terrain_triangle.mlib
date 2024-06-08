@@ -8,6 +8,8 @@
         <shaders>
                 <shader name="terrain">
                         <vs>
+                                <file name="../shaders/utils/header.glsl"/>
+                                <file name="../shaders/utils/noise.glsl"/>
                                 <file name="../shaders/terrain/terrain.vert"/>
                         </vs>
                         <tc>
@@ -22,6 +24,8 @@
                                 <file name="../shaders/terrain/terrain.geom"/>
                         </gs-->
                         <ps>
+                                <file name="../shaders/utils/header.glsl"/>
+                                <file name="../shaders/utils/noise.glsl"/>
                                 <file name="../shaders/terrain/terrain.frag"/>
                         </ps>
                 </shader>
@@ -69,8 +73,10 @@
                                         <valueof uniform="heightmult" type="RENDERER" component="heightMultiplier" />
                                         <valueof uniform="lacunarity" type="RENDERER" component="lacunarity" />
                                         <valueof uniform="persistence" type="RENDERER" component="persistence" />
-                                        
                                         <valueof uniform="scale" type="RENDERER" component="scale" />
+
+                                        <valueof uniform="height" type="RENDERER" component="height" />
+                                        
                                         <valueof uniform="timer" type="RENDERER" component="TIMER" />
                                         <valueof uniform="FAR" type="CAMERA" context="MainCamera" component="FAR" />
                                         <valueof uniform="NEAR" type="CAMERA" context="MainCamera" component="NEAR" />
@@ -78,6 +84,7 @@
                                         <valueof uniform="squareSize" type="RENDERER" context="CURRENT" component="squareSize" />
                                         <valueof uniform="LOOKAT" type="CAMERA" context="MainCamera" component="LOOK_AT_POINT" />
                                         <valueof uniform="POS" type="CAMERA" context="MainCamera" component="POSITION" />
+                                        <valueof uniform="seeTessLevels" type="RENDERER" context="CURRENT" component="seeTessLevels" />
 
                                 </values>
                         </shader>
