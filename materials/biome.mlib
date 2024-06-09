@@ -1,0 +1,49 @@
+<materialLib name="Biome">
+
+    <shaders>
+        <shader name="biome" vs="../shaders/biome/biome.vert"
+                             ps="../shaders/biome/biome.frag" />
+    </shaders>
+
+    <renderTargets>
+        <renderTarget name="biome_map">
+            <SIZE width="1024" height="1024" />
+            <CLEAR_VALUES r="0.0" g="0.0" b="0.0" a="0.0"/>
+            <colors>
+                <color name="biome_map" internalFormat="RGBA"/>
+            </colors>
+        </renderTarget>
+    </renderTargets>
+    <materials>
+        <material name="biome" >
+            <shader name="biome" >
+                <values>
+                    <valueof uniform="bm_scale" 
+                                type="RENDERER" component="bm_scale" />
+                    <valueof uniform="t_octaves" 
+                                type="RENDERER" component="t_octaves" />
+                    <valueof uniform="t_freq" 
+                                type="RENDERER" component="t_freq" />
+                    <valueof uniform="t_limit1" 
+                                type="RENDERER" component="t_limit1" />
+                    <valueof uniform="t_limit2" 
+                                type="RENDERER" component="t_limit2" />
+                    <valueof uniform="p_octaves" 
+                                type="RENDERER" component="p_octaves" />
+                    <valueof uniform="p_limit1" 
+                                type="RENDERER" component="p_limit1" />
+                    <valueof uniform="p_limit2" 
+                                type="RENDERER" component="p_limit2" />
+                    <valueof uniform="p_offset_x" 
+                                type="RENDERER" component="p_offset_x" />
+                    <valueof uniform="p_offset_y" 
+                                type="RENDERER" component="p_offset_y" />
+                    <valueof uniform="p_freq" 
+                                type="RENDERER" component="p_freq" />
+                </values>
+            </shader>
+        </material>
+
+    </materials>
+
+</materialLib>

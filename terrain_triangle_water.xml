@@ -12,11 +12,11 @@
 			<attribute name= "initFrequency" type="RENDERER" data="FLOAT" value="1.0" />
 			<attribute name= "initbaseHeight" type="RENDERER" data="FLOAT" value="0.0" />
 
-			<attribute name="option" data="INT" type="RENDERER" value=0 />
-			<attribute name="alpha" data="FLOAT" type="RENDERER" value=0.75 />
+			<attribute name="option" data="INT" type="RENDERER" value="0" />
+			<attribute name="alpha" data="FLOAT" type="RENDERER" value="0.75" />
 
-			<attribute name="squareSize" data="INT" type="RENDERER" value=5 />
-			<attribute name="chunkSize" data="INT" type="RENDERER" value=7 />
+			<attribute name="squareSize" data="INT" type="RENDERER" value="5" />
+			<attribute name="chunkSize" data="INT" type="RENDERER" value="7" />
 
 			<attribute type="RENDERER" name="height" data="FLOAT" value="5.0"/>
 			<attribute type="RENDERER" name="width" data="FLOAT" value="300.0"/>
@@ -25,9 +25,21 @@
 			<attribute type="RENDERER" name="seeTessLevels" data="INT" value="0"/>
 			<attribute type="RENDERER" name="foam_option" data="INT" value="0"/>
 
+			<attribute name="bm_scale" type="RENDERER" data= "FLOAT" value="6" />
+			<attribute name="t_octaves" type="RENDERER" data="INT" value="4" />
+			<attribute name="t_limit1" type="RENDERER" data= "FLOAT" value="-0.2" />
+			<attribute name="t_limit2" type="RENDERER" data= "FLOAT" value="0.3" />
+			<attribute name="t_freq" type="RENDERER" data= "FLOAT" value="1" />
+			<attribute name="p_octaves" type="RENDERER" data="INT" value="4" />
+			<attribute name="p_limit1" type="RENDERER" data= "FLOAT" value="-0.25" />
+			<attribute name="p_limit2" type="RENDERER" data= "FLOAT" value="0.2" />
+			<attribute name="p_freq" type="RENDERER" data= "FLOAT" value="1" />
+			<attribute name="p_offset_x" type="RENDERER" data= "FLOAT" value="0.4"/>
+			<attribute name="p_offset_y" type="RENDERER" data= "FLOAT" value="0.5"/>
 
-			<attribute type="PASS" name="FROM" data="FLOAT" value = -1 />
-			<attribute type="PASS" name="TO" data="FLOAT" value = -1 />
+
+			<attribute type="PASS" name="FROM" data="FLOAT" value = "-1" />
+			<attribute type="PASS" name="TO" data="FLOAT" value = "-1" />
         </attributes>
 		
 		<scenes>
@@ -45,7 +57,7 @@
 			</scene>
 			<scene name="Axis">
         		<geometry name = "axis" type = "AXIS"  >
-        		    <SCALE x=500 y=500 z =500 />
+        		    <SCALE x="500" y="500" z ="500" />
         		</geometry>
     		</scene>
 			<scene name="chunks" >
@@ -70,12 +82,12 @@
                 <SIZE width="0.25" height="0.25" />
 				<CLEAR_COLOR r="1.0" g="1.0" b="1.0" />
 			</viewport>
-			<!--viewport name="RightViewport" >
-				<ORIGIN x=0.5 y=0.0 />
-				<SIZE width=0.5 height=1 />
+			<viewport name="RightViewport" >
+				<ORIGIN x="0.5" y="0.0" />
+				<SIZE width="0.5" height="1" />
 				<CLEAR_COLOR r="0.2" g="0.2" b="0.4" />
 			</viewport>
-			<viewport name="LeftViewport" >
+			<!--viewport name="LeftViewport" >
 				<ORIGIN x=0.0 y=0.0 />
 				<SIZE width=0.5 height=1 />
 				<CLEAR_COLOR r="0.2" g="0.2" b="0.4" />
@@ -120,6 +132,7 @@
             <materialLib filename="materials/skybox.mlib" />
 			<materialLib filename="materials/chunks.mlib" />
 			<materialLib filename="materials/water.mlib" />
+			<materialLib filename="materials/biome.mlib"/>
 			<!--materialLib filename="materials/shadowMaterials3.mlib"/-->
 
 		</materialLibs>
@@ -130,7 +143,16 @@
     <pipelines>
         <pipeline name="terrain" default="true" defaultCamera="MainCamera">
 
-			
+			<pass class="quad" name="biome" >
+                <material name="biome" fromLibrary="Biome"/>
+				<renderTarget name="biome_map" fromLibrary="Biome"/>
+            </pass>
+
+			<!-- This pass adds a view of the biome map to the right of the window (for debug and experiments for example)-->
+			<!--pass class="quad" name="Biome_Map" >
+                <viewport name="RightViewport"/>
+                <material name="biome" fromLibrary="Biome"/>
+            </pass-->
 			
 
             <pass class="default" name="skybox">
@@ -368,6 +390,21 @@
 			<var label ="Foam Option" type ="RENDERER" context="CURRENT"
 					component="foam_option" def="min=0 max=1 step=1" />
 		</window>
+
+		<window label="Biome Map settings" >
+			<var label="Scale" type="RENDERER" context="CURRENT" component="bm_scale" def="step=0.1 min=0.1 max=8" />
+			<var label="Temperature map Num  Octaves" type="RENDERER" context="CURRENT" component="t_octaves" def="step=1 min=1 max=8" />
+			<var label="Temperature - noise Frequency" type="RENDERER" context="CURRENT" component="t_freq" def="step=0.01 min=0 max=4" />
+			<var label="Temperature limit 1" type="RENDERER" context="CURRENT" component="t_limit1" def="step=0.001 min=-0.8 max=0.8" />
+			<var label="Temperature limit 2" type="RENDERER" context="CURRENT" component="t_limit2" def="step=0.001 min=-0.8 max=0.8" />
+			<var label="Precipitation Num  Octaves" type="RENDERER" context="CURRENT" component="p_octaves" def="step=1 min=1 max=8" />
+			<var label="Precipitation limit 1" type="RENDERER" context="CURRENT" component="p_limit1" def="step=0.001 min=-0.8 max=0.8" />
+			<var label="Precipitation limit 2" type="RENDERER" context="CURRENT" component="p_limit2" def="step=0.001 min=-0.8 max=0.8" />
+			<var label="Precipitation - noise Frequency" type="RENDERER" context="CURRENT" component="p_freq" def="step=0.01 min=0 max=4" />
+			<var label="Precipitation offset x" type="RENDERER" context="CURRENT" component="p_offset_x" def="step=0.01 min=-4 max=4" />
+			<var label="Precipitation offset y" type="RENDERER" context="CURRENT" component="p_offset_y" def="step=0.01 min=-4 max=4" />
+		</window>
+	
 	</interface>
 </project>
 		
