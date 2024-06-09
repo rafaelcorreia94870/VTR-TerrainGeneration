@@ -43,6 +43,10 @@
 					<valueof uniform="heightmult" type="RENDERER" component="heightMultiplier" />
 					<valueof uniform="lacunarity" type="RENDERER" component="lacunarity" />
 					<valueof uniform="persistence" type="RENDERER" component="persistence" />
+					<valueof uniform="initAmplitude" type="RENDERER" component="initAmplitude" />
+					<valueof uniform="initFrequency" type="RENDERER" component="initFrequency" />
+					<valueof uniform="initbaseHeight" type="RENDERER" component="initbaseHeight" />
+
 												
 					<valueof uniform="timer" 	type="RENDERER"  
 												component="TIMER"  />	

@@ -6,7 +6,6 @@ uniform mat4 m_view_model;
 uniform vec4 l_dir;
 uniform mat3 m_normal;
 uniform float speedvar;
-uniform float height;
 uniform int foam_option;
 
 

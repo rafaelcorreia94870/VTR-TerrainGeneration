@@ -4,6 +4,10 @@ uniform float persistence;
 uniform float lacunarity;
 uniform float heightmult;
 uniform float scale;
+uniform float height;
+uniform float initAmplitude;
+uniform float initFrequency;
+uniform float initbaseHeight;
 
 // The MIT License
 // Copyright © 2013 Inigo Quilez
@@ -430,21 +434,59 @@ float snoiseFractal(vec3 m) {
 				+0.0666667* snoiseNikita(8.0*m);
 }
 
+void biomeSettings(vec4 biome, inout float options[6]){
+    float amplitude = initAmplitude; //1.0
+    float frequency = initFrequency; //1.0;
+    float baseHeight = initbaseHeight; //0.0;
+    float calcscale = scale;
+    float calcpersistence = persistence;
+    float calclacunarity = lacunarity;
 
-float fbm(vec2 xz) {
+    if (biome == vec4(1.0, 0.0, 0.0, 0.0))
+    {
+      amplitude = 1.0;
+      frequency = 1.0;
+      baseHeight = 0.0;
+      calcscale = scale;
+      calcpersistence = persistence;
+      calclacunarity = lacunarity;
+
+    }
+
+    options[0] = amplitude;
+    options[1] = frequency;
+    options[2] = baseHeight;
+    options[3] = calcscale;
+    options[4] = calcpersistence;
+    options[5] = calclacunarity;
+
+
+}
+
+
+float fbm(vec2 xz, vec4 biome) {
+
     float noisevar = 0.0;
+    float waterHeight = height;
     
-    float amplitude = 1.0;
-    float frequency = 1.0;
+    float options[6];
+    biomeSettings(biome, options);
+
+    float amplitude = options[0];
+    float frequency = options[1];
+    float baseHeight = options[2];
+    float calcscale = options[3];
+    float calcpersistence = options[4];
+    float calclacunarity = options[5];
     
     for(int i = 0; i < num_octaves; ++i) {
 
-        float sampleX = xz.x / scale * frequency;
-        float sampleZ = xz.y / scale * frequency; 
+        float sampleX = xz.x / calcscale * frequency;
+        float sampleZ = xz.y / calcscale * frequency; 
         noisevar += snoise(vec2(sampleX,sampleZ)) * amplitude;
 
         amplitude *= persistence;
 		    frequency *= lacunarity;
     }
-    return heightmult * (noisevar+1);
+    return (heightmult * (noisevar+1)) + baseHeight;
 }

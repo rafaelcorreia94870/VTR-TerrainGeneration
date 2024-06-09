@@ -19,12 +19,14 @@ void main(void) {
     vec4 dir = LOOKAT - POS;
     vec4 worldSpace = m_m * vec4(position.x,0,position.z,1.);
 
+    vec4 biome = vec4(0.0,0.0,0.0,0.0);
+
     float height = 0.0;
 
 	float amplitude = 1.0;
 	float frequency = 1.0;
 	
-    worldSpace.y = fbm(worldSpace.xz);
+    worldSpace.y = fbm(worldSpace.xz, biome);
     worldSpace = translate_to_centerCam(worldSpace);
     posV = worldSpace;
     gl_Position = worldSpace;

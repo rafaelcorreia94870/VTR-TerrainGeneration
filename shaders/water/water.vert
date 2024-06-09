@@ -6,7 +6,6 @@ uniform	mat4 m_view;
 uniform mat4 m_p;
 uniform	mat3 m_normal;
 uniform mat4 m_view_model;
-uniform float height;
 uniform sampler2D water;
 uniform float timer;
 uniform float speedvar;
@@ -40,8 +39,8 @@ void main () {
 	calcposition.y = height;
 	calcposition.y += texture(water, texCoord - 0.5 * timer * speed).r;
 
-
-    terrainHeight = fbm(vec2(calcposition.x, calcposition.z));
+	vec4 biome = vec4(0.0, 0.0, 0.0, 0.0);
+    terrainHeight = fbm(vec2(calcposition.x, calcposition.z), biome);
 	waterHeight = calcposition.y;
 	water_position = calcposition;
 

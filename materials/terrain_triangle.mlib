@@ -75,6 +75,9 @@
                                         <valueof uniform="lacunarity" type="RENDERER" component="lacunarity" />
                                         <valueof uniform="persistence" type="RENDERER" component="persistence" />
                                         <valueof uniform="scale" type="RENDERER" component="scale" />
+                                        <valueof uniform="initAmplitude" type="RENDERER" component="initAmplitude" />
+                                        <valueof uniform="initFrequency" type="RENDERER" component="initFrequency" />
+                                        <valueof uniform="initbaseHeight" type="RENDERER" component="initbaseHeight" />
 
                                         <valueof uniform="height" type="RENDERER" component="height" />
                                         
@@ -86,7 +89,7 @@
                                         <valueof uniform="LOOKAT" type="CAMERA" context="MainCamera" component="LOOK_AT_POINT" />
                                         <valueof uniform="POS" type="CAMERA" context="MainCamera" component="POSITION" />
                                         <valueof uniform="seeTessLevels" type="RENDERER" context="CURRENT" component="seeTessLevels" />
-
+                                        <valueof uniform="level" type="RENDERER" context="CURRENT" component="level" />
                                 </values>
                         </shader>
                 </material>

@@ -17,8 +17,7 @@ out float distanceTC[];
 
 uniform vec4 Pos;
 uniform mat4 m_m, m_view, m_p;
-uniform float olevel=10;
-uniform float ilevel=10;
+uniform float level;
 
 void main() {
 	isInsideFrustumTC[gl_InvocationID] = isInsideFrustum[gl_InvocationID];
@@ -41,29 +40,29 @@ void main() {
 	float distanceCalc = -viewSpacePos.z /  viewSpacePos.w;
 	
 	float tessLevel = 3.0;
-	float outer = 20.0;
-	float spacing = 5;
+	float outer = level*20.0;
+	float spacing = 20;
 	vec4 distanceColor = vec4(1.0, 1.0, 1.0, 1.0);
 	
 	if (distanceCalc < spacing){
 		distanceColor = vec4(0.604, 0.388, 0.141,1.0);
-		tessLevel = 45.0;
+		tessLevel = level*45.0;
 		distanceTC[gl_InvocationID] = 1.0;
 
 	}
 	else if (distanceCalc < 2*spacing) {
 		distanceColor = vec4(0.749, 0.937, 0.271,1.0);
-        tessLevel = 32.0;  
+        tessLevel = level*32.0;  
 		distanceTC[gl_InvocationID] = 1.0;
 
     } else if (distanceCalc < 4 * spacing) {
 		distanceColor = vec4(0.98, 0.745, 0.831,1.0);
-        tessLevel = 16.0;  
+        tessLevel = level*16.0;  
 		distanceTC[gl_InvocationID] = 2.0;
 
     } else if(distanceCalc < 8 * spacing) {
 		distanceColor = vec4(1., 0.882, 0.098,1.0);
-        tessLevel = 8.0;  
+        tessLevel = level*8.0;  
 		distanceTC[gl_InvocationID] = 4.0;
 
     }

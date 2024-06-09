@@ -34,15 +34,15 @@ void main() {
 		return;
 	}
 	*/
-
+	vec4 biome = vec4(0.0, 0.0, 0.0, 0.0);
 
     //confio só nas contas do stor
 	vec3 b300 = (posTC[0]).xyz;
 	vec3 b030 = (posTC[1]).xyz;
 	vec3 b003 = (posTC[2]).xyz;
-	b300.y = fbm(b300.xz);
-	b030.y = fbm(b030.xz);
-	b003.y = fbm(b003.xz);
+	b300.y = fbm(b300.xz, biome);
+	b030.y = fbm(b030.xz, biome);
+	b003.y = fbm(b003.xz, biome);
 
 /*
 	float noisevar1 = 0.0;

@@ -2,12 +2,15 @@
 <project name="Terrain Generation" width="800" height="800">
 	<assets>
         <attributes>
-            <attribute type = "RENDERER" data="FLOAT" name = "level" value = "10" />
+            <attribute type = "RENDERER" data="FLOAT" name = "level" value = "1.0" />
 			<attribute name="num_octaves" type="RENDERER" data="INT" value="8" />
             <attribute name="scale" type="RENDERER" data= "FLOAT" value="128" />
 			<attribute name="persistence" type="RENDERER" data="FLOAT" value="0.5" />
 			<attribute name="lacunarity" type="RENDERER" data="FLOAT" value="2.0" />
 			<attribute name="heightMultiplier" type="RENDERER" data="FLOAT" value="20.0" />
+			<attribute name="initAmplitude" type="RENDERER" data="FLOAT" value="1.0" />
+			<attribute name= "initFrequency" type="RENDERER" data="FLOAT" value="1.0" />
+			<attribute name= "initbaseHeight" type="RENDERER" data="FLOAT" value="0.0" />
 
 			<attribute name="option" data="INT" type="RENDERER" value=0 />
 			<attribute name="alpha" data="FLOAT" type="RENDERER" value=0.75 />
@@ -34,7 +37,7 @@
             </scene>
             <scene name="Terrain" >
 				
-				<geometry name="terrain" type ="GRID" LENGTH="200" DIVISIONS="100" material="terrain">
+				<geometry name="terrain" type ="GRID" LENGTH="2000" DIVISIONS="100" material="terrain">
                 	<TRANSLATE x="0.0" y="0.0" z="0.0" />
                 </geometry>
 				<!--geometry name="terrain" type ="GRID" LENGTH="2000" DIVISIONS="50" material="terrain"-->
@@ -52,7 +55,7 @@
 			</scene>
 			
 			<scene name="Water" >
-				<geometry name="water" type ="GRID" LENGTH="200" DIVISIONS="100" material="water">
+				<geometry name="water" type ="GRID" LENGTH="2000" DIVISIONS="100" material="water">
 					<TRANSLATE x="0.0" y="4.0" z="0.0" />
 				</geometry>
 			</scene>
@@ -331,7 +334,7 @@
 	<interface>
 		<window label="Terrain Generation">
 			<var label = "level" type ="RENDERER" context="CURRENT" 
-					component="level" def="min=1.0 max=20 step=1.0" />
+					component="level" def="min=1.0 max=1 step=0.1" />
 			<var label = "num_octaves" type ="RENDERER" context="CURRENT"
 					component="num_octaves" def="min=1 max=32 step=1" />
 			<var label = "scale" type ="RENDERER" context="CURRENT"
@@ -342,10 +345,12 @@
 					component="lacunarity" def="min=0.1 max=2.0 step=0.1" />
 			<var label = "HeightMultiplier" type ="RENDERER" context="CURRENT"
 					component="heightMultiplier" def="min=0.1 max=100.0 step=0.1" />
-			<var label = "CHUNKSIZE" type ="RENDERER" context="CURRENT"
-					component="chunkSize" def="min=1 max=15 step=1" />
-			<var label = "SQUARESIZE" type ="RENDERER" context="CURRENT"
-					component="squareSize" def="min=1 max=50 step=1" />
+			<var label = "initAmplitude" type ="RENDERER" context="CURRENT"
+					component="initAmplitude" def="min=0.1 max=100.0 step=0.1" />
+			<var label = "initFrequency" type ="RENDERER" context="CURRENT"
+					component="initFrequency" def="min=0.1 max=100.0 step=0.1" />
+			<var label = "initbaseHeight" type ="RENDERER" context="CURRENT"
+					component="initbaseHeight" def="min=0.1 max=100.0 step=0.1" />
 			<var label = "seeTessLevels" type ="RENDERER" context="CURRENT"
 					component="seeTessLevels" def="min=0 max=1 step=1" />
 			
