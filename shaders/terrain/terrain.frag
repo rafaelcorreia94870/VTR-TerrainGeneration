@@ -1,6 +1,13 @@
 
 uniform sampler2D grass_diff, grass_disp, grass_rough;
-uniform mat4 m_pvm;
+uniform sampler2DShadow shadowMap1,shadowMap2,shadowMap3,shadowMap4;
+uniform mat4 lightSpaceMat1,lightSpaceMat2,lightSpaceMat3,lightSpaceMat4;
+uniform vec4 lightDirection;
+uniform mat4 inverse_projection, inverse_view;
+
+
+uniform mat4 m_pvm, m_m, m_view, m_p;
+
 uniform mat3 m_normal;
 uniform int seeTessLevels;
 
@@ -14,7 +21,7 @@ in Data {
 	float distanceTE;
 } DataIn;
 
-out vec4 color;
+out vec4 colorOut;
 
 vec4 biomePicker(vec3 p) {
 	vec4 water = vec4(0.0, 0.0, 1.0, 1.0);
@@ -23,6 +30,8 @@ vec4 biomePicker(vec3 p) {
 	vec4 rock = vec4(0.176, 0.173, 0.173,1.0);
 	vec4 snow = vec4(1.0, 1.0, 1.0, 1.0);
 	vec4 dirt = vec4(0.522, 0.31, 0.149, 1.0);
+
+
 
 	float terrainHeight = p.y;
 	float maxHeight = 50;
@@ -49,57 +58,73 @@ vec4 biomePicker(vec3 p) {
 
 
 
-void main(){
-	/*
-	if (DataIn.isInsideFrustumTE == 0.0) {
-		discard;
-	}
-	*/
+void main() {    
+    vec4 eColor = vec4(texture(grass_diff, DataIn.tcTE).xyz, 1.0);
+    vec4 eNight = texture(grass_rough, DataIn.tcTE);
+
+    float OFFSET = DataIn.distanceTE * 0.0008;
+    vec4 biome = vec4(0.0, 0.0, 0.0, 1.0);
+    vec3 p = DataIn.posTE;
+
+    // Calculate the normal of the terrain by sampling Nearby points
+    vec3 front_Height = vec3(0 + OFFSET, fbm(vec2(p.x + OFFSET, p.z), biome), 0);
+    vec3 right_Height = vec3(0, fbm(vec2(p.x, p.z + OFFSET), biome), 0 + OFFSET);
+    vec3 back_Height = vec3(0 - OFFSET, fbm(vec2(p.x - OFFSET, p.z), biome), 0);
+    vec3 left_Height = vec3(0, fbm(vec2(p.x, p.z - OFFSET), biome), 0 - OFFSET);
+
+    vec3 calcNormal = cross(vec3(0, p.y, 0) - left_Height, vec3(0, p.y, 0) - back_Height) + cross(vec3(0, p.y, 0) - right_Height, vec3(0, p.y, 0) - front_Height);
+    vec3 n = normalize(m_normal * calcNormal);
+    vec3 l = normalize(DataIn.l_dirTE);
+    float intensity = max(dot(l, n), 0.0);
+
+	vec4 color;
+    vec4 biomeColor = biomePicker(p);
+    vec4 rgbcolor = seeTessLevels == 1 ? DataIn.colorTE : biomeColor;
+    if (intensity <= 0.1) {
+        color = (rgbcolor * intensity) + rgbcolor * 0.2;
+    } else {
+        color = rgbcolor * intensity;
+    }
+
+    vec3 lightDir = normalize(vec3(m_view * -lightDirection));
+    float NdotL = max(dot(n, lightDir), 0.0);
+
+    vec4 viewSpacePos = m_view * vec4(DataIn.posTE, 1.0);
+    float distance = -viewSpacePos.z / viewSpacePos.w;
+    vec4 projShadowCoord[4];
+    float split[4];
+	colorOut = color;
 	
-	vec4 eColor = vec4(texture(grass_diff, DataIn.tcTE).xyz,1.0);
 
-	//float eSpec = texture(grass_disp,DataIn.tcTE);.r;
-	vec4 eNight = texture(grass_rough, DataIn.tcTE);
+    if (NdotL > 0.0) {
+        split[0] = 100;
+        split[1] = 200;
+        split[2] = 400;
+        split[3] = 1000;
 
-	float OFFSET = DataIn.distanceTE*0.00005;
-	vec4 biome = vec4(0.0,0.0,0.0,1.0);
-	vec3 p = DataIn.posTE;
-	//p.y = fbm(vec2(p.x,p.z));
+		projShadowCoord[0] = lightSpaceMat1  * (vec4(p, 1.0));
+		projShadowCoord[1] = lightSpaceMat2  * (vec4(p, 1.0));
+		projShadowCoord[2] = lightSpaceMat3  * (vec4(p, 1.0));
+		projShadowCoord[3] = lightSpaceMat4  * (vec4(p, 1.0));
 
-	//Calculate the normal of the terrain by sampling Nearby points
-	vec3 front_Height = vec3 (0+OFFSET,fbm(vec2(p.x+OFFSET,p.z), biome),0);
-  	vec3 right_Height = vec3 (0,fbm(vec2(p.x,p.z+OFFSET), biome),0+OFFSET);
-	vec3 back_Height = vec3 (0-OFFSET,fbm(vec2(p.x-OFFSET,p.z), biome),0);
-	vec3 left_Height = vec3 (0,fbm(vec2(p.x,p.z-OFFSET),biome),0-OFFSET);
+      
+        float shadowFactor[4];
+        shadowFactor[0] = textureProj(shadowMap1, projShadowCoord[0]).r;
+        shadowFactor[1] = textureProj(shadowMap2, projShadowCoord[1]).r;
+        shadowFactor[2] = textureProj(shadowMap3, projShadowCoord[2]).r;
+        shadowFactor[3] = textureProj(shadowMap4, projShadowCoord[3]).r;
 
-  	vec3 calcNormal = cross((0,p.y,0)-left_Height,(0,p.y,0)-back_Height)+cross((0,p.y,0)-right_Height,(0,p.y,0)-front_Height);
-	vec3 n = normalize(m_normal * calcNormal);
-	vec3 l = normalize(DataIn.l_dirTE);
-	float intensity = max(dot(l,n),0.0);
+		float shadow = 0.0;
+		for (int i = 0; i < 4; i++) {
+			if (distance < split[i]) {
+			shadow = shadowFactor[i];
+			break;
+			}
+		}
 
-	vec4 biomeColor = biomePicker(p);
-	vec4 rgbcolor = seeTessLevels == 1 ? DataIn.colorTE : biomeColor;
-	if (intensity < 0.1) {
-		
-		color = (rgbcolor * intensity) + rgbcolor * 0.2;
-	}
-	else {
-		color = rgbcolor * intensity ;
-	}
-
-/*
-	if (DataIn.colorTE == vec4(1.0,0.0,0.0,1.0) || DataIn.colorTE == vec4(0.0,1.0,0.0,1.0) || DataIn.colorTE == vec4(0.0,0.0,1.0,1.0)){
-		color = DataIn.colorTE;
-	}
-	else {
-		color = vec4(0.0,0.0,0.0,0.0);
-	}
-*/
-	//color = DataIn.colorTE;
-
-	//color = clamp(eColor,0,1);
-
-
-	//color = DataIn.colorTE;
-	//color = vec4(2.0, 0.0, 0.0, 1.0);
+		color = color * (1.0 - shadow) + color * 0.5;
+		colorOut = color;
+    }
+	
 }
+

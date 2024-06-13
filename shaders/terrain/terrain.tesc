@@ -41,7 +41,7 @@ void main() {
 	
 	float tessLevel = 3.0;
 	float outer = level*20.0;
-	float spacing = 20;
+	float spacing = 50;
 	vec4 distanceColor = vec4(1.0, 1.0, 1.0, 1.0);
 	
 	if (distanceCalc < spacing){
@@ -53,17 +53,17 @@ void main() {
 	else if (distanceCalc < 2*spacing) {
 		distanceColor = vec4(0.749, 0.937, 0.271,1.0);
         tessLevel = level*32.0;  
-		distanceTC[gl_InvocationID] = 1.0;
+		distanceTC[gl_InvocationID] = 2.0;
 
     } else if (distanceCalc < 4 * spacing) {
 		distanceColor = vec4(0.98, 0.745, 0.831,1.0);
         tessLevel = level*16.0;  
-		distanceTC[gl_InvocationID] = 2.0;
+		distanceTC[gl_InvocationID] = 16.0;
 
     } else if(distanceCalc < 8 * spacing) {
 		distanceColor = vec4(1., 0.882, 0.098,1.0);
         tessLevel = level*8.0;  
-		distanceTC[gl_InvocationID] = 4.0;
+		distanceTC[gl_InvocationID] = 32.0;
 
     }
 	else if (distanceCalc < 16 * spacing) {

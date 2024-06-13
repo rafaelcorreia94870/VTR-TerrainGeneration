@@ -35,9 +35,9 @@ void main () {
 
 
 	vec4 calcposition = m_m * position;
-	calcposition = translate_to_centerCam(calcposition);
 	calcposition.y = height;
 	calcposition.y += texture(water, texCoord - 0.5 * timer * speed).r;
+	calcposition = translate_to_centerCam(calcposition);
 
 	vec4 biome = vec4(0.0, 0.0, 0.0, 0.0);
     terrainHeight = fbm(vec2(calcposition.x, calcposition.z), biome);

@@ -34,6 +34,7 @@ void main() {
     // set the specular term to an ocean blue color
 
     vec4 waterColor = vec4(0.0, 0.4, 0.7, 1.0);
+    waterColor = vec4(0.137, 0.537, 0.855,1.0);
     vec4 specularColor = vec4(0.0, 0.0, 0.0, 1.0);
 
     // normalize both input vectors
@@ -58,15 +59,15 @@ void main() {
         float foamFactor = texture(foam, texCoord * 10.0 + vec2(timer * speed * .1, timer * speed * 0.1)).r;
         vec4 foamColor = vec4(foamFactor, foamFactor, foamFactor, 1.0);
 
-        if (terrainHeight >= waterHeight - 2.0) {
-            float blendFactor = smoothstep(waterHeight - 2.0, waterHeight, terrainHeight);
+        if (terrainHeight >= waterHeight - 3.0) {
+            float blendFactor = smoothstep(waterHeight - 3.0, waterHeight, terrainHeight);
             colorOut = mix(baseColor, foamColor, blendFactor);
         } else {
             colorOut = baseColor;
         }
     }
 
-    colorOut.a = 0.8;
+    colorOut.a = 0.9;
     
     
 }

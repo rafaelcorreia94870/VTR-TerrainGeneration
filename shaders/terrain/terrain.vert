@@ -1,5 +1,5 @@
 
-uniform mat4 m_pvm, m_view, m_m;
+uniform mat4 m_pvm, m_view, m_m, m_p;
 uniform mat3 m_normal;
 uniform vec4 l_dir;
 uniform float timer;
@@ -29,7 +29,7 @@ void main(void) {
     worldSpace.y = fbm(worldSpace.xz, biome);
     worldSpace = translate_to_centerCam(worldSpace);
     posV = worldSpace;
-    gl_Position = worldSpace;
+    gl_Position = m_p * m_view * worldSpace;
 
     /* vec4 clipPos = m_pvm * position;
 
