@@ -168,19 +168,19 @@
 
                                         
                     <valueof uniform="lightSpaceMat1" type="CAMERA" 
-														context="MainCamera" 
+														context="terrain#pass1-LightCam" 
 														component="TS05_PVM_MATRIX" />
 														
 					<valueof uniform="lightSpaceMat2" type="CAMERA" 
-														context="MainCamera" 
+														context="terrain#pass2-LightCam" 
 														component="TS05_PVM_MATRIX" />
 														
 					<valueof uniform="lightSpaceMat3" type="CAMERA" 
-														context="MainCamera" 
+														context="terrain#pass3-LightCam" 
 														component="TS05_PVM_MATRIX" />
 														
 					<valueof uniform="lightSpaceMat4" type="CAMERA" 
-														context="MainCamera" 
+														context="terrain#pass4-LightCam" 
 														component="TS05_PVM_MATRIX" />
 					<valueof uniform="inverse_projection" type="CAMERA" context="MainCamera" component="PROJECTION_INVERSE_MATRIX" />
 					<valueof uniform="inverse_view" type="CAMERA" context="MainCamera" component="VIEW_INVERSE_MATRIX" />

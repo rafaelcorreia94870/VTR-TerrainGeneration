@@ -94,18 +94,19 @@ void main() {
     vec4 projShadowCoord[4];
     float split[4];
 	colorOut = color;
+
 	
 
     if (NdotL > 0.0) {
         split[0] = 100;
         split[1] = 200;
         split[2] = 400;
-        split[3] = 1000;
+        split[3] = 2000;
 
-		projShadowCoord[0] = lightSpaceMat1  * (vec4(p, 1.0));
-		projShadowCoord[1] = lightSpaceMat2  * (vec4(p, 1.0));
-		projShadowCoord[2] = lightSpaceMat3  * (vec4(p, 1.0));
-		projShadowCoord[3] = lightSpaceMat4  * (vec4(p, 1.0));
+		projShadowCoord[0] = lightSpaceMat1  * vec4(p, 1.0);
+		projShadowCoord[1] = lightSpaceMat2  * vec4(p, 1.0);
+		projShadowCoord[2] = lightSpaceMat3  * vec4(p, 1.0);
+		projShadowCoord[3] = lightSpaceMat4  * vec4(p, 1.0);
 
       
         float shadowFactor[4];
@@ -122,7 +123,7 @@ void main() {
 			}
 		}
 
-		color = color * (1.0 - shadow) + color * 0.5;
+		color = color * (shadow) + color * 0.4;
 		colorOut = color;
     }
 	

@@ -68,11 +68,18 @@ void main() {
     }
 	else if (distanceCalc < 16 * spacing) {
 		distanceColor = vec4(0.569, 0.118, 0.706,1.0);
-		tessLevel = 4.0;  
+		if(level >= 0.25)
+			tessLevel = level* 4.0;
+		else
+			tessLevel = 1.0;  
 		distanceTC[gl_InvocationID] = 512.0;
 
 	} else if (distanceCalc < 32 * spacing){
 		distanceColor = vec4(0.961, 0.51, 0.192,1.0);
+		if(level >= 0.5)
+			tessLevel = level* 2.0;
+		else
+			tessLevel = 1.0;
 		tessLevel = 2.0;  
 		distanceTC[gl_InvocationID] = 2048;
 	}

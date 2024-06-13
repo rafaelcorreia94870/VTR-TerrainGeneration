@@ -58,7 +58,8 @@ void main() {
     if (foam_option == 0) {
         float foamFactor = texture(foam, texCoord * 10.0 + vec2(timer * speed * .1, timer * speed * 0.1)).r;
         vec4 foamColor = vec4(foamFactor, foamFactor, foamFactor, 1.0);
-
+        foamColor = mix(baseColor, vec4(1.0), foamFactor);
+        
         if (terrainHeight >= waterHeight - 3.0) {
             float blendFactor = smoothstep(waterHeight - 3.0, waterHeight, terrainHeight);
             colorOut = mix(baseColor, foamColor, blendFactor);

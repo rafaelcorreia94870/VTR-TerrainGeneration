@@ -485,8 +485,8 @@ float fbm(vec2 xz, vec4 biome) {
         float sampleZ = xz.y / calcscale * frequency; 
         noisevar += snoise(vec2(sampleX,sampleZ)) * amplitude;
 
-        amplitude *= persistence;
-		    frequency *= lacunarity;
+        amplitude *= calcpersistence;
+		    frequency *= calclacunarity;
     }
     return (heightmult * (noisevar+1)) + baseHeight;
 }

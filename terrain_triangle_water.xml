@@ -228,7 +228,7 @@
 					<scene name="Terrain" />
 				</scenes>
 				<FROM value="400" />
-				<TO value="1000" />
+				<TO value="2000" />
 				<camera name="MainCamera" />
 				<lights>
 					<light name="Sun" />
