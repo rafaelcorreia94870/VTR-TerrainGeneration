@@ -12,6 +12,8 @@
 			<attribute name= "initFrequency" type="RENDERER" data="FLOAT" value="1.0" />
 			<attribute name= "initbaseHeight" type="RENDERER" data="FLOAT" value="0.0" />
 
+			<attribute name="shadows" type="RENDERER" data="INT" value="1" />
+
 			<attribute name="option" data="INT" type="RENDERER" value="0" />
 			<attribute name="alpha" data="FLOAT" type="RENDERER" value="0.75" />
 
@@ -130,8 +132,6 @@
 		<materialLibs>
 			<materialLib filename="materials/terrain_triangle.mlib"/>
             <materialLib filename="materials/skybox.mlib" />
-			<materialLib filename="materials/chunks.mlib" />
-			<materialLib filename="materials/water.mlib" />
 			<materialLib filename="materials/biome.mlib"/>
 
 		</materialLibs>
@@ -172,8 +172,6 @@
 
 
 			
-
-
 
 
 			<pass class="depthmap" name="pass1">
@@ -289,30 +287,11 @@
 					<light name="Sun" />
 				</lights>
 				<materialMaps>
-					<map fromMaterial="*" toMaterial="water"  toLibrary="water" />
+					<map fromMaterial="*" toMaterial="water"  toLibrary="Terrain" />
 				</materialMaps>
 				<COLOR_CLEAR value="false"/>
 				<DEPTH_CLEAR value="false"/>
 			</pass>
-
-			<!--pass name="Chunks" class="default" >
-				<scenes instances = "1023">
-					<scene name="chunks" />
-				</scenes>
-				<camera name="MainCamera" />
-				<viewport name="MainViewport"/>
-				<lights>
-					<light name="Sun" />
-				</lights>
-				<materialMaps>
-					<map fromMaterial="chunks" toMaterial="chunks"  toLibrary="Chunks" />
-				</materialMaps>
-				<renderTarget name="buffer" fromLibrary="Chunks"/>
-				<COLOR_CLEAR value="false"/>
-			</pass-->
-
-
-            
 
 			
 			<!--pass name = "texturing" class = "default">
@@ -384,6 +363,8 @@
 					component="initbaseHeight" def="min=0.1 max=100.0 step=0.1" />
 			<var label = "seeTessLevels" type ="RENDERER" context="CURRENT"
 					component="seeTessLevels" def="min=0 max=1 step=1" />
+			<var label = "shadows" type ="RENDERER" context="CURRENT"
+					component="shadows" def="min=0 max=1 step=1" />
 			
 		</window>
 		<window label="Wave Settings" >

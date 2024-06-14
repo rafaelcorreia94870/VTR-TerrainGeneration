@@ -26,6 +26,7 @@ out vec2 texCoord;
 out float terrainHeight;
 out float waterHeight;
 out vec4 water_position;
+out vec3 posV;
 
 void main () {
     float speed = 0.00008* speedvar;
@@ -44,7 +45,7 @@ void main () {
 	waterHeight = calcposition.y;
 	water_position = calcposition;
 
-
+	posV = calcposition.xyz;
     gl_Position = m_p* m_view * calcposition;
 
 }

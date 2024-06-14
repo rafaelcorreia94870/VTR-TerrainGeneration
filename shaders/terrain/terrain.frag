@@ -4,6 +4,7 @@ uniform sampler2DShadow shadowMap1,shadowMap2,shadowMap3,shadowMap4;
 uniform mat4 lightSpaceMat1,lightSpaceMat2,lightSpaceMat3,lightSpaceMat4;
 uniform vec4 lightDirection;
 uniform mat4 inverse_projection, inverse_view;
+uniform int shadows;
 
 
 uniform mat4 m_pvm, m_m, m_view, m_p;
@@ -86,46 +87,54 @@ void main() {
         color = rgbcolor * intensity;
     }
 
-    vec3 lightDir = normalize(vec3(m_view * -lightDirection));
-    float NdotL = max(dot(n, lightDir), 0.0);
 
-    vec4 viewSpacePos = m_view * vec4(DataIn.posTE, 1.0);
-    float distance = -viewSpacePos.z / viewSpacePos.w;
-    vec4 projShadowCoord[4];
-    float split[4];
-	colorOut = color;
+
+	if(shadows == 1){
+
+    	vec3 lightDir = normalize(vec3(m_view * -lightDirection));
+    	float NdotL = max(dot(n, lightDir), 0.0);
+
+    	vec4 viewSpacePos = m_view * vec4(DataIn.posTE, 1.0);
+    	float distance = -viewSpacePos.z / viewSpacePos.w;
+    	vec4 projShadowCoord[4];
+    	float split[4];
+		colorOut = color;
+
+
+
+    	if (NdotL > 0.0) {
+    	    split[0] = 100;
+    	    split[1] = 200;
+    	    split[2] = 400;
+    	    split[3] = 2000;
+
+			projShadowCoord[0] = lightSpaceMat1  * vec4(p, 1.0);
+			projShadowCoord[1] = lightSpaceMat2  * vec4(p, 1.0);
+			projShadowCoord[2] = lightSpaceMat3  * vec4(p, 1.0);
+			projShadowCoord[3] = lightSpaceMat4  * vec4(p, 1.0);
 
 	
+    	    float shadowFactor[4];
+    	    shadowFactor[0] = textureProj(shadowMap1, projShadowCoord[0]).r;
+    	    shadowFactor[1] = textureProj(shadowMap2, projShadowCoord[1]).r;
+    	    shadowFactor[2] = textureProj(shadowMap3, projShadowCoord[2]).r;
+    	    shadowFactor[3] = textureProj(shadowMap4, projShadowCoord[3]).r;
 
-    if (NdotL > 0.0) {
-        split[0] = 100;
-        split[1] = 200;
-        split[2] = 400;
-        split[3] = 2000;
-
-		projShadowCoord[0] = lightSpaceMat1  * vec4(p, 1.0);
-		projShadowCoord[1] = lightSpaceMat2  * vec4(p, 1.0);
-		projShadowCoord[2] = lightSpaceMat3  * vec4(p, 1.0);
-		projShadowCoord[3] = lightSpaceMat4  * vec4(p, 1.0);
-
-      
-        float shadowFactor[4];
-        shadowFactor[0] = textureProj(shadowMap1, projShadowCoord[0]).r;
-        shadowFactor[1] = textureProj(shadowMap2, projShadowCoord[1]).r;
-        shadowFactor[2] = textureProj(shadowMap3, projShadowCoord[2]).r;
-        shadowFactor[3] = textureProj(shadowMap4, projShadowCoord[3]).r;
-
-		float shadow = 0.0;
-		for (int i = 0; i < 4; i++) {
-			if (distance < split[i]) {
-			shadow = shadowFactor[i];
-			break;
+			float shadow = 0.0;
+			for (int i = 0; i < 4; i++) {
+				if (distance < split[i]) {
+				shadow = shadowFactor[i];
+				break;
+				}
 			}
-		}
 
-		color = color * (shadow) + color * 0.4;
+			color = color * (shadow) + color * 0.4;
+			colorOut = color;
+    	}
+	}
+	else {
 		colorOut = color;
-    }
+	}
 	
 }
 

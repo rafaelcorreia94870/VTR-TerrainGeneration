@@ -35,72 +35,89 @@
                 <texture name="grass_rock_diffuse" filename="../textures/biomes/grass_rock/textures/aerial_grass_rock_diff_1k.jpg" mipmap="true"/>
                 <texture name="grass_rock_displacement" filename="../textures/biomes/grass_rock/textures/aerial_grass_rock_disp_1k.png" mipmap="true"/>
                 <texture name="grass_rock_roughness" filename="../textures/biomes/grass_rock/textures/aerial_grass_rock_rough_1k.jpg" mipmap="true"/>
+				<texture name="ocean" filename="../textures/water/ocean.jpeg" mipmap="true" />
+				<texture name="waves" filename="../textures/water/waves.jpeg" mipmap="true" />
+				<texture name="lake" filename="../textures/water/lake.jpg" mipmap="true" />
+				<texture name="water" filename="../textures/water/water.jpeg" mipmap="true" />
+				<texture name="foam" filename="../textures/water/foam.png" mipmap="true" />
         </textures>
         <shaders>
-                <shader name="terrain">
-                        <vs>
-                                <file name="../shaders/utils/header.glsl"/>
-                                <file name="../shaders/utils/noise.glsl"/>
-                                <file name="../shaders/utils/translate.glsl"/>
-                                <file name="../shaders/terrain/terrain.vert"/>
-                        </vs>
-                        <tc>
-                                <file name="../shaders/terrain/terrain.tesc"/>
-                        </tc>
-                        <te>
-                                <file name="../shaders/utils/header.glsl"/>
-                                <file name="../shaders/utils/noise.glsl"/>
-                                <file name="../shaders/terrain/terrain.tese"/>
-                        </te>
-                        <!--gs>
-                                <file name="../shaders/terrain/terrain.geom"/>
-                        </gs-->
-                        <ps>
-                                <file name="../shaders/utils/header.glsl"/>
-                                <file name="../shaders/utils/noise.glsl"/>
-                                <file name="../shaders/terrain/terrain.frag"/>
-                        </ps>
-                </shader>
-                <!--shader name="terrain"
-                        ps="../shaders/terrain.frag"
-                        tc="../shaders/terrain.tesc"
-                        te="../shaders/terrain.tese"
-                        vs="../shaders/terrain.vert"
-                /-->
-                <shader name = "grass_rock">
-                        <vs>
-                                <file name="../shaders/texture/texture.vert"/>
-                        </vs>
-                        <ps>
-                                <file name="../shaders/texture/texture.frag"/>
-                        </ps>
-                </shader>
-                <shader name="perpixel-color-shadow-4-depths">
-			<vs>
-                                <file name="../shaders/utils/header.glsl"/>
-                                <file name="../shaders/utils/noise.glsl"/>
-				<file name="../shaders/utils/translate.glsl"/>
-				<file name="../shaders/shadows/perpixel-color-shadow-4-depths.vert"/>
-			</vs>
-			<ps>
-				<file name="../shaders/shadows/perpixel-color-shadow-4-depths.frag"/>
-			</ps>
-		</shader>
+            <shader name="terrain">
+                    <vs>
+                            <file name="../shaders/utils/header.glsl"/>
+                            <file name="../shaders/utils/noise.glsl"/>
+                            <file name="../shaders/utils/translate.glsl"/>
+                            <file name="../shaders/terrain/terrain.vert"/>
+                    </vs>
+                    <tc>
+                            <file name="../shaders/terrain/terrain.tesc"/>
+                    </tc>
+                    <te>
+                            <file name="../shaders/utils/header.glsl"/>
+                            <file name="../shaders/utils/noise.glsl"/>
+                            <file name="../shaders/terrain/terrain.tese"/>
+                    </te>
+                    <!--gs>
+                            <file name="../shaders/terrain/terrain.geom"/>
+                    </gs-->
+                    <ps>
+                            <file name="../shaders/utils/header.glsl"/>
+                            <file name="../shaders/utils/noise.glsl"/>
+                            <file name="../shaders/terrain/terrain.frag"/>
+                    </ps>
+            </shader>
+            <shader name = "grass_rock">
+                    <vs>
+                            <file name="../shaders/texture/texture.vert"/>
+                    </vs>
+                    <ps>
+                            <file name="../shaders/texture/texture.frag"/>
+                    </ps>
+            </shader>
+               
 													
-		<shader name="depthOnly" >
-			<vs>
-				<file name="../shaders/utils/header.glsl"/>
-				<file name="../shaders/utils/translate.glsl"/>
-				<file name="../shaders/utils/noise.glsl"/>
-				<file name="../shaders/shadows/depthOnly.vert"/>
-			</vs>
-			<ps>
-				<file name="../shaders/shadows/depthOnly.frag"/>
-			</ps>
-		</shader>
+			<shader name="depthOnly" >
+				<vs>
+					<file name="../shaders/utils/header.glsl"/>
+					<file name="../shaders/utils/translate.glsl"/>
+					<file name="../shaders/utils/noise.glsl"/>
+					<file name="../shaders/shadows/depthOnly.vert"/>
+				</vs>
+				<tc>
+					<file name="../shaders/shadows/depthOnly.tesc"/>
+				</tc>
+				<te>
+					<file name = "../shaders/utils/header.glsl"/>
+					<file name="../shaders/utils/noise.glsl"/>
+					<file name="../shaders/shadows/depthOnly.tese"/>
+				</te>
+				<ps>
+					<file name="../shaders/shadows/depthOnly.frag"/>
+				</ps>
+			</shader>
+			<shader name="water" >
+				<vs>
+					<file name="../shaders/utils/header.glsl"/>
+            	    <file name="../shaders/utils/noise.glsl"/>
+            	    <file name="../shaders/utils/translate.glsl"/>
+					<file name= "../shaders/water/water.vert" />
+				</vs>
+				<!--tc>
+					<file name="../shaders/water/water.tesc"/>
+				</tc>
+				<te>
+					<file name = "../shaders/utils/header.glsl"/>
+					<file name="../shaders/utils/noise.glsl"/>
+					<file name="../shaders/water/water.tese"/>
+				</te-->
+				<ps>
+					<file name="../shaders/utils/header.glsl"/>
+					<file name= "../shaders/water/water.frag"/>
+				</ps>
+			</shader>
         </shaders>
 
-        <buffers>
+    <buffers>
 		<buffer name="point">
 			<SIZE value=16  />
 		</buffer>
@@ -108,6 +125,15 @@
         <states>
 		<state name="frontCull">
 			<CULL_TYPE value="FRONT" />
+		</state>
+		<state name="CullFront">
+			<CULL_TYPE value ="FRONT"  />
+		</state>
+		<state name="Transparent" >
+			<ORDER value="2" />
+			<BLEND value="TRUE" />
+			<BLEND_SRC value="SRC_ALPHA" />
+			<BLEND_DST value="ONE_MINUS_SRC_ALPHA" />
 		</state>
 	</states>
 
@@ -157,63 +183,65 @@
 														<valueof uniform="shadowMap1" 	type="TEXTURE_BINDING" context="CURRENT" 
 														id=0 component="UNIT" />
 														
-					<valueof uniform="shadowMap2" 	type="TEXTURE_BINDING" context="CURRENT" 
-														id=1 component="UNIT" />
-														
-					<valueof uniform="shadowMap3" 	type="TEXTURE_BINDING" context="CURRENT" 
-														id=2 component="UNIT" />
-														
-					<valueof uniform="shadowMap4" 	type="TEXTURE_BINDING" context="CURRENT" 
-														id=3 component="UNIT" />
+										<valueof uniform="shadowMap2" 	type="TEXTURE_BINDING" context="CURRENT" 
+																			id=1 component="UNIT" />
 
-                                        
-                    <valueof uniform="lightSpaceMat1" type="CAMERA" 
-														context="terrain#pass1-LightCam" 
-														component="TS05_PVM_MATRIX" />
-														
-					<valueof uniform="lightSpaceMat2" type="CAMERA" 
-														context="terrain#pass2-LightCam" 
-														component="TS05_PVM_MATRIX" />
-														
-					<valueof uniform="lightSpaceMat3" type="CAMERA" 
-														context="terrain#pass3-LightCam" 
-														component="TS05_PVM_MATRIX" />
-														
-					<valueof uniform="lightSpaceMat4" type="CAMERA" 
-														context="terrain#pass4-LightCam" 
-														component="TS05_PVM_MATRIX" />
-					<valueof uniform="inverse_projection" type="CAMERA" context="MainCamera" component="PROJECTION_INVERSE_MATRIX" />
-					<valueof uniform="inverse_view" type="CAMERA" context="MainCamera" component="VIEW_INVERSE_MATRIX" />
+										<valueof uniform="shadowMap3" 	type="TEXTURE_BINDING" context="CURRENT" 
+																			id=2 component="UNIT" />
+
+										<valueof uniform="shadowMap4" 	type="TEXTURE_BINDING" context="CURRENT" 
+																			id=3 component="UNIT" />
+
+
+                    					<valueof uniform="lightSpaceMat1" type="CAMERA" 
+																			context="terrain#pass1-LightCam" 
+																			component="TS05_PVM_MATRIX" />
+
+										<valueof uniform="lightSpaceMat2" type="CAMERA" 
+																			context="terrain#pass2-LightCam" 
+																			component="TS05_PVM_MATRIX" />
+
+										<valueof uniform="lightSpaceMat3" type="CAMERA" 
+																			context="terrain#pass3-LightCam" 
+																			component="TS05_PVM_MATRIX" />
+
+										<valueof uniform="lightSpaceMat4" type="CAMERA" 
+																			context="terrain#pass4-LightCam" 
+																			component="TS05_PVM_MATRIX" />
+										<valueof uniform="inverse_projection" type="CAMERA" context="MainCamera" component="PROJECTION_INVERSE_MATRIX" />
+										<valueof uniform="inverse_view" type="CAMERA" context="MainCamera" component="VIEW_INVERSE_MATRIX" />
+										<valueof uniform="shadows" type="RENDERER" context="CURRENT" component="shadows" />
+
 
                                 </values>
                         </shader>
-                        <textures>
-				<texture UNIT="0" name="shadowMap1" >
-					<COMPARE_MODE value="COMPARE_REF_TO_TEXTURE" />
-					<COMPARE_FUNC value="LEQUAL" />
-					<MIN_FILTER value="LINEAR" />
-					<MAG_FILTER value="LINEAR" />
-				</texture>	
-				<texture UNIT="1" name="shadowMap2" >
-					<COMPARE_MODE value="COMPARE_REF_TO_TEXTURE" />
-					<COMPARE_FUNC value="LEQUAL" />
-					<MIN_FILTER value="LINEAR" />
-					<MAG_FILTER value="LINEAR" />
-				</texture>	
-				<texture UNIT="2" name="shadowMap3" >
-					<COMPARE_MODE value="COMPARE_REF_TO_TEXTURE" />
-					<COMPARE_FUNC value="LEQUAL" />
-					<MIN_FILTER value="LINEAR" />
-					<MAG_FILTER value="LINEAR" />
-				</texture>	
-				<texture UNIT="3" name="shadowMap4" >
-					<COMPARE_MODE value="COMPARE_REF_TO_TEXTURE" />
-					<COMPARE_FUNC value="LEQUAL" />
-					<MIN_FILTER value="LINEAR" />
-					<MAG_FILTER value="LINEAR" />
-				</texture>	
-			</textures>
-                </material>
+            		<textures>
+						<texture UNIT="0" name="shadowMap1" >
+							<COMPARE_MODE value="COMPARE_REF_TO_TEXTURE" />
+							<COMPARE_FUNC value="LEQUAL" />
+							<MIN_FILTER value="LINEAR" />
+							<MAG_FILTER value="LINEAR" />
+						</texture>	
+						<texture UNIT="1" name="shadowMap2" >
+							<COMPARE_MODE value="COMPARE_REF_TO_TEXTURE" />
+							<COMPARE_FUNC value="LEQUAL" />
+							<MIN_FILTER value="LINEAR" />
+							<MAG_FILTER value="LINEAR" />
+						</texture>	
+						<texture UNIT="2" name="shadowMap3" >
+							<COMPARE_MODE value="COMPARE_REF_TO_TEXTURE" />
+							<COMPARE_FUNC value="LEQUAL" />
+							<MIN_FILTER value="LINEAR" />
+							<MAG_FILTER value="LINEAR" />
+						</texture>	
+						<texture UNIT="3" name="shadowMap4" >
+							<COMPARE_MODE value="COMPARE_REF_TO_TEXTURE" />
+							<COMPARE_FUNC value="LEQUAL" />
+							<MIN_FILTER value="LINEAR" />
+							<MAG_FILTER value="LINEAR" />
+						</texture>	
+					</textures>
+            	</material>
                 <material name = "grass_rock">
                         <shader name="grass_rock">
                                 <valueof uniform="grass_diff"
@@ -232,136 +260,139 @@
 				<texture name="grass_rock_roughness" UNIT="2"/>
 			</textures>
                 </material>
-                <material name="flat-with-shadow-4-depths">
-			<color>
-				<AMBIENT r="0.3" g="0.3" b="0.3" a="1.0" />
-				<DIFFUSE r="1.0" g="1.0" b="1.0" a="1.0" />
-				<SPECULAR r="0.0" g="0.0" b="0.0" a="1.0" />
-				<EMISSION r="0.0" g="0.0" b="0.0" a="1.0" />
-				<SHININESS value="0.0" />
-			</color>
-			<shader name="perpixel-color-shadow-4-depths">
+                
+		<material name="water" >
+			<shader name="water" >
 				<values>
-					<valueof uniform="PVM"          type="RENDERER" context="CURRENT" 
-													component="PROJECTION_VIEW_MODEL" />
-														
-					<valueof uniform="V"          	type="RENDERER" context="CURRENT" 
-													component="VIEW" />
-														
-					<valueof uniform="M"          	type="RENDERER" context="CURRENT" 
-													component="MODEL" />
-					<valueof uniform="P"          	type="RENDERER" context="CURRENT" 
-													component="PROJECTION" />
-														
-					<valueof uniform="NormalMatrix" type="RENDERER" context="CURRENT" 
-													component="NORMAL" />
-					
-					<valueof uniform="lightDirection" 	type="LIGHT" 
-														context="Sun" 
-														component="DIRECTION" /> 
-														
- 					<valueof uniform="lightSpaceMat1" type="CAMERA" 
-														context="MainCamera" 
-														component="TS05_PVM_MATRIX" />
-														
-					<valueof uniform="lightSpaceMat2" type="CAMERA" 
-														context="MainCamera" 
-														component="TS05_PVM_MATRIX" />
-														
-					<valueof uniform="lightSpaceMat3" type="CAMERA" 
-														context="MainCamera" 
-														component="TS05_PVM_MATRIX" />
-														
-					<valueof uniform="lightSpaceMat4" type="CAMERA" 
-														context="MainCamera" 
-														component="TS05_PVM_MATRIX" />
-														
-					<!--valueof uniform="split1" type="PASS" context="shadow#pass1" component="TO" />
-					<valueof uniform="split2" type="PASS" context="shadow#pass2" component="TO" />
-					<valueof uniform="split3" type="PASS" context="shadow#pass3" component="TO" />
-					<valueof uniform="split4" type="PASS" context="shadow#pass4" component="TO" /-->
-					<!--valueof uniform="split[0]" type="PASS" context="shadow#pass1" component="TO" />
-					<valueof uniform="split[1]" type="PASS" context="shadow#pass2" component="TO" />
-					<valueof uniform="split[2]" type="PASS" context="shadow#pass3" component="TO" />
-					<valueof uniform="split[3]" type="PASS" context="shadow#pass4" component="TO" /-->
-					<!--valueof uniform="split[1]" type="DATA" context="15" component="FLOAT" />
-					<valueof uniform="split[2]" type="DATA" context="50" component="FLOAT" />
-					<valueof uniform="split[3]" type="DATA" context="500" component="FLOAT" /-->
+					<valueof uniform="scale" 	type="RENDERER"  
+												component="scale"  />
+
+					<valueof uniform="num_octaves" type="RENDERER" component="num_octaves" />
+					<valueof uniform="heightmult" type="RENDERER" component="heightMultiplier" />
+					<valueof uniform="lacunarity" type="RENDERER" component="lacunarity" />
+					<valueof uniform="persistence" type="RENDERER" component="persistence" />
+					<valueof uniform="initAmplitude" type="RENDERER" component="initAmplitude" />
+					<valueof uniform="initFrequency" type="RENDERER" component="initFrequency" />
+					<valueof uniform="initbaseHeight" type="RENDERER" component="initbaseHeight" />
+
+												
+					<valueof uniform="timer" 	type="RENDERER"  
+												component="TIMER"  />	
+												
+					<valueof uniform="m_p" 	type="RENDERER"  
+												component="PROJECTION"  />	
+
+					<valueof uniform="m_m" 	type="RENDERER"  
+												component="MODEL"  />	
+												
+					<valueof uniform="m_vm" 	type="RENDERER"  
+												component="VIEW_MODEL"  />	
+
+					<valueof uniform="m_pvm" 	type="RENDERER"  
+												component="PROJECTION_VIEW_MODEL"  />
+
+					<valueof uniform="m_pv" 	type="RENDERER"  
+												component="PROJECTION_VIEW"  />	
+												
+					<valueof uniform="m_normal" 	type="RENDERER"  
+												component="NORMAL"  />	
+												
+					<valueof uniform="m_view" 	type="RENDERER"  
+												component="VIEW"  />	
+												
+					<valueof uniform="l_dir"	type="LIGHT" 
+												component="DIRECTION" id="0"/>
+
+					<valueof uniform="projViewModelMatrix"  type="RENDERER" context="CURRENT" 
+														component="PROJECTION_VIEW_MODEL" />
+
+
+					<valueof uniform="diffuse" type="COLOR"
+							context="CURRENT" component="DIFFUSE" />
+
+                    <valueof uniform="height"    type="RENDERER" component="height" />   
+
+					<valueof uniform="width"    type="RENDERER" component="width" />
+
+					<valueof uniform="nwaves"	type="RENDERER" component="nwaves" />  
+
+					<valueof uniform="speedvar"	type="RENDERER" component="speed" />
+					<valueof uniform="foam_option" type="RENDERER" component="foam_option" />
+					<valueof uniform="LOOKAT" type="CAMERA" context="MainCamera" component="LOOK_AT_POINT" />
+					<valueof uniform="POS" type="CAMERA" context="MainCamera" component="POSITION" />
+					<valueof uniform="ocean" type="TEXTURE_BINDING" component = "UNIT" id="0" />
+					<valueof uniform="waves" type="TEXTURE_BINDING" component = "UNIT" id="2" />   
+					<valueof uniform="water" type="TEXTURE_BINDING" component = "UNIT" id="3" />                                    
+					<valueof uniform="foam" type="TEXTURE_BINDING" component = "UNIT" id="4" />
 					<valueof uniform="shadowMap1" 	type="TEXTURE_BINDING" context="CURRENT" 
 														id=0 component="UNIT" />
+										<valueof uniform="lightDirection" 	type="LIGHT" 
+														context="Sun" 
+														component="DIRECTION" /> 
+														<valueof uniform="shadowMap1" 	type="TEXTURE_BINDING" context="CURRENT" 
+														id=5 component="UNIT" />
 														
-					<valueof uniform="shadowMap2" 	type="TEXTURE_BINDING" context="CURRENT" 
-														id=1 component="UNIT" />
-														
-					<valueof uniform="shadowMap3" 	type="TEXTURE_BINDING" context="CURRENT" 
-														id=2 component="UNIT" />
-														
-					<valueof uniform="shadowMap4" 	type="TEXTURE_BINDING" context="CURRENT" 
-														id=3 component="UNIT" />
-					<valueof uniform="m_pvm"    type="RENDERER" context="CURRENT" component="PROJECTION_VIEW_MODEL" />
-                                        <valueof uniform="m_m"          	type="RENDERER" context="CURRENT" component="MODEL" />
-                                        <valueof uniform="m_normal" type="RENDERER" context="CURRENT" component="NORMAL"                />
-                                        <valueof uniform="m_p"  type="RENDERER" context="CURRENT" component="PROJECTION"/>
-                                        <valueof uniform="m_view"   type="RENDERER" context="CURRENT" component="VIEW"                  />
-                                        <valueof uniform="l_dir"    type="LIGHT"    context="Sun"     component="DIRECTION"             />
-                                        <valueof uniform="ilevel"   type="RENDERER" context="CURRENT" component="level"                 />
-                                        <valueof uniform="olevel"   type="RENDERER" context="CURRENT" component="level"                 />
-                                        <valueof uniform="RayOrigin"    type="CAMERA" context="MainCamera" component="POSITION" />
-                                        <valueof uniform="FOV"  type="CAMERA" context="MainCamera" component="FOV" />
-                                        <valueof uniform="Ratio" type="VIEWPORT" context="MainViewport" component="ABSOLUTE_RATIO" />
-                                        <valueof uniform="WindowSize"	type="VIEWPORT" context="MainViewport" component="ABSOLUTE_SIZE" />
-                                         
-                                        
-                                        <valueof uniform="num_octaves" type="RENDERER" component="num_octaves" />
-                                        <valueof uniform="heightmult" type="RENDERER" component="heightMultiplier" />
-                                        <valueof uniform="lacunarity" type="RENDERER" component="lacunarity" />
-                                        <valueof uniform="persistence" type="RENDERER" component="persistence" />
-                                        <valueof uniform="scale" type="RENDERER" component="scale" />
-                                        <valueof uniform="initAmplitude" type="RENDERER" component="initAmplitude" />
-                                        <valueof uniform="initFrequency" type="RENDERER" component="initFrequency" />
-                                        <valueof uniform="initbaseHeight" type="RENDERER" component="initbaseHeight" />
+										<valueof uniform="shadowMap2" 	type="TEXTURE_BINDING" context="CURRENT" 
+																			id=6 component="UNIT" />
 
-                                        <valueof uniform="height" type="RENDERER" component="height" />
-                                        
-                                        <valueof uniform="timer" type="RENDERER" component="TIMER" />
-                                        <valueof uniform="FAR" type="CAMERA" context="MainCamera" component="FAR" />
-                                        <valueof uniform="NEAR" type="CAMERA" context="MainCamera" component="NEAR" />
-                                        <valueof uniform="chunkSize" type="RENDERER" context="CURRENT" component="chunkSize" />
-                                        <valueof uniform="squareSize" type="RENDERER" context="CURRENT" component="squareSize" />
-                                        <valueof uniform="LOOKAT" type="CAMERA" context="MainCamera" component="LOOK_AT_POINT" />
-                                        <valueof uniform="POS" type="CAMERA" context="MainCamera" component="POSITION" />
-                                        <valueof uniform="seeTessLevels" type="RENDERER" context="CURRENT" component="seeTessLevels" />
-                                        <valueof uniform="level" type="RENDERER" context="CURRENT" component="level" />
+										<valueof uniform="shadowMap3" 	type="TEXTURE_BINDING" context="CURRENT" 
+																			id=7 component="UNIT" />
+
+										<valueof uniform="shadowMap4" 	type="TEXTURE_BINDING" context="CURRENT" 
+																			id=1 component="UNIT" />
+
+
+                    					<valueof uniform="lightSpaceMat1" type="CAMERA" 
+																			context="terrain#pass1-LightCam" 
+																			component="TS05_PVM_MATRIX" />
+
+										<valueof uniform="lightSpaceMat2" type="CAMERA" 
+																			context="terrain#pass2-LightCam" 
+																			component="TS05_PVM_MATRIX" />
+
+										<valueof uniform="lightSpaceMat3" type="CAMERA" 
+																			context="terrain#pass3-LightCam" 
+																			component="TS05_PVM_MATRIX" />
+
+										<valueof uniform="lightSpaceMat4" type="CAMERA" 
+																			context="terrain#pass4-LightCam" 
+																			component="TS05_PVM_MATRIX" />
+										<valueof uniform="shadows" type="RENDERER" context="CURRENT" component="shadows" />
+
 				</values>
 			</shader>
 			<textures>
-				<texture UNIT="0" name="shadowMap1" >
+				<texture name="ocean" UNIT ="0"/>
+				<texture name="waves" UNIT = "2"/>
+				<texture name="water" UNIT = "3"/>
+				<texture name="foam" UNIT = "4"/>
+				<texture UNIT="5" name="shadowMap1" >
 					<COMPARE_MODE value="COMPARE_REF_TO_TEXTURE" />
 					<COMPARE_FUNC value="LEQUAL" />
 					<MIN_FILTER value="LINEAR" />
 					<MAG_FILTER value="LINEAR" />
 				</texture>	
-				<texture UNIT="1" name="shadowMap2" >
+				<texture UNIT="6" name="shadowMap2" >
 					<COMPARE_MODE value="COMPARE_REF_TO_TEXTURE" />
 					<COMPARE_FUNC value="LEQUAL" />
 					<MIN_FILTER value="LINEAR" />
 					<MAG_FILTER value="LINEAR" />
 				</texture>	
-				<texture UNIT="2" name="shadowMap3" >
+				<texture UNIT="7" name="shadowMap3" >
 					<COMPARE_MODE value="COMPARE_REF_TO_TEXTURE" />
 					<COMPARE_FUNC value="LEQUAL" />
 					<MIN_FILTER value="LINEAR" />
 					<MAG_FILTER value="LINEAR" />
 				</texture>	
-				<texture UNIT="3" name="shadowMap4" >
+				<texture UNIT="1" name="shadowMap4" >
 					<COMPARE_MODE value="COMPARE_REF_TO_TEXTURE" />
 					<COMPARE_FUNC value="LEQUAL" />
 					<MIN_FILTER value="LINEAR" />
 					<MAG_FILTER value="LINEAR" />
 				</texture>	
 			</textures>
-		</material>	
-		
+			<state name = "Transparent" />
+		</material>
 		<material  name="depthOnly" >
 			<shader name="depthOnly">
 				<values>
@@ -376,39 +407,39 @@
 					<valueof uniform="P"          	type="RENDERER" context="CURRENT" 
 													component="PROJECTION" />
 					<valueof uniform="m_pvm"    type="RENDERER" context="CURRENT" component="PROJECTION_VIEW_MODEL" />
-                                        <valueof uniform="m_m"          	type="RENDERER" context="CURRENT" component="MODEL" />
-                                        <valueof uniform="m_normal" type="RENDERER" context="CURRENT" component="NORMAL"                />
-                                        <valueof uniform="m_p"  type="RENDERER" context="CURRENT" component="PROJECTION"/>
-                                        <valueof uniform="m_view"   type="RENDERER" context="CURRENT" component="VIEW"                  />
-                                        <valueof uniform="l_dir"    type="LIGHT"    context="Sun"     component="DIRECTION"             />
-                                        <valueof uniform="ilevel"   type="RENDERER" context="CURRENT" component="level"                 />
-                                        <valueof uniform="olevel"   type="RENDERER" context="CURRENT" component="level"                 />
-                                        <valueof uniform="RayOrigin"    type="CAMERA" context="MainCamera" component="POSITION" />
-                                        <valueof uniform="FOV"  type="CAMERA" context="MainCamera" component="FOV" />
-                                        <valueof uniform="Ratio" type="VIEWPORT" context="MainViewport" component="ABSOLUTE_RATIO" />
-                                        <valueof uniform="WindowSize"	type="VIEWPORT" context="MainViewport" component="ABSOLUTE_SIZE" />
-                                         
-                                        
-                                        <valueof uniform="num_octaves" type="RENDERER" component="num_octaves" />
-                                        <valueof uniform="heightmult" type="RENDERER" component="heightMultiplier" />
-                                        <valueof uniform="lacunarity" type="RENDERER" component="lacunarity" />
-                                        <valueof uniform="persistence" type="RENDERER" component="persistence" />
-                                        <valueof uniform="scale" type="RENDERER" component="scale" />
-                                        <valueof uniform="initAmplitude" type="RENDERER" component="initAmplitude" />
-                                        <valueof uniform="initFrequency" type="RENDERER" component="initFrequency" />
-                                        <valueof uniform="initbaseHeight" type="RENDERER" component="initbaseHeight" />
-
-                                        <valueof uniform="height" type="RENDERER" component="height" />
-                                        
-                                        <valueof uniform="timer" type="RENDERER" component="TIMER" />
-                                        <valueof uniform="FAR" type="CAMERA" context="MainCamera" component="FAR" />
-                                        <valueof uniform="NEAR" type="CAMERA" context="MainCamera" component="NEAR" />
-                                        <valueof uniform="chunkSize" type="RENDERER" context="CURRENT" component="chunkSize" />
-                                        <valueof uniform="squareSize" type="RENDERER" context="CURRENT" component="squareSize" />
-                                        <valueof uniform="LOOKAT" type="CAMERA" context="MainCamera" component="LOOK_AT_POINT" />
-                                        <valueof uniform="POS" type="CAMERA" context="MainCamera" component="POSITION" />
-                                        <valueof uniform="seeTessLevels" type="RENDERER" context="CURRENT" component="seeTessLevels" />
-                                        <valueof uniform="level" type="RENDERER" context="CURRENT" component="level" />
+					<valueof uniform="m_m"          	type="RENDERER" context="CURRENT" component="MODEL" />
+					<valueof uniform="m_normal" type="RENDERER" context="CURRENT" component="NORMAL"                />
+					<valueof uniform="m_p"  type="RENDERER" context="CURRENT" component="PROJECTION"/>
+					<valueof uniform="m_view"   type="RENDERER" context="CURRENT" component="VIEW"                  />
+					<valueof uniform="l_dir"    type="LIGHT"    context="Sun"     component="DIRECTION"             />
+					<valueof uniform="ilevel"   type="RENDERER" context="CURRENT" component="level"                 />
+					<valueof uniform="olevel"   type="RENDERER" context="CURRENT" component="level"                 />
+					<valueof uniform="RayOrigin"    type="CAMERA" context="MainCamera" component="POSITION" />
+					<valueof uniform="FOV"  type="CAMERA" context="MainCamera" component="FOV" />
+					<valueof uniform="Ratio" type="VIEWPORT" context="MainViewport" component="ABSOLUTE_RATIO" />
+					<valueof uniform="WindowSize"	type="VIEWPORT" context="MainViewport" component="ABSOLUTE_SIZE" />
+                                     
+                                    
+					<valueof uniform="num_octaves" type="RENDERER" component="num_octaves" />
+					<valueof uniform="heightmult" type="RENDERER" component="heightMultiplier" />
+					<valueof uniform="lacunarity" type="RENDERER" component="lacunarity" />
+					<valueof uniform="persistence" type="RENDERER" component="persistence" />
+					<valueof uniform="scale" type="RENDERER" component="scale" />
+					<valueof uniform="initAmplitude" type="RENDERER" component="initAmplitude" />
+					<valueof uniform="initFrequency" type="RENDERER" component="initFrequency" />
+					<valueof uniform="initbaseHeight" type="RENDERER" component="initbaseHeight" />
+					<valueof uniform="height" type="RENDERER" component="height" />
+                                    
+                    <valueof uniform="timer" type="RENDERER" component="TIMER" />
+                    <valueof uniform="FAR" type="CAMERA" context="MainCamera" component="FAR" />
+                    <valueof uniform="NEAR" type="CAMERA" context="MainCamera" component="NEAR" />
+                    <valueof uniform="chunkSize" type="RENDERER" context="CURRENT" component="chunkSize" />
+                    <valueof uniform="squareSize" type="RENDERER" context="CURRENT" component="squareSize" />
+                    <valueof uniform="LOOKAT" type="CAMERA" context="MainCamera" component="LOOK_AT_POINT" />
+                    <valueof uniform="POS" type="CAMERA" context="MainCamera" component="POSITION" />
+                    <valueof uniform="seeTessLevels" type="RENDERER" context="CURRENT" component="seeTessLevels" />
+                    <valueof uniform="level" type="RENDERER" context="CURRENT" component="level" />
+					<valueof uniform="shadows" type="RENDERER" context="CURRENT" component="shadows" />
 				</values>
 			</shader>
 			<state name="frontCull" />	
