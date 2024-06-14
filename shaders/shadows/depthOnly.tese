@@ -35,9 +35,9 @@ void main() {
 	vec3 b300 = (posTC[0]).xyz;
 	vec3 b030 = (posTC[1]).xyz;
 	vec3 b003 = (posTC[2]).xyz;
-	b300.y = fbm(b300.xz, biome);
-	b030.y = fbm(b030.xz, biome);
-	b003.y = fbm(b003.xz, biome);
+	b300.y = pattern(b300.xz, biome);
+	b030.y = pattern(b030.xz, biome);
+	b003.y = pattern(b003.xz, biome);
 
 
 	

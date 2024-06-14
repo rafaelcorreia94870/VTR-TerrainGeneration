@@ -17,6 +17,6 @@ void main(void) {
 
 	
 	pos = translate_to_centerCam(pos);
-	pos.y = fbm(pos.xz, vec4(0.0, 0.0, 0.0, 0.0));
+	pos.y = pattern(pos.xz, vec4(0.0, 0.0, 0.0, 0.0));
 	posV = pos;
 }

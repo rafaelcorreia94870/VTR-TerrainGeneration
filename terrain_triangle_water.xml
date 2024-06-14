@@ -365,6 +365,9 @@
 					component="seeTessLevels" def="min=0 max=1 step=1" />
 			<var label = "shadows" type ="RENDERER" context="CURRENT"
 					component="shadows" def="min=0 max=1 step=1" />
+
+			<var label = "option" type ="RENDERER" context="CURRENT"
+					component="option" def="min=0 max=0 step=1" />
 			
 		</window>
 		<window label="Wave Settings" >
@@ -378,7 +381,7 @@
 			<var label ="Speed" type ="RENDERER" context="CURRENT"
 					component="speed" def="min=0.01 max=1.0 step=0.01" />
 			<var label ="Foam Option" type ="RENDERER" context="CURRENT"
-					component="foam_option" def="min=0 max=1 step=1" />
+					component="foam_option" def="min=0 max=3 step=1" />
 		</window>
 
 		<window label="Biome Map settings" >

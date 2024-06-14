@@ -9,6 +9,8 @@ uniform float initAmplitude;
 uniform float initFrequency;
 uniform float initbaseHeight;
 
+uniform int option;
+
 // The MIT License
 // Copyright © 2013 Inigo Quilez
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
@@ -489,4 +491,23 @@ float fbm(vec2 xz, vec4 biome) {
 		    frequency *= calclacunarity;
     }
     return (heightmult * (noisevar+1)) + baseHeight;
+}
+
+float pattern(vec2 xz, vec4 biome) {
+    if (option == 0) return fbm(xz, biome);
+    if (option == 1){
+      vec2 q = vec2( fbm(xz + vec2(0.0,0.0), biome ),
+                     fbm(xz + vec2(5.2,1.3), biome ));
+
+      return fbm( xz + 4.0*q, biome);
+
+    }
+    if (option == 2) {
+      vec2 q = vec2( fbm( xz + vec2(0.0,0.0), biome),
+                     fbm( xz + vec2(5.2,1.3), biome));
+
+      vec2 r = vec2( fbm( xz + 4.0*q + vec2(1.7,9.2), biome ),
+                     fbm( xz + 4.0*q + vec2(8.3,2.8), biome ));
+      return fbm( xz + 4.0*r, biome);
+    }
 }

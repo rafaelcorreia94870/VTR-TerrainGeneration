@@ -41,7 +41,7 @@ void main () {
 	calcposition = translate_to_centerCam(calcposition);
 
 	vec4 biome = vec4(0.0, 0.0, 0.0, 0.0);
-    terrainHeight = fbm(vec2(calcposition.x, calcposition.z), biome);
+    terrainHeight = pattern(vec2(calcposition.x, calcposition.z), biome);
 	waterHeight = calcposition.y;
 	water_position = calcposition;
 

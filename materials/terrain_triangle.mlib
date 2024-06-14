@@ -211,6 +211,7 @@
 										<valueof uniform="inverse_projection" type="CAMERA" context="MainCamera" component="PROJECTION_INVERSE_MATRIX" />
 										<valueof uniform="inverse_view" type="CAMERA" context="MainCamera" component="VIEW_INVERSE_MATRIX" />
 										<valueof uniform="shadows" type="RENDERER" context="CURRENT" component="shadows" />
+										<valueof uniform="option" type="RENDERER" context="CURRENT" component="option" />
 
 
                                 </values>
@@ -358,6 +359,8 @@
 																			context="terrain#pass4-LightCam" 
 																			component="TS05_PVM_MATRIX" />
 										<valueof uniform="shadows" type="RENDERER" context="CURRENT" component="shadows" />
+										<valueof uniform="option" type="RENDERER" context="CURRENT" component="option" />
+
 
 				</values>
 			</shader>
@@ -440,6 +443,8 @@
                     <valueof uniform="seeTessLevels" type="RENDERER" context="CURRENT" component="seeTessLevels" />
                     <valueof uniform="level" type="RENDERER" context="CURRENT" component="level" />
 					<valueof uniform="shadows" type="RENDERER" context="CURRENT" component="shadows" />
+										<valueof uniform="option" type="RENDERER" context="CURRENT" component="option" />
+
 				</values>
 			</shader>
 			<state name="frontCull" />	

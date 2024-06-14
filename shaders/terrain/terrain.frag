@@ -68,10 +68,10 @@ void main() {
     vec3 p = DataIn.posTE;
 
     // Calculate the normal of the terrain by sampling Nearby points
-    vec3 front_Height = vec3(0 + OFFSET, fbm(vec2(p.x + OFFSET, p.z), biome), 0);
-    vec3 right_Height = vec3(0, fbm(vec2(p.x, p.z + OFFSET), biome), 0 + OFFSET);
-    vec3 back_Height = vec3(0 - OFFSET, fbm(vec2(p.x - OFFSET, p.z), biome), 0);
-    vec3 left_Height = vec3(0, fbm(vec2(p.x, p.z - OFFSET), biome), 0 - OFFSET);
+    vec3 front_Height = vec3(0 + OFFSET, pattern(vec2(p.x + OFFSET, p.z), biome), 0);
+    vec3 right_Height = vec3(0, pattern(vec2(p.x, p.z + OFFSET), biome), 0 + OFFSET);
+    vec3 back_Height = vec3(0 - OFFSET, pattern(vec2(p.x - OFFSET, p.z), biome), 0);
+    vec3 left_Height = vec3(0, pattern(vec2(p.x, p.z - OFFSET), biome), 0 - OFFSET);
 
     vec3 calcNormal = cross(vec3(0, p.y, 0) - left_Height, vec3(0, p.y, 0) - back_Height) + cross(vec3(0, p.y, 0) - right_Height, vec3(0, p.y, 0) - front_Height);
     vec3 n = normalize(m_normal * calcNormal);
