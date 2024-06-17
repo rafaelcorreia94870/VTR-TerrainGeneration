@@ -37,7 +37,19 @@ vec4 biomePicker(vec3 p) {
 	float terrainHeight = p.y;
 	float maxHeight = 50;
 	float waterHeight = height;
+	float normalizedHeight = clamp((terrainHeight - waterHeight) / maxHeight, 0.0, 1.0);
 
+    // Interpolate colors based on normalized height
+    if (normalizedHeight < 0.2) {
+        return mix(sand, dirt, normalizedHeight * 5.0);
+    } else if (normalizedHeight < 0.4) {
+        return mix(dirt, grass, (normalizedHeight - 0.2) * 5.0);
+    } else if (normalizedHeight < 0.9) {
+        return mix(grass, rock, (normalizedHeight - 0.4) * 2.5);
+    } else {
+        return mix(rock, snow, (normalizedHeight - 0.9) * 10.0);
+    }
+	/*old one
 	if (terrainHeight < waterHeight) {
 		return mix(sand, dirt, smoothstep(waterHeight , waterHeight + 0.1* maxHeight, terrainHeight));
 	}
@@ -52,7 +64,7 @@ vec4 biomePicker(vec3 p) {
 	}
 	else {
 		return snow;
-	}
+	}*/
 }
 
 

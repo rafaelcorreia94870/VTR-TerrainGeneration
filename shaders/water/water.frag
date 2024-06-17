@@ -1,4 +1,4 @@
-float shininess = 128;
+float shininess = 32;
 uniform sampler2D ocean, waves, water, foam;
 uniform float timer;
 uniform mat4 m_view, m_p;
@@ -74,13 +74,11 @@ void main() {
         vec3 ne = normalize(-eye);
         vec3 h = normalize(l_dirCamera + ne);
 
-        float s = max(0.0, dot(h,nn));
-        if (s == 0){
-           // waterColor = vec4(1.0, 0.2,0.1,1.0);
-        }
-        specularColor *= pow(s,shininess);
+        float s = max(0.0, dot(h,ne));
+        specInt = pow(s,shininess);
     }
-    vec4 baseColor =  max(intensity *  waterColor + specularColor, waterColor * 0.35);
+    vec4 baseColor =  max(intensity *  waterColor + specularColor * specInt, waterColor * 0.35);
+    baseColor = intensity * waterColor + specularColor * specInt;
     color = baseColor;
     if (foam_option == 0) {
         float foamFactor = texture(foam, texCoord * 10.0 + vec2(timer * speed * .1, timer * speed * 0.1)).r;
@@ -98,13 +96,12 @@ void main() {
     
 
 	if(shadows == 1){
-        //vec3 p = DataIn.posTE;
-        vec3 p = posV;
 
-    	vec3 lightDir = normalize(vec3(m_view * -l_dir));
+    	vec3 lightDir = l_dirCamera;
+        vec3 p = posV;
     	float NdotL = max(dot(n, lightDir), 0.0);
 
-    	vec4 viewSpacePos =m_view * vec4(p, 1.0);
+    	vec4 viewSpacePos = m_view * vec4(posV, 1.0);
     	float distance = -viewSpacePos.z / viewSpacePos.w;
     	vec4 projShadowCoord[4];
     	float split[4];
@@ -112,7 +109,7 @@ void main() {
 
 
 
-    	if (NdotL > 0.0) {
+    	if (shadows==1) {
     	    split[0] = 100;
     	    split[1] = 200;
     	    split[2] = 400;
