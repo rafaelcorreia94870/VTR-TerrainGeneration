@@ -30,6 +30,15 @@
 			</colors>
 		</renderTarget>
 
+
+		<renderTarget name="biome_map">
+            <SIZE width="1024" height="1024" />
+            <CLEAR_VALUES r="0.0" g="0.0" b="0.0" a="0.0"/>
+            <colors>
+                <color name="biome_map" internalFormat="RGBA"/>
+            </colors>
+        </renderTarget>
+
 	</renderTargets>
         <textures>
                 <texture name="grass_rock_diffuse" filename="../textures/biomes/grass_rock/textures/aerial_grass_rock_diff_1k.jpg" mipmap="true"/>
@@ -175,6 +184,10 @@
                                         <valueof uniform="POS" type="CAMERA" context="MainCamera" component="POSITION" />
                                         <valueof uniform="seeTessLevels" type="RENDERER" context="CURRENT" component="seeTessLevels" />
                                         <valueof uniform="level" type="RENDERER" context="CURRENT" component="level" />
+										
+										<valueof uniform="biome_map" 	type="TEXTURE_BINDING" context="CURRENT" 
+														component="UNIT" id="4"/>
+
                                         <valueof uniform="shadowMap1" 	type="TEXTURE_BINDING" context="CURRENT" 
 														id=0 component="UNIT" />
 										<valueof uniform="lightDirection" 	type="LIGHT" 
@@ -212,6 +225,7 @@
 										<valueof uniform="inverse_view" type="CAMERA" context="MainCamera" component="VIEW_INVERSE_MATRIX" />
 										<valueof uniform="shadows" type="RENDERER" context="CURRENT" component="shadows" />
 										<valueof uniform="option" type="RENDERER" context="CURRENT" component="option" />
+										<valueof uniform="biome_scale_on_terrain" type="RENDERER" component="biome_scale_on_terrain"/>
 
 
                                 </values>
@@ -241,25 +255,31 @@
 							<MIN_FILTER value="LINEAR" />
 							<MAG_FILTER value="LINEAR" />
 						</texture>	
+						<texture UNIT="4" name="biome_map" >
+							<COMPARE_MODE value="COMPARE_REF_TO_TEXTURE" />
+							<COMPARE_FUNC value="LEQUAL" />
+							<MIN_FILTER value="NEAREST" />
+							<MAG_FILTER value="NEAREST" />
+						</texture>	
 					</textures>
             	</material>
                 <material name = "grass_rock">
                         <shader name="grass_rock">
                                 <valueof uniform="grass_diff"
-						type="TEXTURE_BINDING"
-						component="UNIT" id="0"/>
-				<valueof uniform="grass_disp"
-						 type="TEXTURE_BINDING"
-						 component="UNIT" id="1"/>
-				<valueof uniform="grass_rough"
-						 type="TEXTURE_BINDING"
-						 component="UNIT" id="2"/>
-                        </shader>
+										type="TEXTURE_BINDING"
+										component="UNIT" id="0"/>
+								<valueof uniform="grass_disp"
+										type="TEXTURE_BINDING"
+										component="UNIT" id="1"/>
+								<valueof uniform="grass_rough"
+										type="TEXTURE_BINDING"
+										component="UNIT" id="2"/>
+						</shader>
                         <textures>
-				<texture name="grass_rock_diffuse" UNIT="0"/>
-				<texture name="grass_rock_displacement" UNIT="1"/>
-				<texture name="grass_rock_roughness" UNIT="2"/>
-			</textures>
+							<texture name="grass_rock_diffuse" UNIT="0"/>
+							<texture name="grass_rock_displacement" UNIT="1"/>
+							<texture name="grass_rock_roughness" UNIT="2"/>
+						</textures>
                 </material>
                 
 		<material name="water" >

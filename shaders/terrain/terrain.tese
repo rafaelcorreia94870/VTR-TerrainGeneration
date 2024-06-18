@@ -5,6 +5,8 @@ uniform	mat4 m_pvm, m_view, m_p, m_m;
 uniform	mat3 m_normal;
 uniform vec4 l_dir;
 uniform float timer;
+uniform sampler2D biome_map;
+uniform float biome_scale_on_terrain;
 float minValue = 2;
 float maxValue = 400;
 
@@ -34,15 +36,15 @@ void main() {
 		return;
 	}
 	*/
-	vec4 biome = vec4(0.0, 0.0, 0.0, 0.0);
+
 
     //confio só nas contas do stor
 	vec3 b300 = (posTC[0]).xyz;
 	vec3 b030 = (posTC[1]).xyz;
 	vec3 b003 = (posTC[2]).xyz;
-	b300.y = pattern(b300.xz, biome);
-	b030.y = pattern(b030.xz, biome);
-	b003.y = pattern(b003.xz, biome);
+	b300.y = pattern(b300.xz, biomeColor(b300, biome_map, biome_scale_on_terrain));
+	b030.y = pattern(b030.xz, biomeColor(b030, biome_map, biome_scale_on_terrain));
+	b003.y = pattern(b003.xz, biomeColor(b003, biome_map, biome_scale_on_terrain));
 
 /*
 	float noisevar1 = 0.0;

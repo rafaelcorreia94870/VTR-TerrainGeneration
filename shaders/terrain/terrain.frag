@@ -5,6 +5,8 @@ uniform mat4 lightSpaceMat1,lightSpaceMat2,lightSpaceMat3,lightSpaceMat4;
 uniform vec4 lightDirection;
 uniform mat4 inverse_projection, inverse_view;
 uniform int shadows;
+uniform sampler2D biome_map;
+uniform float biome_scale_on_terrain;
 
 
 uniform mat4 m_pvm, m_m, m_view, m_p;
@@ -32,13 +34,16 @@ vec4 biomePicker(vec3 p) {
 	vec4 snow = vec4(1.0, 1.0, 1.0, 1.0);
 	vec4 dirt = vec4(0.522, 0.31, 0.149, 1.0);
 
-
+	// get biome color from biome map
+	vec4 biomeColor = biomeColor(p, biome_map, biome_scale_on_terrain);
 
 	float terrainHeight = p.y;
 	float maxHeight = 50;
 	float waterHeight = height;
 	float normalizedHeight = clamp((terrainHeight - waterHeight) / maxHeight, 0.0, 1.0);
 
+	return biomeColor;
+	/*
     // Interpolate colors based on normalized height
     if (normalizedHeight < 0.2) {
         return mix(sand, dirt, normalizedHeight * 5.0);
@@ -49,7 +54,8 @@ vec4 biomePicker(vec3 p) {
     } else {
         return mix(rock, snow, (normalizedHeight - 0.9) * 10.0);
     }
-	/*old one
+	*/
+	/* old one
 	if (terrainHeight < waterHeight) {
 		return mix(sand, dirt, smoothstep(waterHeight , waterHeight + 0.1* maxHeight, terrainHeight));
 	}
@@ -76,8 +82,12 @@ void main() {
     vec4 eNight = texture(grass_rough, DataIn.tcTE);
 
     float OFFSET = DataIn.distanceTE * 0.0008;
-    vec4 biome = vec4(0.0, 0.0, 0.0, 1.0);
     vec3 p = DataIn.posTE;
+    //vec4 biome = vec4(0.0, 0.0, 0.0, 1.0);
+	vec4 biome = biomeColor(p, biome_map, biome_scale_on_terrain);
+	colorOut = biome;
+	return;
+
 
     // Calculate the normal of the terrain by sampling Nearby points
     vec3 front_Height = vec3(0 + OFFSET, pattern(vec2(p.x + OFFSET, p.z), biome), 0);

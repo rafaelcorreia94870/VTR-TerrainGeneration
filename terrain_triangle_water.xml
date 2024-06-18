@@ -38,6 +38,7 @@
 			<attribute name="p_freq" type="RENDERER" data= "FLOAT" value="1" />
 			<attribute name="p_offset_x" type="RENDERER" data= "FLOAT" value="0.4"/>
 			<attribute name="p_offset_y" type="RENDERER" data= "FLOAT" value="0.5"/>
+			<attribute name="biome_scale_on_terrain" type="RENDERER" data="FLOAT" value="100"/>
 
 
 			<attribute type="PASS" name="FROM" data="FLOAT" value = "-1" />
@@ -144,7 +145,7 @@
 
 			<pass class="quad" name="biome" >
                 <material name="biome" fromLibrary="Biome"/>
-				<renderTarget name="biome_map" fromLibrary="Biome"/>
+				<renderTarget name="biome_map" fromLibrary="Terrain"/>
             </pass>
 
 			<!-- This pass adds a view of the biome map to the right of the window (for debug and experiments for example)-->
@@ -354,7 +355,7 @@
 			<var label = "lacunarity" type ="RENDERER" context="CURRENT"
 					component="lacunarity" def="min=0.1 max=2.0 step=0.1" />
 			<var label = "HeightMultiplier" type ="RENDERER" context="CURRENT"
-					component="heightMultiplier" def="min=0.1 max=100.0 step=0.1" />
+					component="heightMultiplier" def="min=-10 max=100.0 step=0.1" />
 			<var label = "initAmplitude" type ="RENDERER" context="CURRENT"
 					component="initAmplitude" def="min=0.1 max=100.0 step=0.1" />
 			<var label = "initFrequency" type ="RENDERER" context="CURRENT"
@@ -396,6 +397,7 @@
 			<var label="Precipitation - noise Frequency" type="RENDERER" context="CURRENT" component="p_freq" def="step=0.01 min=0 max=4" />
 			<var label="Precipitation offset x" type="RENDERER" context="CURRENT" component="p_offset_x" def="step=0.01 min=-4 max=4" />
 			<var label="Precipitation offset y" type="RENDERER" context="CURRENT" component="p_offset_y" def="step=0.01 min=-4 max=4" />
+			<var label="Biome Map Scale on the Terrain" type="RENDERER" context="CURRENT" component="biome_scale_on_terrain" def="step=0.1 min=1 max=200" />
 		</window>
 	
 	</interface>

@@ -436,24 +436,67 @@ float snoiseFractal(vec3 m) {
 				+0.0666667* snoiseNikita(8.0*m);
 }
 
-void biomeSettings(vec4 biome, inout float options[6]){
+bool equals_vec4(vec4 a, vec4 b){
+    return a.x == b.x && a.y == b.y && a.z == b.z && a.w == b.w;
+}
+
+void biomeSettings(vec4 biome, inout float options[7]){
     float amplitude = initAmplitude; //1.0
     float frequency = initFrequency; //1.0;
     float baseHeight = initbaseHeight; //0.0;
     float calcscale = scale;
     float calcpersistence = persistence;
     float calclacunarity = lacunarity;
+    float calcheightmult = heightmult;
+    float waterHeight = height;
 
-    if (biome == vec4(1.0, 0.0, 0.0, 0.0))
+
+  if (equals_vec4(biome,vec4(0.0, 0.0, 0.6, 1))) // ocean
     {
-      amplitude = 1.0;
+      amplitude = 5.0;
       frequency = 1.0;
-      baseHeight = 0.0;
-      calcscale = scale;
-      calcpersistence = persistence;
-      calclacunarity = lacunarity;
+      baseHeight = waterHeight;
+      calcscale = 500.0;
+      calcpersistence = 0.3;
+      calclacunarity = 2.0;
+      calcheightmult = -30.0;
+
 
     }
+    /*
+
+    else if (equals_vec4(biome,vec4(0.6, 0.8, 0.1, 1))) // grassland
+    {
+      amplitude = 5.0;
+      frequency = 1.0;
+      baseHeight = 10.0;
+      calcscale = 500;
+      calcpersistence = 0.3;
+      calclacunarity = 2;
+      
+
+    }
+    else if (biome == vec4(0.0, 0.0, 0.6, 1.0)) // TODO -ver ../biome/biome.frag para valores de biomas e replicar para os restantes
+    {
+      amplitude = 50;
+      frequency = 1.0;
+      baseHeight = 10.0;
+      calcscale = 500;
+      calcpersistence = 0.3;
+      calclacunarity = 2;
+
+    }
+    else
+    {
+      amplitude = 0.1;
+      frequency = 0.1;
+      baseHeight = -100;
+      calcscale = 1;
+      calcpersistence = 1;
+      calclacunarity = 1;
+
+    }
+    */
 
     options[0] = amplitude;
     options[1] = frequency;
@@ -461,6 +504,7 @@ void biomeSettings(vec4 biome, inout float options[6]){
     options[3] = calcscale;
     options[4] = calcpersistence;
     options[5] = calclacunarity;
+    options[6] = calcheightmult;
 
 
 }
@@ -471,7 +515,7 @@ float fbm(vec2 xz, vec4 biome) {
     float noisevar = 0.0;
     float waterHeight = height;
     
-    float options[6];
+    float options[7];
     biomeSettings(biome, options);
 
     float amplitude = options[0];
@@ -480,6 +524,7 @@ float fbm(vec2 xz, vec4 biome) {
     float calcscale = options[3];
     float calcpersistence = options[4];
     float calclacunarity = options[5];
+    float calcheightmult = options[6];
     
     for(int i = 0; i < num_octaves; ++i) {
 
@@ -490,7 +535,7 @@ float fbm(vec2 xz, vec4 biome) {
         amplitude *= calcpersistence;
 		    frequency *= calclacunarity;
     }
-    return (heightmult * (noisevar+1)) + baseHeight;
+    return (calcheightmult * (noisevar+10)) + baseHeight;
 }
 
 float pattern(vec2 xz, vec4 biome) {
@@ -510,4 +555,8 @@ float pattern(vec2 xz, vec4 biome) {
                      fbm( xz + 4.0*q + vec2(8.3,2.8), biome ));
       return fbm( xz + 4.0*r, biome);
     }
+}
+
+vec4 biomeColor(vec3 p, sampler2D biome_map, float biome_scale_on_terrain) {
+	return texture(biome_map, p.xz * 0.001 / biome_scale_on_terrain + 0.5);
 }

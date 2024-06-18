@@ -5,15 +5,6 @@
                              ps="../shaders/biome/biome.frag" />
     </shaders>
 
-    <renderTargets>
-        <renderTarget name="biome_map">
-            <SIZE width="1024" height="1024" />
-            <CLEAR_VALUES r="0.0" g="0.0" b="0.0" a="0.0"/>
-            <colors>
-                <color name="biome_map" internalFormat="RGBA"/>
-            </colors>
-        </renderTarget>
-    </renderTargets>
     <materials>
         <material name="biome" >
             <shader name="biome" >
