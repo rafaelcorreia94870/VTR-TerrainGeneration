@@ -85,8 +85,6 @@ void main() {
     vec3 p = DataIn.posTE;
     //vec4 biome = vec4(0.0, 0.0, 0.0, 1.0);
 	vec4 biome = biomeColor(p, biome_map, biome_scale_on_terrain);
-	colorOut = biome;
-	return;
 
 
     // Calculate the normal of the terrain by sampling Nearby points

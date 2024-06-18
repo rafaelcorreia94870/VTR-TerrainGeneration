@@ -9,6 +9,8 @@ uniform mat4 m_view_model;
 uniform sampler2D water;
 uniform float timer;
 uniform float speedvar;
+uniform sampler2D biome_map;
+uniform float biome_scale_on_terrain;
 
 
 
@@ -36,12 +38,13 @@ void main () {
 
 
 	vec4 calcposition = m_m * position;
-	calcposition.y = height;
+	calcposition.y = heightmult*height;
 	calcposition.y += texture(water, texCoord - 0.5 * timer * speed).r;
 	calcposition = translate_to_centerCam(calcposition);
 
-	vec4 biome = vec4(0.0, 0.0, 0.0, 0.0);
-    terrainHeight = pattern(vec2(calcposition.x, calcposition.z), biome);
+	vec4 biomeColor = biomeColor(calcposition.xyz, biome_map, biome_scale_on_terrain);
+
+    terrainHeight = pattern(vec2(calcposition.x, calcposition.z), biomeColor);
 	waterHeight = calcposition.y;
 	water_position = calcposition;
 

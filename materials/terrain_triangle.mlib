@@ -380,6 +380,10 @@
 																			component="TS05_PVM_MATRIX" />
 										<valueof uniform="shadows" type="RENDERER" context="CURRENT" component="shadows" />
 										<valueof uniform="option" type="RENDERER" context="CURRENT" component="option" />
+										<valueof uniform="biome_scale_on_terrain" type="RENDERER" component="biome_scale_on_terrain"/>
+										<valueof uniform="biome_map" 	type="TEXTURE_BINDING" context="CURRENT" 
+														component="UNIT" id="8"/>
+
 
 
 				</values>
@@ -412,7 +416,13 @@
 					<COMPARE_FUNC value="LEQUAL" />
 					<MIN_FILTER value="LINEAR" />
 					<MAG_FILTER value="LINEAR" />
-				</texture>	
+				</texture>
+				<texture UNIT="8" name="biome_map" >
+							<COMPARE_MODE value="COMPARE_REF_TO_TEXTURE" />
+							<COMPARE_FUNC value="LEQUAL" />
+							<MIN_FILTER value="NEAREST" />
+							<MAG_FILTER value="NEAREST" />
+				</texture>		
 			</textures>
 			<state name = "Transparent" />
 		</material>
@@ -464,9 +474,22 @@
                     <valueof uniform="level" type="RENDERER" context="CURRENT" component="level" />
 					<valueof uniform="shadows" type="RENDERER" context="CURRENT" component="shadows" />
 										<valueof uniform="option" type="RENDERER" context="CURRENT" component="option" />
+										<valueof uniform="biome_scale_on_terrain" type="RENDERER" component="biome_scale_on_terrain"/>
+										<valueof uniform="biome_map" 	type="TEXTURE_BINDING" context="CURRENT" 
+														component="UNIT" id="1"/>
+														
+
 
 				</values>
 			</shader>
+			<textures>
+				<texture UNIT="1" name="biome_map" >
+								<COMPARE_MODE value="COMPARE_REF_TO_TEXTURE" />
+								<COMPARE_FUNC value="LEQUAL" />
+								<MIN_FILTER value="NEAREST" />
+								<MAG_FILTER value="NEAREST" />
+							</texture>	
+			</textures>
 			<state name="frontCull" />	
 		</material>	
         </materials>
