@@ -467,13 +467,46 @@ void biomeSettings(vec4 biome, inout float options[7]){
 
     else if (equals_vec4(biome,vec4(0.6, 0.8, 0.1, 1))) // grassland
     {
-      amplitude = 5.0;
+      amplitude = 1.0;
       frequency = 1.0;
-      baseHeight = 10.0;
-      calcscale = 500;
+      baseHeight = 1.5;
+      calcscale = 200;
       calcpersistence = 0.3;
       calclacunarity = 2;
-      
+      calcheightmult = 1;
+
+    }
+    else if (equals_vec4(biome,vec4(0.1, 0.6, 0.1, 1))) // forest
+    {
+      amplitude = 5.0;
+      frequency = 1.0;
+      baseHeight = 9.0;
+      calcscale = 200;
+      calcpersistence = 0.3;
+      calclacunarity = 2;
+      calcheightmult = 1.5;
+
+    }
+    else if (equals_vec4(biome,vec4(1.0, 1.0, 0.0, 1))) // desert
+    {
+      amplitude = 1.5;
+      frequency = 1.5;
+      baseHeight = 5.0;
+      calcscale = 700;
+      calcpersistence = 0.4;
+      calclacunarity = 1;
+      calcheightmult = 7;
+
+    }
+    else if (equals_vec4(biome,vec4(0.7, 0.7, 1.0, 1))) // tundra
+    {
+      amplitude = 1.5;
+      frequency = 1.5;
+      baseHeight = 5.0;
+      calcscale = 700;
+      calcpersistence = 0.4;
+      calclacunarity = 1;
+      calcheightmult = 7;
 
     }
     else if (biome == vec4(0.0, 0.0, 0.6, 1.0)) // TODO -ver ../biome/biome.frag para valores de biomas e replicar para os restantes
