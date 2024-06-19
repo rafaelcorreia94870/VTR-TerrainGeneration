@@ -72,6 +72,7 @@
                     <ps>
                             <file name="../shaders/utils/header.glsl"/>
                             <file name="../shaders/utils/noise.glsl"/>
+							<file name="../shaders/utils/color.glsl"/>
                             <file name="../shaders/terrain/terrain.frag"/>
                     </ps>
             </shader>
