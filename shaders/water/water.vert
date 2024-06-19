@@ -38,7 +38,7 @@ void main () {
 
 
 	vec4 calcposition = m_m * position;
-	calcposition.y = heightmult*height;
+	calcposition.y = height;
 	calcposition.y += texture(water, texCoord - 0.5 * timer * speed).r;
 	calcposition = translate_to_centerCam(calcposition);
 

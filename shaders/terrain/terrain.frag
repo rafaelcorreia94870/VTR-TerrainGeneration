@@ -34,8 +34,7 @@ void main() {
     vec3 p = DataIn.posTE;
     //vec4 biome = vec4(0.0, 0.0, 0.0, 1.0);
 	vec4 biome = biomeColor(p, biome_map, biome_scale_on_terrain);
-
-
+	
     // Calculate the normal of the terrain by sampling Nearby points
     vec3 front_Height = vec3(0 + OFFSET, pattern(vec2(p.x + OFFSET, p.z), biome), 0);
     vec3 right_Height = vec3(0, pattern(vec2(p.x, p.z + OFFSET), biome), 0 + OFFSET);
@@ -50,6 +49,9 @@ void main() {
 	vec4 color;
     vec4 biomeColor = biomePicker(p);
     vec4 rgbcolor = seeTessLevels == 1 ? DataIn.colorTE : biomeColor;
+	
+
+
     if (intensity <= 0.1) {
         color = (rgbcolor * intensity) + rgbcolor * 0.2;
     } else {

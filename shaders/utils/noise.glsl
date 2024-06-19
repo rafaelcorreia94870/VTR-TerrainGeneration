@@ -443,93 +443,90 @@ bool equals_vec4(vec4 a, vec4 b){
 void biomeSettings(vec4 biome, inout float options[7]){
     float amplitude = initAmplitude; //1.0
     float frequency = initFrequency; //1.0;
-    float baseHeight = initbaseHeight; //0.0;
     float calcscale = scale;
     float calcpersistence = persistence;
     float calclacunarity = lacunarity;
     float calcheightmult = heightmult;
     float waterHeight = height;
-
-
-  if (equals_vec4(biome,vec4(0.0, 0.0, 0.6, 1))) // ocean
-    {
-      amplitude = 5.0;
-      frequency = 1.0;
-      baseHeight = waterHeight;
-      calcscale = 500.0;
-      calcpersistence = 0.3;
-      calclacunarity = 2.0;
-      calcheightmult = -30.0;
-
-
+    float baseHeight = initbaseHeight; //0.0;
+    
+    //debug
+    if(biome.x == 1.0){
+       calcheightmult = 40;
     }
-    /*
-
-    else if (equals_vec4(biome,vec4(0.6, 0.8, 0.1, 1))) // grassland
-    {
-      amplitude = 1.0;
-      frequency = 1.0;
-      baseHeight = 1.5;
-      calcscale = 200;
-      calcpersistence = 0.3;
-      calclacunarity = 2;
-      calcheightmult = 1;
-
+    //ocean
+    if (biome.z == 0.6) {
+        amplitude = 5.0;
+        frequency = 1.0;
+        baseHeight = waterHeight;
+        calcscale = 300.0;
+        calcpersistence = 0.6;
+        calclacunarity = 2.0;
+        calcheightmult = -5.;
     }
-    else if (equals_vec4(biome,vec4(0.1, 0.6, 0.1, 1))) // forest
-    {
-      amplitude = 5.0;
-      frequency = 1.0;
-      baseHeight = 9.0;
-      calcscale = 200;
-      calcpersistence = 0.3;
-      calclacunarity = 2;
-      calcheightmult = 1.5;
-
+    // tundra
+    else if (biome.z == 1.0) {
+        amplitude = 20.5;
+        frequency = 1.2;
+        baseHeight += 30.0;
+        calcscale = 300;
+        calcpersistence = 0.5;
+        calclacunarity = 2.0;
+        calcheightmult = 3;
     }
-    else if (equals_vec4(biome,vec4(1.0, 1.0, 0.0, 1))) // desert
-    {
-      amplitude = 1.5;
-      frequency = 1.5;
-      baseHeight = 5.0;
-      calcscale = 700;
-      calcpersistence = 0.4;
-      calclacunarity = 1;
-      calcheightmult = 7;
-
+    //grassland
+    else if (biome.y == 0.8) {
+        amplitude = 1.0;
+        frequency = 1.0;
+        //baseHeight = waterHeight;
+        calcscale = 200;
+        calcpersistence = 0.3;
+        calclacunarity = 2;
+        calcheightmult = 2.5;
     }
-    else if (equals_vec4(biome,vec4(0.7, 0.7, 1.0, 1))) // tundra
-    {
-      amplitude = 1.5;
-      frequency = 1.5;
-      baseHeight = 5.0;
-      calcscale = 700;
-      calcpersistence = 0.4;
-      calclacunarity = 1;
-      calcheightmult = 7;
-
+    //desert
+    else if (biome.y == 1.0) {
+        amplitude = 0.2;
+        frequency = 1.2;
+        //baseHeight = waterHeight;
+        calcscale = 2;
+        calcpersistence = 0.2;
+        calclacunarity = 0.2;
+        calcheightmult = 1.;
     }
-    else if (biome == vec4(0.0, 0.0, 0.6, 1.0)) // TODO -ver ../biome/biome.frag para valores de biomas e replicar para os restantes
-    {
-      amplitude = 50;
-      frequency = 1.0;
-      baseHeight = 10.0;
-      calcscale = 500;
-      calcpersistence = 0.3;
-      calclacunarity = 2;
-
+    //forest
+    else if(biome.y == 0.6) {
+        amplitude = 55.0;
+        frequency = 1.0;
+        //baseHeight = waterHeight;
+        calcscale = 200;
+        calcpersistence = 0.3;
+        calclacunarity = 2;
+        calcheightmult = 1.5;
+       
     }
-    else
-    {
-      amplitude = 0.1;
-      frequency = 0.1;
-      baseHeight = -100;
-      calcscale = 1;
-      calcpersistence = 1;
-      calclacunarity = 1;
-
+    //savana
+    else if(biome.z == 0.0 && biome.x == 1.0){
+        amplitude = 20.0;
+        frequency = 1.0;
+        //baseHeight = waterHeight;
+        calcscale = 200;
+        calcpersistence = 0.3;
+        calclacunarity = 2;
+        calcheightmult = 1.5;
     }
-    */
+    //jungle
+    else if (biome.y == 0.4) {
+        amplitude = 5.0;
+        frequency = 1.0;
+        //baseHeight = waterHeight;
+        calcscale = 200;
+        calcpersistence = 0.3;
+        calclacunarity = 2;
+        calcheightmult = 1.5;
+    }
+    
+   
 
     options[0] = amplitude;
     options[1] = frequency;

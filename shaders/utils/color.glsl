@@ -4,18 +4,18 @@ vec4 biomePicker(vec3 p) {
 
     /*
     dry
-    tundra: (0.7, 0.7, 1.0)
+    tundra:    (0.7, 0.7, 1.0)
     grassland: (0.6, 0.8, 0.1)
-    desert: (1.0, 1.0, 0.0)
+    desert:    (1.0, 1.0, 0.0)
 
     moderate
-    ocean: (0.0, 0.0, 0.6)
-    forest: (0.1, 0.6, 0.1)
-    savanna: (1.0, 0.7, 0.0)
+    ocean:     (0.0, 0.0, 0.6)
+    forest:    (0.1, 0.6, 0.1)
+    savanna:   (1.0, 0.7, 0.0)
 
     wet
-    jungle: (0.3, 0.4, 0.1)
-    ocean: (0.0, 0.0, 0.6)
+    jungle:    (0.3, 0.4, 0.1)
+    ocean:     (0.0, 0.0, 0.6)
     */
     vec4 water = vec4(0.0, 0.0, 1.0, 1.0);
 	vec4 sand = vec4(0.93, 0.79, 0.69, 1.0);
@@ -39,7 +39,7 @@ vec4 biomePicker(vec3 p) {
     if (biomeColor.z == 0.6) {
         return sand;
     }
-    // if biomeColor is tundra then make colors based on normalized height
+    // tundra
     else if (biomeColor.z == 1.0) {
         if (normalizedHeight < 0.2) {
             return mix(sand, dirt, normalizedHeight * 5.0);
@@ -72,20 +72,32 @@ vec4 biomePicker(vec3 p) {
         }
     }
     //savanna
-    else if (biomeColor.y == 0.7) {
+    else if (biomeColor.z == 0.0 && biomeColor.x == 1.0) {
         if (terrainHeight < waterHeight) {
 	    	return mix(sand, dirt, smoothstep(waterHeight , waterHeight + 0.1* maxHeight, terrainHeight));
 	    }
 	    else if (terrainHeight < waterHeight + 0.2* maxHeight) {
 	    	return mix(dirt, tundra_grass, smoothstep(waterHeight - 0.01* maxHeight, waterHeight + 0.2* maxHeight, terrainHeight));
 	    }
-	    else if (terrainHeight < waterHeight + 0.4*maxHeight) {
+	    else {
 	    	return mix(tundra_grass, rock, smoothstep(waterHeight + 0.2* maxHeight, waterHeight + 0.4*maxHeight, terrainHeight));
 	    }
     }
+    //jungle
+    else if (biomeColor.y == 0.4) {
+        if (terrainHeight < waterHeight) {
+        	return mix(sand, dirt, smoothstep(waterHeight , waterHeight + 0.1* maxHeight, terrainHeight));
+        }
+        else if (terrainHeight < waterHeight + 0.2* maxHeight) {
+        	return mix(dirt, jungle_grass, smoothstep(waterHeight - 0.01* maxHeight, waterHeight + 0.2* maxHeight, terrainHeight));
+        }
+        else {
+        	return mix(jungle_grass, rock, smoothstep(waterHeight + 0.2* maxHeight, waterHeight + 0.4*maxHeight, terrainHeight));
+        }
+    }
     
 
-    return vec4(0.0, 0.0, 0.0, 1.0);
+    return vec4(1.0, 0.0, 0.0, 1.0);
 	return biomeColor;
 	/*
     // Interpolate colors based on normalized height
