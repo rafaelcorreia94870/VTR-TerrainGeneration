@@ -29,26 +29,29 @@ vec4 biomePicker(vec3 p) {
 
 	// get biome color from biome map
 	vec4 biomeColor = biomeColor(p, biome_map, biome_scale_on_terrain);
+    float options[7];
+    biomeSettings(biomeColor, options);
+
+    float amplitude = options[0];
+    float baseHeight = options[2];
+    float calcheightmult = options[6];
 
 	float terrainHeight = p.y;
-	float maxHeight = heightmult * initAmplitude;
+	float maxHeight = (amplitude+.1)* 10 * (calcheightmult+ .1) + baseHeight ;
 	float waterHeight = height;
-	float normalizedHeight = clamp((terrainHeight - waterHeight) / maxHeight, 0.0, 1.0);
-
+	float normalizedHeight = clamp((terrainHeight - (baseHeight)) / maxHeight, 0.0, 1.0);
     // if biomeColor z is 0.6 then it is ocean and the biome color is sand
     if (biomeColor.z == 0.6) {
         return sand;
     }
     // tundra
     else if (biomeColor.z == 1.0) {
-        if (normalizedHeight < 0.2) {
-            return mix(sand, dirt, normalizedHeight * 5.0);
+        if (normalizedHeight < 0.1) {
+            return mix(dirt, grass, normalizedHeight);
         } else if (normalizedHeight < 0.4) {
-            return mix(dirt, grass, (normalizedHeight - 0.2) * 5.0);
-        } else if (normalizedHeight < 0.9) {
-            return mix(grass, rock, (normalizedHeight - 0.4) * 2.5);
-        } else {
-            return mix(rock, snow, (normalizedHeight - 0.9) * 10.0);
+            return mix(grass, rock, (normalizedHeight - 0.2));
+        } else{ 
+            return mix(rock, snow, (normalizedHeight - 0.4));
         }
     }
     //grassland
@@ -73,27 +76,27 @@ vec4 biomePicker(vec3 p) {
     }
     //savanna
     else if (biomeColor.z == 0.0 && biomeColor.x == 1.0) {
-        if (terrainHeight < waterHeight) {
-	    	return mix(sand, dirt, smoothstep(waterHeight , waterHeight + 0.1* maxHeight, terrainHeight));
-	    }
-	    else if (terrainHeight < waterHeight + 0.2* maxHeight) {
-	    	return mix(dirt, tundra_grass, smoothstep(waterHeight - 0.01* maxHeight, waterHeight + 0.2* maxHeight, terrainHeight));
-	    }
-	    else {
-	    	return mix(tundra_grass, rock, smoothstep(waterHeight + 0.2* maxHeight, waterHeight + 0.4*maxHeight, terrainHeight));
-	    }
+        //use the normalizedHeight to mix between dirt, savanna grass and rock
+        if (normalizedHeight < 0.2) {
+            return mix(sand, dirt, normalizedHeight * 5.0);
+        } else if (normalizedHeight < 0.6) {
+            return mix(dirt, savanna_grass, (normalizedHeight - 0.2) * 5.0);
+        } else{
+            return mix(savanna_grass, rock, (normalizedHeight - 0.4) * 2.5);
+        } 
     }
     //jungle
     else if (biomeColor.y == 0.4) {
-        if (terrainHeight < waterHeight) {
-        	return mix(sand, dirt, smoothstep(waterHeight , waterHeight + 0.1* maxHeight, terrainHeight));
+        //use the normalizedHeight and mix between jungle grass and rock
+        if (normalizedHeight < 0.2) {
+            return mix(sand, dirt, normalizedHeight * 5.0);
+        } else if (normalizedHeight < 0.9) {
+            return mix(dirt, jungle_grass, (normalizedHeight - 0.2) * 5.0);
+        } else{
+            return mix(jungle_grass, rock, (normalizedHeight - 0.9) * 2.5);
         }
-        else if (terrainHeight < waterHeight + 0.2* maxHeight) {
-        	return mix(dirt, jungle_grass, smoothstep(waterHeight - 0.01* maxHeight, waterHeight + 0.2* maxHeight, terrainHeight));
-        }
-        else {
-        	return mix(jungle_grass, rock, smoothstep(waterHeight + 0.2* maxHeight, waterHeight + 0.4*maxHeight, terrainHeight));
-        }
+
+
     }
     
 

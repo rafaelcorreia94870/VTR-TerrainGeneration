@@ -518,9 +518,9 @@ void biomeSettings(vec4 biome, inout float options[7]){
     //jungle
     else if (biome.y == 0.4) {
         amplitude = 5.0;
-        frequency = 1.0;
+        frequency = 2.0;
         //baseHeight = waterHeight;
-        calcscale = 200;
+        calcscale = 2;
         calcpersistence = 0.3;
         calclacunarity = 2;
         calcheightmult = 1.5;
