@@ -488,14 +488,14 @@ void biomeSettings(vec4 biome, inout float options[7]){
     else if (biome.y == 1.0) {
         amplitude = 0.2;
         frequency = 1.2;
-        //baseHeight = waterHeight;
+        baseHeight = waterHeight +1.0;
         calcscale = 2;
         calcpersistence = 0.2;
         calclacunarity = 0.2;
         calcheightmult = 1.;
     }
     //forest
-    else if(biome.y == 0.6) {
+    else if(biome.y == 0.6) { //TODO: change to forest
         amplitude = 55.0;
         frequency = 1.0;
         //baseHeight = waterHeight;
@@ -506,24 +506,26 @@ void biomeSettings(vec4 biome, inout float options[7]){
        
     }
     //savana
-    else if(biome.z == 0.0 && biome.x == 1.0){
+    else if(biome.z == 0.0 && biome.x == 1.0){ //TODO: change to forest
         amplitude = 20.0;
         frequency = 1.0;
-        //baseHeight = waterHeight;
+        baseHeight = waterHeight +20;
         calcscale = 200;
         calcpersistence = 0.3;
-        calclacunarity = 2;
-        calcheightmult = 1.5;
+        calclacunarity = 3.1;
+        calcheightmult = 0.5;
     }
     //jungle
     else if (biome.y == 0.4) {
+      
         amplitude = 5.0;
-        frequency = 2.0;
-        //baseHeight = waterHeight;
-        calcscale = 2;
-        calcpersistence = 0.3;
-        calclacunarity = 2;
-        calcheightmult = 1.5;
+        frequency = 0.3;
+        baseHeight = waterHeight -20.0;
+        calcscale = 80;
+        calcpersistence = 0.4;
+        calclacunarity = 2.3;
+        calcheightmult = 3.5;
+        
     }
     
    

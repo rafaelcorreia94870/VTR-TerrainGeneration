@@ -37,9 +37,9 @@ vec4 biomePicker(vec3 p) {
     float calcheightmult = options[6];
 
 	float terrainHeight = p.y;
-	float maxHeight = (amplitude+.1)* 10 * (calcheightmult+ .1) + baseHeight ;
+	float maxHeight = (amplitude+.1) * 1.5* (calcheightmult+ .1) + baseHeight ;
 	float waterHeight = height;
-	float normalizedHeight = clamp((terrainHeight - (baseHeight)) / maxHeight, 0.0, 1.0);
+	float normalizedHeight = (terrainHeight - baseHeight) / (maxHeight- baseHeight);
     // if biomeColor z is 0.6 then it is ocean and the biome color is sand
     if (biomeColor.z == 0.6) {
         return sand;
@@ -47,11 +47,13 @@ vec4 biomePicker(vec3 p) {
     // tundra
     else if (biomeColor.z == 1.0) {
         if (normalizedHeight < 0.1) {
-            return mix(dirt, grass, normalizedHeight);
-        } else if (normalizedHeight < 0.4) {
-            return mix(grass, rock, (normalizedHeight - 0.2));
-        } else{ 
-            return mix(rock, snow, (normalizedHeight - 0.4));
+            return mix(dirt, grass, smoothstep(0.0, 0.2, normalizedHeight));
+        } else if (normalizedHeight < 0.5) {
+            return mix(grass, rock, smoothstep(0.1, 0.5, normalizedHeight));
+        } else if(normalizedHeight < 0.999){ 
+            return mix(rock, snow, smoothstep(0.7, 0.999, normalizedHeight));
+        } else {
+            return snow;
         }
     }
     //grassland
@@ -79,24 +81,22 @@ vec4 biomePicker(vec3 p) {
         //use the normalizedHeight to mix between dirt, savanna grass and rock
         if (normalizedHeight < 0.2) {
             return mix(sand, dirt, normalizedHeight * 5.0);
-        } else if (normalizedHeight < 0.6) {
+        } else if (normalizedHeight < 0.7) {
             return mix(dirt, savanna_grass, (normalizedHeight - 0.2) * 5.0);
         } else{
-            return mix(savanna_grass, rock, (normalizedHeight - 0.4) * 2.5);
+            return mix(savanna_grass, rock, (normalizedHeight - 0.4) * 1.5);
         } 
     }
     //jungle
     else if (biomeColor.y == 0.4) {
         //use the normalizedHeight and mix between jungle grass and rock
         if (normalizedHeight < 0.2) {
-            return mix(sand, dirt, normalizedHeight * 5.0);
+            return dirt;
         } else if (normalizedHeight < 0.9) {
-            return mix(dirt, jungle_grass, (normalizedHeight - 0.2) * 5.0);
+            return mix(dirt, jungle_grass, smoothstep(0.8, 0.9, normalizedHeight));
         } else{
-            return mix(jungle_grass, rock, (normalizedHeight - 0.9) * 2.5);
+            return mix(jungle_grass, rock, (normalizedHeight - 0.9));
         }
-
-
     }
     
 
